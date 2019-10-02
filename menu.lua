@@ -10,17 +10,17 @@ local scene = composer.newScene()
 -- include Corona's "widget" library
 local widget = require "widget"
 
---------------------------------------------
-
--- forward declarations and other locals
 local playBtn
+local highScoresBtn
 
--- 'onRelease' event listener for playBtn
-local function onPlayBtnRelease()
-	
+local function onHighscoresTap()
+	composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
+	return true
+end
+
+local function onPlayTap()
 	-- go to level1.lua scene
-	composer.gotoScene( "level1", "fade", 500 )
-	
+	composer.gotoScene( "game", { time=800, effect="crossFade" } )
 	return true	-- indicates successful touch
 end
 
@@ -38,28 +38,53 @@ function scene:create( event )
 	background.anchorY = 0
 	background.x = 0 + display.screenOriginX 
 	background.y = 0 + display.screenOriginY
+
+	local sheetChramOptions =
+	{
+		width = 512,
+		height = 512,
+		numFrames = 25
+	}
+
+	local sheetChram = graphics.newImageSheet( "ChramSprite.png", sheetChramOptions )
+
+	local sequences_chram = {
+		-- consecutive frames sequence
+		{
+			name = "eatingCram",
+			start = 1,
+			count = 25,
+			time = 860,
+			loopCount = 0,
+			loopDirection = "forward"
+		}
+	}
+
+	local chramEating = display.newSprite( sheetChram, sequences_chram )
+	chramEating.x = display.contentCenterX + 20
+	chramEating.y = display.contentHeight - 700
+	chramEating:play()
 	
 	-- create/position logo/title image on upper-half of the screen
-	local titleLogo = display.newImageRect( "logo.png", 264, 42 )
+	local titleLogo = display.newImageRect( "Game Title.png", 500, 240 )
 	titleLogo.x = display.contentCenterX
-	titleLogo.y = 100
+	titleLogo.y = 200
+
+	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 300, native.systemFont, 44 )
+	playButton:setFillColor( 0.82, 0.86, 1 )
+	playButton:addEventListener("tap", onPlayTap)
+
+	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 220, native.systemFont, 44 )
+	highScoresButton:setFillColor( 0.75, 0.78, 1 )
+    highScoresButton:addEventListener( "tap", onHighscoresTap )
 	
-	-- create a widget button (which will loads level1.lua on release)
-	playBtn = widget.newButton{
-		label="Play Now",
-		labelColor = { default={255}, over={128} },
-		default="button.png",
-		over="button-over.png",
-		width=154, height=40,
-		onRelease = onPlayBtnRelease	-- event listener function
-	}
-	playBtn.x = display.contentCenterX
-	playBtn.y = display.contentHeight - 125
-	
+
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
 	sceneGroup:insert( titleLogo )
-	sceneGroup:insert( playBtn )
+	sceneGroup:insert( playButton )
+	sceneGroup:insert( highScoresButton )
+	sceneGroup:insert( chramEating )
 end
 
 function scene:show( event )
