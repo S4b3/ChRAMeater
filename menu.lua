@@ -76,7 +76,7 @@ function scene:create( event )
 	chramEating.x = display.contentCenterX + 30
 	chramEating.y = display.contentHeight - 900
 	chramEating:scale(2,2)
-	--chramEating:rotate()
+	chramEating:rotate(-90)
 	chramEating:play()
 
 	-- create/position logo/title image on upper-half of the screen
