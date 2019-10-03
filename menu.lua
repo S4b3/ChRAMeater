@@ -7,20 +7,28 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 
+audio.reserveChannels( 1 )
+audio.setVolume( 0.5, { channel=1 } )
+
 -- include Corona's "widget" library
 local widget = require "widget"
 
 local playBtn
 local highScoresBtn
 
+local themeSong
+local selectionSound
+
 local function onHighscoresTap()
 	composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
+	audio.play(selectionSound)
 	return true
 end
 
 local function onPlayTap()
 	-- go to level1.lua scene
 	composer.gotoScene( "game", { time=800, effect="crossFade" } )
+	audio.play(selectionSound)
 	return true	-- indicates successful touch
 end
 
@@ -32,13 +40,17 @@ function scene:create( event )
 	-- INSERT code here to initialize the scene
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
 
+
+	themeSong = audio.loadStream("./sounds/menu.mp3")
+	selectionSound = audio.loadSound("./sounds/select.mp3")
+
 	-- display a background image
 	local background = display.newImageRect( "background.jpg", display.actualContentWidth, display.actualContentHeight )
 	background.anchorX = 0
 	background.anchorY = 0
 	background.x = 0 + display.screenOriginX 
 	background.y = 0 + display.screenOriginY
-
+	
 	local sheetChramOptions =
 	{
 		width = 512,
@@ -61,10 +73,12 @@ function scene:create( event )
 	}
 
 	local chramEating = display.newSprite( sheetChram, sequences_chram )
-	chramEating.x = display.contentCenterX + 20
-	chramEating.y = display.contentHeight - 700
+	chramEating.x = display.contentCenterX + 30
+	chramEating.y = display.contentHeight - 900
+	chramEating:scale(2,2)
+	--chramEating:rotate()
 	chramEating:play()
-	
+
 	-- create/position logo/title image on upper-half of the screen
 	local titleLogo = display.newImageRect( "Game Title.png", 500, 240 )
 	titleLogo.x = display.contentCenterX
@@ -98,6 +112,7 @@ function scene:show( event )
 		-- 
 		-- INSERT code here to make the scene come alive
 		-- e.g. start timers, begin animation, play audio, etc.
+		audio.play( themeSong, { channel=1, loops=-1 } )
 	end	
 end
 
@@ -112,6 +127,7 @@ function scene:hide( event )
 		-- e.g. stop timers, stop animation, unload sounds, etc.)
 	elseif phase == "did" then
 		-- Called when the scene is now off screen
+		audio.stop( 1 )
 	end	
 end
 
@@ -122,6 +138,8 @@ function scene:destroy( event )
 	-- 
 	-- INSERT code here to cleanup the scene
 	-- e.g. remove display objects, remove touch listeners, save state, etc.
+	audio.dispose( themeSong )
+	audio.dispose( selectionSound )
 	
 	if playBtn then
 		playBtn:removeSelf()	-- widgets must be manually removed

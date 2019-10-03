@@ -79,8 +79,8 @@ local function createObjects()
         objIndicator = 1
         objName="cacheCleaner"
     end
-    
-
+    if(mainGroup==nil or objectSheet==nil) then
+        return end
 	local newObject = display.newImageRect( mainGroup, objectSheet, objIndicator, 102, 102 )
     table.insert( objTable, newObject )
     physics.addBody( newObject, "dynamic", { radius=40, bounce=0.8 } )
@@ -187,7 +187,9 @@ local function restorePlayerCharm()
 end
 
 local function endGame()
-    composer.gotoScene( "menu", { time=800, effect="crossFade" } )
+    --composer.gotoScene( "menu", { time=800, effect="crossFade" } )
+    composer.setVariable( "finalScore", score )
+    composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
 end
 
 local function updateLives()
@@ -207,6 +209,8 @@ local function updateLives()
 end
 
 local function resizeChram()
+    if(playerChram.contentWidth == nil or playerChram.contentHeight == nil) then
+        return end
     transition.to(playerChram, {xScale = playerChram.contentWidth/117, yScale = playerChram.contentHeight/117})
     timer.performWithDelay(1)
     physics.removeBody(playerChram)
@@ -294,7 +298,7 @@ function scene:create( event )
 	uiGroup = display.newGroup()
 	sceneGroup:insert(uiGroup)
 
-	local background = display.newImageRect( backGroup, "background.jpg", 828, 1729)
+	local background = display.newImageRect( backGroup, "background.jpg", display.actualContentWidth, display.actualContentHeight)
 	background.x = display.contentCenterX
 	background.y = display.contentCenterY
 
