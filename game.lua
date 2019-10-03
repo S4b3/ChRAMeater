@@ -41,7 +41,7 @@ local sheetOptions = {
 
 }
 
-local objectSheet = graphics.newImageSheet("GameObjects.png", sheetOptions)
+local objectSheet = graphics.newImageSheet("./images/GameObjects.png", sheetOptions)
 
 local lives = 3
 local score = 0
@@ -59,8 +59,8 @@ local mainGroup
 local uiGroup
 
 local function updateText()
-    livesText.text = "Lives: " .. lives
-    scoreText.text = "Score: " .. score
+    livesText.text = "Lives: " .. lives 
+    scoreText.text = "Score: " .. score .. "GB"
 end
 
 local function createObjects()
@@ -232,14 +232,14 @@ local function onCollision( event )
                 timer.performWithDelay( 1, resizeChram)
                 -- playerChram:scale(1.1, 1.1)
                 score = score+2 
-                scoreText.text = "Score: " .. score
+                scoreText.text = "Score: " .. score .. "GB"
             elseif(obj2.myName=="ram8GB") then
                 display.remove(obj2)
                 removeFromTable(obj2)
                 -- playerChram:scale(1.3, 1.3)
                 timer.performWithDelay( 1, resizeChram)
                 score = score+8
-                scoreText.text = "Score: " .. score
+                scoreText.text = "Score: " .. score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
                 removeFromTable(obj2)
                 updateLives()
@@ -252,13 +252,13 @@ local function onCollision( event )
                 timer.performWithDelay( 1, resizeChram)
                 -- playerChram:scale(1.1, 1.1)
                 score = score+2
-                scoreText.text = "Score: " .. score
+                scoreText.text = "Score: " .. score .. "GB"
             elseif(obj1.myName=="ram8GB") then
                 display.remove(obj1)
                 removeFromTable(obj1)
                 timer.performWithDelay( 1, resizeChram)
                 score = score+8
-                scoreText.text = "Score: " .. score
+                scoreText.text = "Score: " .. score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
                 removeFromTable(obj1)
                 updateLives()
@@ -298,7 +298,7 @@ function scene:create( event )
 	uiGroup = display.newGroup()
 	sceneGroup:insert(uiGroup)
 
-	local background = display.newImageRect( backGroup, "background.jpg", display.actualContentWidth, display.actualContentHeight)
+	local background = display.newImageRect( backGroup, "./images/background.jpg", display.actualContentWidth, display.actualContentHeight)
 	background.x = display.contentCenterX
 	background.y = display.contentCenterY
 

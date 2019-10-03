@@ -45,7 +45,7 @@ function scene:create( event )
 	selectionSound = audio.loadSound("./sounds/select.mp3")
 
 	-- display a background image
-	local background = display.newImageRect( "background.jpg", display.actualContentWidth, display.actualContentHeight )
+	local background = display.newImageRect( "./images/background.jpg", display.actualContentWidth, display.actualContentHeight )
 	background.anchorX = 0
 	background.anchorY = 0
 	background.x = 0 + display.screenOriginX 
@@ -58,7 +58,7 @@ function scene:create( event )
 		numFrames = 25
 	}
 
-	local sheetChram = graphics.newImageSheet( "ChramSprite.png", sheetChramOptions )
+	local sheetChram = graphics.newImageSheet( "./sprites/ChramSprite.png", sheetChramOptions )
 
 	local sequences_chram = {
 		-- consecutive frames sequence
@@ -76,11 +76,11 @@ function scene:create( event )
 	chramEating.x = display.contentCenterX + 30
 	chramEating.y = display.contentHeight - 900
 	chramEating:scale(2,2)
-	chramEating:rotate(-90)
+	--chramEating:rotate(-90)
 	chramEating:play()
 
 	-- create/position logo/title image on upper-half of the screen
-	local titleLogo = display.newImageRect( "Game Title.png", 500, 240 )
+	local titleLogo = display.newImageRect( "./images/Game Title.png", 500, 240 )
 	titleLogo.x = display.contentCenterX
 	titleLogo.y = 200
 
