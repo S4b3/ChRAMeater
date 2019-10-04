@@ -1,5 +1,6 @@
 
 local composer = require( "composer" )
+local costanti = require "costanti.costantiOggetti"
 
 local scene = composer.newScene()
 
@@ -9,39 +10,7 @@ physics.setGravity( 0, 0 )
 
 math.randomseed( os.time() )
 
-local sheetOptions = {
-
-    frames =
-    {
-        { -- cache cleaner
-            x = 0, 
-            y = 0,
-            width = 512,
-            height = 512
-        },
-        {-- chrome
-            x = 0,
-            y = 512,
-            width = 512,
-            height = 512
-        },
-        {--ram big!
-            x = 0,
-            y = 1024,
-            width = 512,
-            height = 512
-        },
-        {--ram comune
-            x = 0,
-            y = 1536,
-            width = 512,
-            height = 512
-        },
-    },
-
-}
-
-local objectSheet = graphics.newImageSheet("./images/GameObjects.png", sheetOptions)
+local objectSheet = costanti.objectSheet()
 
 local lives = 3
 local score = 0
@@ -58,32 +27,42 @@ local backGroup
 local mainGroup
 local uiGroup
 
-local function updateText()
-    livesText.text = "Lives: " .. lives 
-    scoreText.text = "Score: " .. score .. "GB"
-end
+local bigRamShape = {   (512/2)*3/10,(-288/2)*3/10, (512/2)*3/10,(288/2)*3/10, (-512/2)*3/10,(288/2)*3/10, (-512/2)*3/10,(-288/2)*3/10    }
+local smallRamShape = { (512/2)*3/10,(-192/2)*3/10, (512/2)*3/10,(192/2)*3/10, (-512/2)*3/10,(192/2)*3/10, (-512/2)*3/10,(-192/2)*3/10   }
+local newShape
 
+--per liv 1
 local function createObjects()
     
-    local selector = math.random ( 20 )
+    local selector = math.random ( 100 )
     local objIndicator
     local objName
 
-    if(selector <= 15) then
+    if(selector <= 50) then
         objIndicator = 4
         objName="ram2GB"
-    elseif (selector >= 16 and selector <= 17) then
+    elseif (selector > 50 and selector <= 60) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector >= 18) then
+    elseif (selector >= 60) then
         objIndicator = 1
         objName="cacheCleaner"
     end
     if(mainGroup==nil or objectSheet==nil) then
         return end
-	local newObject = display.newImageRect( mainGroup, objectSheet, objIndicator, 102, 102 )
+    local newObject = display.newImage( mainGroup, objectSheet, objIndicator)
+    newObject:scale(0.3, 0.3)
     table.insert( objTable, newObject )
-    physics.addBody( newObject, "dynamic", { radius=40, bounce=0.8 } )
+
+    --{ radius=(newObject.contentWidth/2, newObject.contentHeight/2), bounce=0.8 }
+    if(objName=="ram2GB") then
+        physics.addBody( newObject, "dynamic", { shape = smallRamShape } )
+    elseif(objName=="ram8GB") then
+        physics.addBody( newObject, "dynamic", { shape = bigRamShape } )
+    elseif(objName=="cacheCleaner") then
+        physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
+    end
+    
     newObject.myName = objName
 
     local whereFrom = math.random( 3 )
@@ -92,17 +71,20 @@ local function createObjects()
         -- From the left
         newObject.x = -60
         newObject.y = math.random( 500 )
-        newObject:setLinearVelocity( math.random( 40,120 ), math.random( 20,60 ) )
+        --newObject:setLinearVelocity( math.random( 40,120 ), math.random( 20,60 ) )
+        newObject:setLinearVelocity( math.random( 80,160 ), math.random( 40,70 ) )
     elseif ( whereFrom == 2 ) then
         -- From the top
         newObject.x = math.random( display.contentWidth )
         newObject.y = -60
-        newObject:setLinearVelocity( math.random( -40,40 ), math.random( 40,120 ) )
+        --newObject:setLinearVelocity( math.random( -40,40 ), math.random( 40,120 ) )
+        newObject:setLinearVelocity( math.random( -70,70 ), math.random( 80,160 ) )
     elseif ( whereFrom == 3 ) then
         -- From the right
         newObject.x = display.contentWidth + 60
         newObject.y = math.random( 500 )
-        newObject:setLinearVelocity( math.random( -120,-40 ), math.random( 20,60 ) )
+        --newObject:setLinearVelocity( math.random( -120,-40 ), math.random( 20,60 ) )
+        newObject:setLinearVelocity( math.random( -160,-80 ), math.random( 40,70 ) )
     end
 
     newObject:applyTorque( math.random( -6,6 ) )
@@ -321,7 +303,7 @@ function scene:show( event )
         -- Code here runs when the scene is entirely on screen
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
-        gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
+        gameLoopTimer = timer.performWithDelay( 700, gameLoop, 0 )
     end
 end
 
