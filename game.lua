@@ -147,21 +147,6 @@ local function gameLoop()
  
 end
 
-local function restoreChram()
- 
-    playerChram.isBodyActive = false
-    playerChram.x = display.contentCenterX
-    playerChram.y = display.contentHeight - 100
- 
-    -- Fade in the playerChram
-    transition.to( playerChram, { alpha=1, time=4000,
-        onComplete = function()
-            playerChram.isBodyActive = true
-            died = false
-        end
-    } )
-end
-
 local function removeFromTable(obj)
     for i = #objTable, 1, -1 do
         if ( objTable[i] == obj ) then
@@ -172,15 +157,16 @@ local function removeFromTable(obj)
 end
 
 local function restorePlayerCharm()
- 
-    playerChram.isBodyActive = false
     playerChram.x = display.contentCenterX
     playerChram.y = display.contentHeight - 100
  
     -- Fade in the playerChram
+    physics.removeBody(playerChram)
     transition.to( playerChram, { alpha=1, time=4000,
         onComplete = function()
             playerChram.isBodyActive = true
+            physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
+            
             died = false
         end
     } )
@@ -203,7 +189,10 @@ local function updateLives()
 			timer.performWithDelay( 2000, endGame )
         else
             playerChram.alpha = 0
-            timer.performWithDelay( 1000, restorePlayerCharm )
+            playerChram.isBodyActive = false
+            restorePlayerCharm()
+            playerChram.isBodyActive = true
+
         end
     end
 end
@@ -211,7 +200,8 @@ end
 local function resizeChram()
     if(playerChram.contentWidth == nil or playerChram.contentHeight == nil) then
         return end
-    transition.to(playerChram, {xScale = playerChram.contentWidth/117, yScale = playerChram.contentHeight/117})
+    playerChram : scale(1.009, 1.009)
+    --transition.to(playerChram, {xScale = playerChram.contentWidth/117, yScale = playerChram.contentHeight/117})
     timer.performWithDelay(1)
     physics.removeBody(playerChram)
     physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
@@ -242,7 +232,7 @@ local function onCollision( event )
                 scoreText.text = "Score: " .. score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
                 removeFromTable(obj2)
-                updateLives()
+                timer.performWithDelay(1, updateLives)
             end
         end
         if(obj2.myName == "Chram") then
@@ -261,7 +251,7 @@ local function onCollision( event )
                 scoreText.text = "Score: " .. score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
                 removeFromTable(obj1)
-                updateLives()
+                timer.performWithDelay(1, updateLives)
             end
         end
 
