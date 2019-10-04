@@ -227,7 +227,7 @@ local function onCollision( event )
                 display.remove(obj2)
                 removeFromTable(obj2)
                 -- playerChram:scale(1.3, 1.3)
-                timer.performWithDelay( 1, resizeChram)
+                timer.performWithDelay( 1, resizeChram,4)
                 score = score+8
                 scoreText.text = "Score: " .. score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
