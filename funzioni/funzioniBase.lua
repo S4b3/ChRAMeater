@@ -92,6 +92,27 @@ function funzioniBase.removeFromTable(obj,objTable)
     end
 end
 
+
+function funzioniBase.gameLoop(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
+    funzioniBase.createObjectsLiv1(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
+ 
+    -- Remove rams which have drifted off screen
+    for i = #objTable, 1, -1 do
+        local thisRam = objTable[i]
+ 
+        if ( thisRam.x < -100 or
+             thisRam.x > display.contentWidth + 100 or
+             thisRam.y < -100 or
+             thisRam.y > display.contentHeight + 100 )
+        then
+            display.remove( thisRam )
+            table.remove( objTable, i )
+        end
+ 
+    end
+ 
+end
+
 function funzioniBase.endGame(score)
     --composer.gotoScene( "menu", { time=800, effect="crossFade" } )
     composer.setVariable( "finalScore", score )
