@@ -30,30 +30,12 @@ local bigRamShape = {   (512/2)*2/10,(-288/2)*2/10, (512/2)*2/10,(288/2)*2/10, (
 local smallRamShape = { (512/2)*2/10,(-192/2)*2/10, (512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(-192/2)*2/10   }
 local newShape
 
-
-
 local function gameLoop()
     funzioniBase.gameLoop(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
 end
 
-local function restorePlayerCharm()
-    playerChram.x = display.contentCenterX
-    playerChram.y = display.contentHeight - 100
- 
-    -- Fade in the playerChram
-    physics.removeBody(playerChram)
-    transition.to( playerChram, { alpha=1, time=4000,
-        onComplete = function()
-            playerChram.isBodyActive = true
-            physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
-            
-            died = false
-        end
-    } )
-end
-
-
 local function updateLives()
+    died = false --porkaround
     if ( died == false ) then
         died = true
         -- Update lives
@@ -65,9 +47,8 @@ local function updateLives()
         else
             playerChram.alpha = 0
             playerChram.isBodyActive = false
-            restorePlayerCharm()
+            funzioniBase.restorePlayerCharm(playerChram,died)
             playerChram.isBodyActive = true
-
         end
     end
 end

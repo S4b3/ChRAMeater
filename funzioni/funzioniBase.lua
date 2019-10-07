@@ -92,6 +92,22 @@ function funzioniBase.removeFromTable(obj,objTable)
     end
 end
 
+function funzioniBase.restorePlayerCharm(playerChram,died)
+    playerChram.x = display.contentCenterX
+    playerChram.y = display.contentHeight - 100
+ 
+    -- Fade in the playerChram
+    physics.removeBody(playerChram)
+    transition.to( playerChram, { alpha=1, time=4000,
+        onComplete = function()
+            playerChram.isBodyActive = true
+            physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
+            
+            died = false
+        end
+    } )
+end
+
 
 function funzioniBase.gameLoop(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
     funzioniBase.createObjectsLiv1(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
