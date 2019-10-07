@@ -92,7 +92,7 @@ function funzioniBase.removeFromTable(obj,objTable)
     end
 end
 
-function funzioniBase.restorePlayerCharm(playerChram,died)
+function funzioniBase.restorePlayerCharm(playerChram)
     playerChram.x = display.contentCenterX
     playerChram.y = display.contentHeight - 100
  
@@ -102,12 +102,20 @@ function funzioniBase.restorePlayerCharm(playerChram,died)
         onComplete = function()
             playerChram.isBodyActive = true
             physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
-            
-            died = false
+            -- died = false non serve se lo sposto
         end
     } )
 end
 
+function funzioniBase.resizeChram(playerChram)
+    if(playerChram.contentWidth == nil or playerChram.contentHeight == nil) then
+        return end
+    playerChram : scale(1.009, 1.009)
+    --transition.to(playerChram, {xScale = playerChram.contentWidth/117, yScale = playerChram.contentHeight/117})
+    timer.performWithDelay(1)
+    physics.removeBody(playerChram)
+    physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
+end
 
 function funzioniBase.gameLoop(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
     funzioniBase.createObjectsLiv1(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)

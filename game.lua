@@ -30,12 +30,12 @@ local bigRamShape = {   (512/2)*2/10,(-288/2)*2/10, (512/2)*2/10,(288/2)*2/10, (
 local smallRamShape = { (512/2)*2/10,(-192/2)*2/10, (512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(-192/2)*2/10   }
 local newShape
 
-local function gameLoop()
+local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
     funzioniBase.gameLoop(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
 end
 
 local function updateLives()
-    died = false --porkaround
+    died = false --porkaround mi serve forzare died = false
     if ( died == false ) then
         died = true
         -- Update lives
@@ -47,22 +47,15 @@ local function updateLives()
         else
             playerChram.alpha = 0
             playerChram.isBodyActive = false
-            funzioniBase.restorePlayerCharm(playerChram,died)
+            funzioniBase.restorePlayerCharm(playerChram)
             playerChram.isBodyActive = true
         end
     end
 end
 
-local function resizeChram()
-    if(playerChram.contentWidth == nil or playerChram.contentHeight == nil) then
-        return end
-    playerChram : scale(1.009, 1.009)
-    --transition.to(playerChram, {xScale = playerChram.contentWidth/117, yScale = playerChram.contentHeight/117})
-    timer.performWithDelay(1)
-    physics.removeBody(playerChram)
-    physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
+local function resizeChram() --mi serve poter passare la funzione senza parametri
+    funzioniBase.resizeChram(playerChram)
 end
-
 
 local function onCollision( event )
  
@@ -110,9 +103,6 @@ local function onCollision( event )
                 timer.performWithDelay(1, updateLives)
             end
         end
-
-
-
     end
 end
 
@@ -120,9 +110,6 @@ end
 -- Code outside of the scene event functions below will only be executed ONCE unless
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
-
-
-
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
@@ -158,7 +145,6 @@ function scene:create( event )
 	scoreText = display.newText( uiGroup, "Score: " .. score .. "GB", 400, 80, native.systemFont, 36 )
 
 	playerChram:addEventListener( "touch", funzioniBase.dragplayerChram )
-
 
 end
 
@@ -200,7 +186,6 @@ function scene:hide( event )
     end
 end
 
-
 -- destroy()
 function scene:destroy( event )
 
@@ -208,7 +193,6 @@ function scene:destroy( event )
 	-- Code here runs prior to the removal of scene's view
 
 end
-
 
 -- -----------------------------------------------------------------------------------
 -- Scene event function listeners
