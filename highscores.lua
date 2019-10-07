@@ -65,7 +65,7 @@ function scene:create( event )
 	table.sort( scoresTable, compare )
 	saveScores()
 
-	local background = display.newImageRect( sceneGroup, "./images/background.jpg", display.actualContentWidth, display.actualContentHeight)
+	local background = display.newImageRect( sceneGroup, "images/background.jpg", display.actualContentWidth, display.actualContentHeight)
     background.x = display.contentCenterX
     background.y = display.contentCenterY
      

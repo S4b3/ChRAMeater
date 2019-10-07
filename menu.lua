@@ -41,11 +41,11 @@ function scene:create( event )
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
 
 
-	themeSong = audio.loadStream("./sounds/menu.mp3")
-	selectionSound = audio.loadSound("./sounds/select.mp3")
+	themeSong = audio.loadStream("sounds/menu.mp3")
+	selectionSound = audio.loadSound("sounds/select.mp3")
 
 	-- display a background image
-	local background = display.newImageRect( "./images/background.jpg", display.actualContentWidth, display.actualContentHeight )
+	local background = display.newImageRect( "images/background.jpg", display.actualContentWidth, display.actualContentHeight )
 	background.anchorX = 0
 	background.anchorY = 0
 	background.x = 0 + display.screenOriginX 
@@ -58,7 +58,7 @@ function scene:create( event )
 		numFrames = 25
 	}
 
-	local sheetChram = graphics.newImageSheet( "./sprites/ChramSprite.png", sheetChramOptions )
+	local sheetChram = graphics.newImageSheet( "sprites/ChramSprite.png", sheetChramOptions )
 
 	local sequences_chram = {
 		-- consecutive frames sequence
@@ -80,7 +80,7 @@ function scene:create( event )
 	chramEating:play()
 
 	-- create/position logo/title image on upper-half of the screen
-	local titleLogo = display.newImageRect( "./images/Game Title.png", 500, 240 )
+	local titleLogo = display.newImageRect( "images/Game Title.png", 500, 240 )
 	titleLogo.x = display.contentCenterX
 	titleLogo.y = 200
 

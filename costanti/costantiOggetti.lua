@@ -37,7 +37,7 @@ local sheetOptions = {
 }
 
 function costanti.objectSheet()
-    return graphics.newImageSheet("./images/GameObjects2.png", sheetOptions)
+    return graphics.newImageSheet("images/GameObjects2.png", sheetOptions)
 end
 
 return costanti
