@@ -68,11 +68,6 @@ local function restorePlayerCharm()
     } )
 end
 
-local function endGame()
-    --composer.gotoScene( "menu", { time=800, effect="crossFade" } )
-    composer.setVariable( "finalScore", score )
-    composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
-end
 
 local function updateLives()
     if ( died == false ) then
@@ -82,7 +77,7 @@ local function updateLives()
         livesText.text = "Lives: " .. lives
         if ( lives == 0 ) then
 			display.remove( playerChram )
-			timer.performWithDelay( 2000, endGame )
+			timer.performWithDelay( 2000, funzioniBase.endGame(score) )
         else
             playerChram.alpha = 0
             playerChram.isBodyActive = false

@@ -1,3 +1,4 @@
+local composer = require( "composer" )
 local funzioniBase = {}
 
 local physics = require( "physics" )
@@ -89,6 +90,12 @@ function funzioniBase.removeFromTable(obj,objTable)
             break
         end
     end
+end
+
+function funzioniBase.endGame(score)
+    --composer.gotoScene( "menu", { time=800, effect="crossFade" } )
+    composer.setVariable( "finalScore", score )
+    composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
 end
 
 return funzioniBase
