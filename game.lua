@@ -1,7 +1,7 @@
 
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
-
+local funzioniBase = require "funzioni.funzioniBase"
 local scene = composer.newScene()
 
 local physics = require( "physics" )
@@ -110,15 +110,6 @@ local function gameLoop()
  
 end
 
-local function removeFromTable(obj)
-    for i = #objTable, 1, -1 do
-        if ( objTable[i] == obj ) then
-            table.remove( objTable, i )
-            break
-        end
-    end
-end
-
 local function restorePlayerCharm()
     playerChram.x = display.contentCenterX
     playerChram.y = display.contentHeight - 100
@@ -181,39 +172,39 @@ local function onCollision( event )
         if(obj1.myName == "Chram") then
             if(obj2.myName == "ram2GB" ) then
                 display.remove(obj2)
-                removeFromTable(obj2)
+                funzioniBase.removeFromTable(obj2,objTable)
                 timer.performWithDelay( 1, resizeChram)
                 -- playerChram:scale(1.1, 1.1)
                 score = score+2 
                 scoreText.text = "Score: " .. score .. "GB"
             elseif(obj2.myName=="ram8GB") then
                 display.remove(obj2)
-                removeFromTable(obj2)
+                funzioniBase.removeFromTable(obj2,objTable)
                 -- playerChram:scale(1.3, 1.3)
                 timer.performWithDelay( 1, resizeChram,4)
                 score = score+8
                 scoreText.text = "Score: " .. score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
-                removeFromTable(obj2)
+                funzioniBase.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, updateLives)
             end
         end
         if(obj2.myName == "Chram") then
             if(obj1.myName == "ram2GB" ) then
                 display.remove(obj1)
-                removeFromTable(obj1)
+                funzioniBase.removeFromTable(obj1,objTable)
                 timer.performWithDelay( 1, resizeChram)
                 -- playerChram:scale(1.1, 1.1)
                 score = score+2
                 scoreText.text = "Score: " .. score .. "GB"
             elseif(obj1.myName=="ram8GB") then
                 display.remove(obj1)
-                removeFromTable(obj1)
+                funzioniBase.removeFromTable(obj1,objTable)
                 timer.performWithDelay( 1, resizeChram)
                 score = score+8
                 scoreText.text = "Score: " .. score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
-                removeFromTable(obj1)
+                funzioniBase.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
             end
         end
@@ -264,7 +255,7 @@ function scene:create( event )
 	livesText = display.newText( uiGroup, "Lives: " .. lives, 200, 80, native.systemFont, 36 )
 	scoreText = display.newText( uiGroup, "Score: " .. score .. "GB", 400, 80, native.systemFont, 36 )
 
-	playerChram:addEventListener( "touch", costanti.dragplayerChram )
+	playerChram:addEventListener( "touch", funzioniBase.dragplayerChram )
 
 
 end
