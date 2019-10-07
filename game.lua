@@ -90,25 +90,6 @@ local function createObjects()
     newObject:applyTorque( math.random( -6,6 ) )
 end
 
-local function dragplayerChram( event )
-    local playerChram = event.target
-    local phase = event.phase
-    if ( "began" == phase ) then
-        -- Set touch focus on playerChram
-        display.currentStage:setFocus( playerChram )
-        playerChram.touchOffsetX = event.x - playerChram.x
-        playerChram.touchOffsetY = event.y - playerChram.y
-    elseif ( "moved" == phase ) then
-        -- Move playerChram to the new touch position
-        playerChram.x = event.x - playerChram.touchOffsetX
-        playerChram.y = event.y - playerChram.touchOffsetY
-    elseif ( "ended" == phase or "cancelled" == phase ) then
-        -- Release touch focus on playerChram
-        display.currentStage:setFocus( nil )
-    end
-    return true 
-end
-
 local function gameLoop()
     createObjects()
  
@@ -283,7 +264,7 @@ function scene:create( event )
 	livesText = display.newText( uiGroup, "Lives: " .. lives, 200, 80, native.systemFont, 36 )
 	scoreText = display.newText( uiGroup, "Score: " .. score .. "GB", 400, 80, native.systemFont, 36 )
 
-	playerChram:addEventListener( "touch", dragplayerChram )
+	playerChram:addEventListener( "touch", costanti.dragplayerChram )
 
 
 end
