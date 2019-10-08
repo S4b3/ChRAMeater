@@ -8,37 +8,47 @@ physics.start()
 physics.setGravity( 0, 0 )
 
 math.randomseed( os.time() )
-
 local objectSheet = costanti.objectSheet()
+local playerState = {lives, score, died}
 
-local lives = costanti.getLives()
-local score = costanti.getScore()
-local died = costanti.isDead()
+playerState.lives = 3
+playerState.score = 0
+playerState.died = false
 
+function playerState.setScore(value)
+    playerState.score = value
+end
+
+function playerState.decrementLives()
+    playerState.lives = playerState.lives-1
+end
+
+function playerState.setDied(bool)
+    playerState.died = bool
+end
+
+local livesText
+local scoreText
 local objTable = {}
-
-local cache
 local playerChram
-
 local backGroup
 local mainGroup
 local uiGroup
-
-
 
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
     funzioniBase.gameLoop(mainGroup,objectSheet,objTable)
 end
 
-
 local function resizeChram() --mi serve poter passare la funzione senza parametri
     funzioniBase.resizeChram(playerChram)
 end
 
+local function updateLives()
+    funzioniBase.updateLives(playerChram, playerState,livesText)
+end
+
 local function onCollision( event )
- 
     if ( event.phase == "began" ) then
- 
         local obj1 = event.object1
         local obj2 = event.object2
 
@@ -47,16 +57,14 @@ local function onCollision( event )
                 display.remove(obj2)
                 funzioniBase.removeFromTable(obj2,objTable)
                 timer.performWithDelay( 1, resizeChram)
-                -- playerChram:scale(1.1, 1.1)
-                score = score+2 
-                scoreText.text = "Score: " .. score .. "GB"
+                playerState.setScore(playerState.score + 2)
+                scoreText.text = "Score: " .. playerState.score .. "GB"
             elseif(obj2.myName=="ram8GB") then
                 display.remove(obj2)
                 funzioniBase.removeFromTable(obj2,objTable)
-                -- playerChram:scale(1.3, 1.3)
                 timer.performWithDelay( 1, resizeChram,4)
-                score = score+8
-                scoreText.text = "Score: " .. score .. "GB"
+                playerState.setScore(playerState.score + 8)
+                scoreText.text = "Score: " .. playerState.score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
                 funzioniBase.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, updateLives)
@@ -67,15 +75,14 @@ local function onCollision( event )
                 display.remove(obj1)
                 funzioniBase.removeFromTable(obj1,objTable)
                 timer.performWithDelay( 1, resizeChram)
-                -- playerChram:scale(1.1, 1.1)
-                score = score+2
-                scoreText.text = "Score: " .. score .. "GB"
+                playerState.setScore(playerState.score + 2)
+                scoreText.text = "Score: " .. playerState.score .. "GB"
             elseif(obj1.myName=="ram8GB") then
                 display.remove(obj1)
                 funzioniBase.removeFromTable(obj1,objTable)
                 timer.performWithDelay( 1, resizeChram)
-                score = score+8
-                scoreText.text = "Score: " .. score .. "GB"
+                playerState.setScore(playerState.score + 8)
+                scoreText.text = "Score: " .. playerState.score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
                 funzioniBase.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
@@ -119,10 +126,10 @@ function scene:create( event )
 	physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
 	playerChram.myName = "Chram"
 
-	livesText = display.newText( uiGroup, "Lives: " .. lives, 200, 80, native.systemFont, 36 )
-	scoreText = display.newText( uiGroup, "Score: " .. score .. "GB", 400, 80, native.systemFont, 36 )
+	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
+	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
 
-	playerChram:addEventListener( "touch", funzioniBase.dragplayerChram )
+	playerChram:addEventListener( "touch", funzioniBase.dragPlayerChram )
 
 end
 
@@ -134,8 +141,6 @@ function scene:show( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
-		
- 
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
         physics.start()
@@ -144,18 +149,14 @@ function scene:show( event )
     end
 end
 
-
 -- hide()
 function scene:hide( event )
-
 	local sceneGroup = self.view
 	local phase = event.phase
-
 	if ( phase == "will" ) then
         -- Code here runs when the scene is on screen (but is about to go off screen)
 		timer.cancel( gameLoopTimer )
 		gameLoopTimer=nil
- 
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
@@ -166,12 +167,9 @@ end
 
 -- destroy()
 function scene:destroy( event )
-
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
-
 end
-
 -- -----------------------------------------------------------------------------------
 -- Scene event function listeners
 -- -----------------------------------------------------------------------------------
@@ -180,5 +178,4 @@ scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
 -- -----------------------------------------------------------------------------------
-
 return scene

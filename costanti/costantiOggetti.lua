@@ -12,8 +12,8 @@ local bigRamShape = {   (512/2)*2/10,(-288/2)*2/10, (512/2)*2/10,(288/2)*2/10, (
 local smallRamShape = { (512/2)*2/10,(-192/2)*2/10, (512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(-192/2)*2/10   }
 local newShape
 
-local livesText
-local scoreText
+local livesText = "Lives : ".. lives;
+local scoreText = "Score : " .. score;
 
 function costanti.getLives()
     return lives
@@ -52,7 +52,7 @@ function costanti.getLivesText()
 end
 
 function costanti.setLivesText(text)
-    livesText = test
+    livesText = text
 end
 
 function costanti.getScoreText()
@@ -60,7 +60,7 @@ function costanti.getScoreText()
 end
 
 function costanti.setSoreText(text)
-    scoreText = test
+    scoreText = text
 end
 
 local sheetOptions = {
