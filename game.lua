@@ -11,47 +11,25 @@ math.randomseed( os.time() )
 
 local objectSheet = costanti.objectSheet()
 
-local lives = 3
-local score = 0
-local died = false
+local lives = costanti.getLives()
+local score = costanti.getScore()
+local died = costanti.isDead()
 
 local objTable = {}
 
 local cache
 local playerChram
-local livesText
-local scoreText
 
 local backGroup
 local mainGroup
 local uiGroup
 
-local bigRamShape = {   (512/2)*2/10,(-288/2)*2/10, (512/2)*2/10,(288/2)*2/10, (-512/2)*2/10,(288/2)*2/10, (-512/2)*2/10,(-288/2)*2/10    }
-local smallRamShape = { (512/2)*2/10,(-192/2)*2/10, (512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(-192/2)*2/10   }
-local newShape
+
 
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    funzioniBase.gameLoop(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
+    funzioniBase.gameLoop(mainGroup,objectSheet,objTable)
 end
 
-local function updateLives()
-    died = false --porkaround mi serve forzare died = false
-    if ( died == false ) then
-        died = true
-        -- Update lives
-        lives = lives - 1
-        livesText.text = "Lives: " .. lives
-        if ( lives == 0 ) then
-			display.remove( playerChram )
-			timer.performWithDelay( 2000, funzioniBase.endGame(score) )
-        else
-            playerChram.alpha = 0
-            playerChram.isBodyActive = false
-            funzioniBase.restorePlayerCharm(playerChram)
-            playerChram.isBodyActive = true
-        end
-    end
-end
 
 local function resizeChram() --mi serve poter passare la funzione senza parametri
     funzioniBase.resizeChram(playerChram)

@@ -1,9 +1,44 @@
 local composer = require( "composer" )
+local costantiOggetti = require("costanti.costantiOggetti")
 local funzioniBase = {}
+
+local bigRamShape = costantiOggetti.getBigRamShape();
+local smallRamShape = costantiOggetti.getSmallRamShape();
+
+local died = costantiOggetti.isDead();
+local lives = costantiOggetti.getLives();
 
 local physics = require( "physics" )
 physics.start()
 physics.setGravity( 0, 0 )
+
+
+
+
+
+
+
+
+local function updateLives()
+    if ( died == false ) then
+        died = true
+        -- Update lives
+        costanti.setLives(lives - 1)
+        livesText.text = "Lives: " .. costanti.getLives()
+        if ( lives == 0 ) then
+			display.remove( playerChram )
+			timer.performWithDelay( 2000, funzioniBase.endGame(score) )
+        else
+            playerChram.alpha = 0
+            playerChram.isBodyActive = false
+            funzioniBase.restorePlayerCharm(playerChram)
+            playerChram.isBodyActive = true
+        end
+    end
+end
+
+
+
 
 function funzioniBase.dragplayerChram( event )
     local playerChram = event.target
@@ -25,7 +60,7 @@ function funzioniBase.dragplayerChram( event )
 end
 
 --per liv 1
-function funzioniBase.createObjectsLiv1(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
+function funzioniBase.createObjectsLiv1(mainGroup,objectSheet,objTable)
     
     local selector = math.random ( 100 )
     local objIndicator
@@ -102,7 +137,7 @@ function funzioniBase.restorePlayerCharm(playerChram)
         onComplete = function()
             playerChram.isBodyActive = true
             physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
-            -- died = false non serve se lo sposto
+            died = false --non serve se lo sposto
         end
     } )
 end
@@ -117,8 +152,8 @@ function funzioniBase.resizeChram(playerChram)
     physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
 end
 
-function funzioniBase.gameLoop(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
-    funzioniBase.createObjectsLiv1(mainGroup,objectSheet,objTable,smallRamShape,bigRamShape)
+function funzioniBase.gameLoop(mainGroup,objectSheet,objTable)
+    funzioniBase.createObjectsLiv1(mainGroup,objectSheet,objTable)
  
     -- Remove rams which have drifted off screen
     for i = #objTable, 1, -1 do
