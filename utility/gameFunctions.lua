@@ -1,6 +1,7 @@
 local composer = require( "composer" )
 local costantiOggetti = require("costanti.costantiOggetti")
-local funzioniBase = {}
+local objectsFunctions = require "utility.objectsFunctions"
+local gameFunctions = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
 local smallRamShape = costantiOggetti.getSmallRamShape();
@@ -12,28 +13,8 @@ local physics = require( "physics" )
 physics.start()
 physics.setGravity( 0, 0 )
 
-
-function funzioniBase.dragPlayerChram( event )
-    local playerChram = event.target
-    local phase = event.phase
-    if ( "began" == phase ) then
-        -- Set touch focus on playerChram
-        display.currentStage:setFocus( playerChram )
-        playerChram.touchOffsetX = event.x - playerChram.x
-        playerChram.touchOffsetY = event.y - playerChram.y
-    elseif ( "moved" == phase ) then
-        -- Move playerChram to the new touch position
-        playerChram.x = event.x - playerChram.touchOffsetX
-        playerChram.y = event.y - playerChram.touchOffsetY
-    elseif ( "ended" == phase or "cancelled" == phase ) then
-        -- Release touch focus on playerChram
-        display.currentStage:setFocus( nil )
-    end
-    return true 
-end
-
---per liv 1
-function funzioniBase.createObjects(mainGroup,objectSheet,objTable)
+-------------------------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------------------
+function gameFunctions.createObjects(mainGroup,objectSheet,objTable)
     
     local selector = math.random ( 100 )
     local objIndicator
@@ -90,17 +71,7 @@ function funzioniBase.createObjects(mainGroup,objectSheet,objTable)
     newObject:applyTorque( math.random( -6,6 ) )
 end
 
-
-function funzioniBase.removeFromTable(obj,objTable)
-    for i = #objTable, 1, -1 do
-        if ( objTable[i] == obj ) then
-            table.remove( objTable, i )
-            break
-        end
-    end
-end
-
-function funzioniBase.resizeChram(playerChram)
+function gameFunctions.resizeChram(playerChram)
     if(playerChram.contentWidth == nil or playerChram.contentHeight == nil) then
         return end
     playerChram : scale(1.009, 1.009)
@@ -110,8 +81,8 @@ function funzioniBase.resizeChram(playerChram)
     physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
 end
 
-function funzioniBase.gameLoop(mainGroup,objectSheet,objTable)
-    funzioniBase.createObjects(mainGroup,objectSheet,objTable)
+function gameFunctions.gameLoop(mainGroup,objectSheet,objTable)
+    gameFunctions.createObjects(mainGroup,objectSheet,objTable)
     -- Remove rams which have drifted off screen
     for i = #objTable, 1, -1 do
         local thisRam = objTable[i]
@@ -126,28 +97,14 @@ function funzioniBase.gameLoop(mainGroup,objectSheet,objTable)
     end
 end
 
-function funzioniBase.restorePlayerCharm(playerChram, playerState)
-    playerChram.x = display.contentCenterX
-    playerChram.y = display.contentHeight - 100
-    -- Fade in the playerChram
-    physics.removeBody(playerChram)
-    transition.to( playerChram, { alpha=1, time=4000,
-        onComplete = function()
-            playerChram.isBodyActive = true
-            physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
-            playerState.setDied(false) --non serve se lo sposto
-        end
-    } )
-end
-
-function funzioniBase.endGame(score)
+function gameFunctions.endGame(score)
     --composer.gotoScene( "menu", { time=800, effect="crossFade" } )
     composer.setVariable( "finalScore", score )
     composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
 end
 
 
-function funzioniBase.updateLives(playerChram, playerState,livesText)
+function gameFunctions.updateLives(playerChram, playerState,livesText)
     if ( playerState.died == false ) then
         playerState.setDied(true)
         -- Update lives
@@ -155,14 +112,14 @@ function funzioniBase.updateLives(playerChram, playerState,livesText)
         livesText.text = "Lives: " .. playerState.lives
         if ( playerState.lives == 0 ) then
 			display.remove( playerChram )
-			timer.performWithDelay( 2000, funzioniBase.endGame(playerState.score) )
+			timer.performWithDelay( 2000, gameFunctions.endGame(playerState.score) )
         else
             playerChram.alpha = 0
             playerChram.isBodyActive = false
-            funzioniBase.restorePlayerCharm(playerChram, playerState)
+            objectsFunctions.restorePlayerCharm(playerChram, playerState)
             playerChram.isBodyActive = true
         end
     end
 end
 
-return funzioniBase
+return gameFunctions

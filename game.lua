@@ -1,6 +1,8 @@
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
-local funzioniBase = require "funzioni.funzioniBase"
+local gameFunctions = require "utility.gameFunctions"
+local objectsFunctions = require "utility.objectsFunctions"
+
 local scene = composer.newScene()
 
 local physics = require( "physics" )
@@ -36,15 +38,15 @@ local mainGroup
 local uiGroup
 
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    funzioniBase.gameLoop(mainGroup,objectSheet,objTable)
+    gameFunctions.gameLoop(mainGroup,objectSheet,objTable)
 end
 
 local function resizeChram() --mi serve poter passare la funzione senza parametri
-    funzioniBase.resizeChram(playerChram)
+    gameFunctions.resizeChram(playerChram)
 end
 
 local function updateLives()
-    funzioniBase.updateLives(playerChram, playerState,livesText)
+    gameFunctions.updateLives(playerChram, playerState,livesText)
 end
 
 local function onCollision( event )
@@ -55,36 +57,36 @@ local function onCollision( event )
         if(obj1.myName == "Chram") then
             if(obj2.myName == "ram2GB" ) then
                 display.remove(obj2)
-                funzioniBase.removeFromTable(obj2,objTable)
+                objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay( 1, resizeChram)
                 playerState.setScore(playerState.score + 2)
                 scoreText.text = "Score: " .. playerState.score .. "GB"
             elseif(obj2.myName=="ram8GB") then
                 display.remove(obj2)
-                funzioniBase.removeFromTable(obj2,objTable)
+                objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay( 1, resizeChram,4)
                 playerState.setScore(playerState.score + 8)
                 scoreText.text = "Score: " .. playerState.score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
-                funzioniBase.removeFromTable(obj2,objTable)
+                objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, updateLives)
             end
         end
         if(obj2.myName == "Chram") then
             if(obj1.myName == "ram2GB" ) then
                 display.remove(obj1)
-                funzioniBase.removeFromTable(obj1,objTable)
+                objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay( 1, resizeChram)
                 playerState.setScore(playerState.score + 2)
                 scoreText.text = "Score: " .. playerState.score .. "GB"
-            elseif(obj1.myName=="ram8GB") then
+            elseif(obj1.myName=="ram8GB") then--
                 display.remove(obj1)
-                funzioniBase.removeFromTable(obj1,objTable)
+                objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay( 1, resizeChram)
                 playerState.setScore(playerState.score + 8)
                 scoreText.text = "Score: " .. playerState.score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
-                funzioniBase.removeFromTable(obj1,objTable)
+                objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
             end
         end
@@ -129,7 +131,7 @@ function scene:create( event )
 	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
 	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
 
-	playerChram:addEventListener( "touch", funzioniBase.dragPlayerChram )
+	playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
 
 end
 
