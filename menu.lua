@@ -3,12 +3,10 @@
 -- menu.lua
 --
 -----------------------------------------------------------------------------------------
-
+local sounds = require("costanti.sounds")
 local composer = require( "composer" )
 local scene = composer.newScene()
-
-audio.reserveChannels( 1 )
-audio.setVolume( 0.5, { channel=1 } )
+local buttons = require( "costanti.buttons" )
 
 -- include Corona's "widget" library
 local widget = require "widget"
@@ -21,14 +19,14 @@ local selectionSound
 
 local function onHighscoresTap()
 	composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
-	audio.play(selectionSound)
+	audio.play(sounds.selectionSound)
 	return true
 end
 
 local function onPlayTap()
 	-- go to level1.lua scene
 	composer.gotoScene( "game", { time=800, effect="crossFade" } )
-	audio.play(selectionSound)
+	audio.play(sounds.selectionSound)
 	return true	-- indicates successful touch
 end
 
@@ -39,10 +37,6 @@ function scene:create( event )
 	-- 
 	-- INSERT code here to initialize the scene
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
-
-
-	themeSong = audio.loadStream("sounds/menu.mp3")
-	selectionSound = audio.loadSound("sounds/select.mp3")
 
 	-- display a background image
 	local background = display.newImageRect( "images/background.jpg", display.actualContentWidth, display.actualContentHeight )
@@ -73,16 +67,24 @@ function scene:create( event )
 	}
 
 	local chramEating = display.newSprite( sheetChram, sequences_chram )
-	chramEating.x = display.contentCenterX + 30
-	chramEating.y = display.contentHeight - 900
-	chramEating:scale(2,2)
-	--chramEating:rotate(-90)
+	chramEating.x = display.contentCenterX --+ 30
+	chramEating.y = display.contentHeight - 100
+	chramEating:scale(4.2,4.2)
+	chramEating:rotate(-90)
 	chramEating:play()
 
 	-- create/position logo/title image on upper-half of the screen
 	local titleLogo = display.newImageRect( "images/Game Title.png", 500, 240 )
 	titleLogo.x = display.contentCenterX
 	titleLogo.y = 200
+
+	--local musicButton = buttons.musicButton.show
+	--musicButton:addEventListener("tap", buttons.onTap)
+
+	--local effectsButton = buttons.effectsButton.show
+	--effectsButton:addEventListener("tap", buttons.onTap)
+
+	buttons.buttonsInit()
 
 	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 300, native.systemFont, 44 )
 	playButton:setFillColor( 0.82, 0.86, 1 )
@@ -91,8 +93,6 @@ function scene:create( event )
 	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 220, native.systemFont, 44 )
 	highScoresButton:setFillColor( 0.75, 0.78, 1 )
     highScoresButton:addEventListener( "tap", onHighscoresTap )
-	
-
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
 	sceneGroup:insert( titleLogo )
@@ -112,7 +112,7 @@ function scene:show( event )
 		-- 
 		-- INSERT code here to make the scene come alive
 		-- e.g. start timers, begin animation, play audio, etc.
-		audio.play( themeSong, { channel=1, loops=-1 } )
+		audio.play( sounds.menuThemeSong, { channel=1, loops=-1 } )
 	end	
 end
 
@@ -138,8 +138,8 @@ function scene:destroy( event )
 	-- 
 	-- INSERT code here to cleanup the scene
 	-- e.g. remove display objects, remove touch listeners, save state, etc.
-	audio.dispose( themeSong )
-	audio.dispose( selectionSound )
+	audio.dispose( sounds.menuThemeSong )
+	audio.dispose( sounds.selectionSound )
 	
 	if playBtn then
 		playBtn:removeSelf()	-- widgets must be manually removed
