@@ -27,7 +27,7 @@ end
 
 local function onPlayTap()
 	-- go to level1.lua scene
-	composer.gotoScene( "game", { time=800, effect="crossFade" } )
+	composer.gotoScene( "liv1.liv1", { time=800, effect="crossFade" } )
 	audio.play(selectionSound)
 	return true	-- indicates successful touch
 end
