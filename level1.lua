@@ -25,7 +25,7 @@ function scene:create( event )
 	local sceneGroup = self.view
 
 	-- We need physics started to add bodies, but we don't want the simulaton
-	-- running until the scene is on the screen.
+	-- running until the scene is on the screen.jbj
 	physics.start()
 	physics.pause()
 
