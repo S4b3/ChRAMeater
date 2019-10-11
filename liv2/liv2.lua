@@ -29,7 +29,7 @@ end
 function playerState.setDied(bool)
     playerState.died = bool
 end
-
+--
 local livesText
 local scoreText
 local objTable = {}
