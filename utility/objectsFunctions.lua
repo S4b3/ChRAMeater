@@ -4,8 +4,21 @@ local physics = require( "physics" )
 physics.start()
 physics.setGravity( 0, 0 )
 
+local isStopped = false
+
+function objectsFunctions.pauseDrag()
+    isStopped = true
+end
+
+function objectsFunctions.resumeDrag()
+    isStopped = false
+end
+
 
 function objectsFunctions.dragPlayerChram( event )
+    if(isStopped ) then
+        return
+    end
     local playerChram = event.target
     local phase = event.phase
     if ( "began" == phase ) then

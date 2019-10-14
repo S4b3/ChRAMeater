@@ -1,6 +1,7 @@
 local composer = require( "composer" )
 local costantiOggetti = require("costanti.costantiOggetti")
 local objectsFunctions = require "utility.objectsFunctions"
+local levelsFunctions = require("levelsFunctions")
 local gameFunctions = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
@@ -45,6 +46,18 @@ function gameFunctions.updateLives(playerChram, playerState,livesText)
             playerChram.isBodyActive = true
         end
     end
+end
+
+function gameFunctions.pauseGame()
+    physics.pause()
+    levelsFunctions.pauseLoop()
+    objectsFunctions.pauseDrag()
+end
+
+function gameFunctions.resumeGame()
+    physics.start()
+    levelsFunctions.resumeLoop()
+    objectsFunctions.resumeDrag()
 end
 
 return gameFunctions

@@ -1,11 +1,12 @@
-
+-----------------------------------------------------------------------------------------
+--
+-- menu.lua
+--
+-----------------------------------------------------------------------------------------
+local sounds = require("costanti.sounds")
 local composer = require( "composer" )
 local scene = composer.newScene()
-
--- riservo il canale 1 per la musica di background del menù
-audio.reserveChannels( 1 )
--- riduco il volume complessivo del canale
-audio.setVolume( 0.5, { channel=1 } )
+local buttons = require( "costanti.buttons" )
 
 local playBtn -- variabile per il bottone play
 local themeSong -- variabile per la musica di background
@@ -18,7 +19,7 @@ selectionSound = audio.loadSound("sounds/select.mp3")
 -- funzione per aprire la scena di Highscores
 local function onHighscoresTap()
 	composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
-	audio.play(selectionSound)
+	audio.play(sounds.selectionSound)
 	return true
 end
 
@@ -32,7 +33,6 @@ end
 -- viene chiamato quando la scena non esiste
 function scene:create( event )
 	local sceneGroup = self.view
-
 	-- mostra un'immagine in background
 	local background = display.newImageRect( "images/background.jpg", display.actualContentWidth, display.actualContentHeight )
 	background.anchorX = 0
@@ -63,16 +63,18 @@ function scene:create( event )
 	}
     -- variabile immagine Chrome animata
 	local chramEating = display.newSprite( sheetChram, sequences_chram )
-	chramEating.x = display.contentCenterX + 30
-	chramEating.y = display.contentHeight - 900
-	chramEating:scale(2,2)
-	-- variabile chramEating: rotazione(-90)
+	chramEating.x = display.contentCenterX --+ 30
+	chramEating.y = display.contentHeight - 100
+	chramEating:scale(4.2,4.2)
+	chramEating:rotate(-90)
 	chramEating:play()
 
 	-- crea immagine logo nella parte superiore della scena
 	local titleLogo = display.newImageRect( "images/Game Title.png", 500, 240 )
 	titleLogo.x = display.contentCenterX
 	titleLogo.y = 200
+
+	buttons.buttonsInit()
     -- crea bottone Play
 	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 300, native.systemFont, 44 )
 	playButton:setFillColor( 0.82, 0.86, 1 )
@@ -98,7 +100,7 @@ function scene:show( event )
 		-- chiamata quando la scena è ancora spenta e sta per essere mostrata
 	elseif phase == "did" then
 		-- chiamata quando la scena è già sullo schermo
-		audio.play( themeSong, { channel=1, loops=-1 } )
+		audio.play( sounds.menuThemeSong, { channel=1, loops=-1 } )
 	end	
 end
 
@@ -117,8 +119,9 @@ end
 
 function scene:destroy( event )
 	local sceneGroup = self.view
-	audio.dispose( themeSong )
-	audio.dispose( selectionSound )
+	-- Called prior to the removal of scene's "view" (sceneGroup)
+	audio.dispose( sounds.menuThemeSong )
+	audio.dispose( sounds.selectionSound )
 	
 	if playBtn then
 		playBtn:removeSelf()	-- i widgets devono essere rimossi manualmente

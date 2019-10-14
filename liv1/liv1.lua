@@ -3,6 +3,7 @@ local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
 local functionLivOne = require "liv1.functionLivOne"
 local objectsFunctions = require "utility.objectsFunctions"
+local levelsFunctions = require "levelsFunctions"
 
 local scene = composer.newScene()
 
@@ -38,8 +39,10 @@ local backGroup
 local mainGroup
 local uiGroup
 
+--Passiamo riferimento al livello corrente,
+--questo ci permetterà di accedere alla funzione di creazione oggetti corretta
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    functionLivOne.gameLoop(mainGroup,objectSheet,objTable)
+    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable, 1)
 end
 
 local function resizeChram() --mi serve poter passare la funzione senza parametri

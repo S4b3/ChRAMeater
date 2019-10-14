@@ -9,8 +9,7 @@ physics.start()
 physics.setGravity( 0, 0 )
 
 -------------------------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------------------
-local function createObjects(mainGroup,objectSheet,objTable)
-    
+function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
     local selector = math.random ( 100 )
     local objIndicator
     local objName
