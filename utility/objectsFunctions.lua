@@ -4,8 +4,21 @@ local physics = require( "physics" )
 physics.start()
 physics.setGravity( 0, 0 )
 
+local isStopped = false
+
+function objectsFunctions.pauseDrag()
+    isStopped = true
+end
+
+function objectsFunctions.resumeDrag()
+    isStopped = false
+end
+
 
 function objectsFunctions.dragPlayerChram( event )
+    if(isStopped ) then
+        return
+    end
     local playerChram = event.target
     local phase = event.phase
     if ( "began" == phase ) then
@@ -38,7 +51,7 @@ function objectsFunctions.restorePlayerCharm(playerChram, playerState)
     playerChram.y = display.contentHeight - 100
     -- Fade in the playerChram
     physics.removeBody(playerChram)
-    transition.to( playerChram, { alpha=1, time=4000,
+    transition.to( playerChram, { alpha=1, time=2000,
         onComplete = function()
             playerChram.isBodyActive = true
             physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )

@@ -1,7 +1,9 @@
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
+local functionLivOne = require "liv1.functionLivOne"
 local objectsFunctions = require "utility.objectsFunctions"
+local levelsFunctions = require "levelsFunctions"
 
 local scene = composer.newScene()
 
@@ -37,8 +39,10 @@ local backGroup
 local mainGroup
 local uiGroup
 
+--Passiamo riferimento al livello corrente,
+--questo ci permetterà di accedere alla funzione di creazione oggetti corretta
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    gameFunctions.gameLoop(mainGroup,objectSheet,objTable)
+    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable, 1)
 end
 
 local function resizeChram() --mi serve poter passare la funzione senza parametri
@@ -122,7 +126,7 @@ function scene:create( event )
 	background.x = display.contentCenterX
 	background.y = display.contentCenterY
 
-	playerChram = display.newImageRect(mainGroup, objectSheet, 2, 120, 120)
+    playerChram = display.newImageRect(mainGroup, objectSheet, 2, 120, 120)
 	playerChram.x = display.contentCenterX
 	playerChram.y = display.contentHeight - 150
 	physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
@@ -163,7 +167,7 @@ function scene:hide( event )
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
 		physics.pause()
-		composer.removeScene( "game" )
+		composer.removeScene( "liv1.liv1" )
     end
 end
 

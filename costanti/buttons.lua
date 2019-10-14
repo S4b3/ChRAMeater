@@ -1,4 +1,5 @@
 local widget = require "widget"
+local gameFunctions = require ("utility.gameFunctions")
 
 local buttons = {}
 buttons.musicButton = {}
@@ -39,12 +40,14 @@ function buttons.onCloseMenuTapEffect(button)
         transition.to(buttons.effectsButton.show, {time = 200, x = buttons.effectsButton.show.x - 200})
         transition.to(button, {rotation=180, time = 200, x = button.x - 160})
         buttons.buttonsMenu.closeMenuButton.pressed = true
+        gameFunctions.pauseGame()
     else
         transition.to(buttons.buttonsMenu.show, {time = 200, x = buttons.buttonsMenu.show.x + 200})
         transition.to(buttons.musicButton.show, {time = 200, x = buttons.musicButton.show.x + 200})
         transition.to(buttons.effectsButton.show, {time = 200, x = buttons.effectsButton.show.x + 200})
         transition.to(button, {rotation=0, time = 200, x = button.x + 160})
         buttons.buttonsMenu.closeMenuButton.pressed = false
+        gameFunctions.resumeGame()
         end
 end
 

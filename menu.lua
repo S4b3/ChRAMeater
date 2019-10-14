@@ -8,15 +8,15 @@ local composer = require( "composer" )
 local scene = composer.newScene()
 local buttons = require( "costanti.buttons" )
 
--- include Corona's "widget" library
-local widget = require "widget"
+local playBtn -- variabile per il bottone play
+local themeSong -- variabile per la musica di background
+local selectionSound -- variabile per il suono della selezione
 
-local playBtn
-local highScoresBtn
+themeSong = audio.loadStream("sounds/menu.mp3")
+selectionSound = audio.loadSound("sounds/select.mp3")
 
-local themeSong
-local selectionSound
 
+-- funzione per aprire la scena di Highscores
 local function onHighscoresTap()
 	composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
 	audio.play(sounds.selectionSound)
@@ -24,38 +24,34 @@ local function onHighscoresTap()
 end
 
 local function onPlayTap()
-	-- go to level1.lua scene
-	composer.gotoScene( "game", { time=800, effect="crossFade" } )
-	audio.play(sounds.selectionSound)
-	return true	-- indicates successful touch
+	-- vai alla scena level1.lua
+	composer.gotoScene( "liv1.liv1", { time=800, effect="crossFade" } )
+	audio.play(selectionSound)
+	return true	-- indica il tocco successivo
 end
 
+-- viene chiamato quando la scena non esiste
 function scene:create( event )
 	local sceneGroup = self.view
-
-	-- Called when the scene's view does not exist.
-	-- 
-	-- INSERT code here to initialize the scene
-	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
-
-	-- display a background image
+	-- mostra un'immagine in background
 	local background = display.newImageRect( "images/background.jpg", display.actualContentWidth, display.actualContentHeight )
 	background.anchorX = 0
 	background.anchorY = 0
 	background.x = 0 + display.screenOriginX 
 	background.y = 0 + display.screenOriginY
 	
+	-- variabile per le caratteristiche della gif di Chrome
 	local sheetChramOptions =
 	{
 		width = 512,
 		height = 512,
 		numFrames = 25
 	}
-
+	-- variabile immagine Chrome statica
 	local sheetChram = graphics.newImageSheet( "sprites/ChramSprite.png", sheetChramOptions )
-
+	
+	-- sequenza di immagini consecutive
 	local sequences_chram = {
-		-- consecutive frames sequence
 		{
 			name = "eatingCram",
 			start = 1,
@@ -65,7 +61,7 @@ function scene:create( event )
 			loopDirection = "forward"
 		}
 	}
-
+    -- variabile immagine Chrome animata
 	local chramEating = display.newSprite( sheetChram, sequences_chram )
 	chramEating.x = display.contentCenterX --+ 30
 	chramEating.y = display.contentHeight - 100
@@ -73,27 +69,22 @@ function scene:create( event )
 	chramEating:rotate(-90)
 	chramEating:play()
 
-	-- create/position logo/title image on upper-half of the screen
+	-- crea immagine logo nella parte superiore della scena
 	local titleLogo = display.newImageRect( "images/Game Title.png", 500, 240 )
 	titleLogo.x = display.contentCenterX
 	titleLogo.y = 200
 
-	--local musicButton = buttons.musicButton.show
-	--musicButton:addEventListener("tap", buttons.onTap)
-
-	--local effectsButton = buttons.effectsButton.show
-	--effectsButton:addEventListener("tap", buttons.onTap)
-
 	buttons.buttonsInit()
-
+    -- crea bottone Play
 	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 300, native.systemFont, 44 )
 	playButton:setFillColor( 0.82, 0.86, 1 )
 	playButton:addEventListener("tap", onPlayTap)
-
+	-- crea bottone Highscores
 	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 220, native.systemFont, 44 )
 	highScoresButton:setFillColor( 0.75, 0.78, 1 )
     highScoresButton:addEventListener( "tap", onHighscoresTap )
-	-- all display objects must be inserted into group
+	
+	-- tutti gli oggetti del display devono essere inseriti nel gruppo
 	sceneGroup:insert( background )
 	sceneGroup:insert( titleLogo )
 	sceneGroup:insert( playButton )
@@ -106,12 +97,9 @@ function scene:show( event )
 	local phase = event.phase
 	
 	if phase == "will" then
-		-- Called when the scene is still off screen and is about to move on screen
+		-- chiamata quando la scena è ancora spenta e sta per essere mostrata
 	elseif phase == "did" then
-		-- Called when the scene is now on screen
-		-- 
-		-- INSERT code here to make the scene come alive
-		-- e.g. start timers, begin animation, play audio, etc.
+		-- chiamata quando la scena è già sullo schermo
 		audio.play( sounds.menuThemeSong, { channel=1, loops=-1 } )
 	end	
 end
@@ -121,35 +109,29 @@ function scene:hide( event )
 	local phase = event.phase
 	
 	if event.phase == "will" then
-		-- Called when the scene is on screen and is about to move off screen
-		--
-		-- INSERT code here to pause the scene
-		-- e.g. stop timers, stop animation, unload sounds, etc.)
+		-- chiamata quando la scena è già sullo schermo e sta per sparire
+
 	elseif phase == "did" then
-		-- Called when the scene is now off screen
+		-- chiamata quando la scena non è più sullo schermo
 		audio.stop( 1 )
 	end	
 end
 
 function scene:destroy( event )
 	local sceneGroup = self.view
-	
 	-- Called prior to the removal of scene's "view" (sceneGroup)
-	-- 
-	-- INSERT code here to cleanup the scene
-	-- e.g. remove display objects, remove touch listeners, save state, etc.
 	audio.dispose( sounds.menuThemeSong )
 	audio.dispose( sounds.selectionSound )
 	
 	if playBtn then
-		playBtn:removeSelf()	-- widgets must be manually removed
+		playBtn:removeSelf()	-- i widgets devono essere rimossi manualmente
 		playBtn = nil
 	end
 end
 
 ---------------------------------------------------------------------------------
 
--- Listener setup
+-- configurazione Listener 
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
