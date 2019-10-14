@@ -2,11 +2,6 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 
--- riservo il canale 1 per la musica di background del menù
-audio.reserveChannels( 1 )
--- riduco il volume complessivo del canale
-audio.setVolume( 0.5, { channel=1 } )
-
 local playBtn -- variabile per il bottone play
 local themeSong -- variabile per la musica di background
 local selectionSound -- variabile per il suono della selezione
@@ -16,8 +11,14 @@ themeSong = audio.loadStream("sounds/menu.mp3")
 selectionSound = audio.loadSound("sounds/select.mp3")
 
 local function goToLevel(liv)
-	-- vai alla scena level1.lua
+	-- mi rimanda alla scena "livX.livX" usata come convenzione per indicare la pagina dei livelli
 	composer.gotoScene( liv .. "." .. liv, { time=800, effect="crossFade" } )
+	audio.play(selectionSound)
+	return true	-- indica il tocco successivo
+end
+
+local function gotoMenu()
+	composer.gotoScene( "menu", { time=800, effect="crossFade" } )
 	audio.play(selectionSound)
 	return true	-- indica il tocco successivo
 end
@@ -43,16 +44,22 @@ function scene:create( event )
 	sceneGroup:insert( background )
     sceneGroup:insert( titleLogo)
 
-    for a,liv in pairs(levels) do
-        function goToLiv()
+	-- creo tanti bottoni in base a quanti livellin sono disponibili
+	for a,liv in pairs(levels) do
+		-- mi serve una funzione senza paramentri per dopo
+        local function goToLiv()
             goToLevel(liv)
-        end
+		end
+		--mi creo un bottone che mi rimanda al livello corrispondente
         playButton = display.newText( sceneGroup,liv, display.contentCenterX, startY+80 , native.systemFont, 44 )
         playButton:setFillColor( 0.82, 0.86, 1 )
         playButton:addEventListener("tap", goToLiv)
         table.insert(buttons,playButton)
         startY = startY +80
-    end   
+	end   
+	local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, 1500, native.systemFont, 44 )
+    menuButton:setFillColor( 0.75, 0.78, 1 )
+    menuButton:addEventListener( "tap", gotoMenu )
 end
 
 function scene:show( event )
