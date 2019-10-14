@@ -2,10 +2,10 @@ local liv1 = require("liv1.functionLivOne")
 
 local levelsFunction = {}
 
-levelsFunction.isStopped = false
+local isStopped = false
 
 function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
-    if (levelsFunction.isStopped == true) then
+    if (isStopped == true) then
         return
     end
     if(intLevel == 1) then
@@ -26,11 +26,11 @@ function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
 end
 
 function levelsFunction.pauseLoop()
-    levelsFunction.isStopped = true
+    isStopped = true
 end
 
 function levelsFunction.resumeLoop()
-    levelsFunction.isStopped = false
+    isStopped = false
 end
 
 

@@ -11,6 +11,11 @@ buttons.buttonsMenu.show = {}
 buttons.buttonsMenu.closeMenuButton = {}
 buttons.buttonsMenu.closeMenuButton.show = {}
 
+
+local blackScreen = display.newRect(display.contentCenterX, display.contentCenterY, display.actualContentWidth, display.actualContentHeight)
+blackScreen:setFillColor("black", 0.5)
+blackScreen.isVisible = false
+
 function buttons.onMusicTapEffect(button)
     if(not button.pressed) then
         audio.setVolume(0, { channel = 1 } )
@@ -40,6 +45,7 @@ function buttons.onCloseMenuTapEffect(button)
         transition.to(buttons.effectsButton.show, {time = 200, x = buttons.effectsButton.show.x - 200})
         transition.to(button, {rotation=180, time = 200, x = button.x - 160})
         buttons.buttonsMenu.closeMenuButton.pressed = true
+        blackScreen.isVisible = true
         gameFunctions.pauseGame()
     else
         transition.to(buttons.buttonsMenu.show, {time = 200, x = buttons.buttonsMenu.show.x + 200})
@@ -47,6 +53,8 @@ function buttons.onCloseMenuTapEffect(button)
         transition.to(buttons.effectsButton.show, {time = 200, x = buttons.effectsButton.show.x + 200})
         transition.to(button, {rotation=0, time = 200, x = button.x + 160})
         buttons.buttonsMenu.closeMenuButton.pressed = false
+        blackScreen.isVisible = false
+        
         gameFunctions.resumeGame()
         end
 end
