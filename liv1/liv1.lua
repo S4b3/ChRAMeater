@@ -4,7 +4,7 @@ local gameFunctions = require "utility.gameFunctions"
 local functionLivOne = require "liv1.functionLivOne"
 local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require "levelsFunctions"
-local secondsLeft = 120
+local secondsLeft = 200
 local scene = composer.newScene()
 
 local physics = require( "physics" )
@@ -174,7 +174,7 @@ function scene:show( event )
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
         gameLoopTimer = timer.performWithDelay( 700, gameLoop, 0 )
-        timer.performWithDelay(1000,finishTime,0)
+        checktimer = timer.performWithDelay(1000,finishTime,0)
     end
 end
 
@@ -185,7 +185,9 @@ function scene:hide( event )
 	if ( phase == "will" ) then
         -- Code here runs when the scene is on screen (but is about to go off screen)
 		timer.cancel( gameLoopTimer )
-		gameLoopTimer=nil
+        gameLoopTimer=nil
+        timer.cancel( checktimer)
+		checktimer=nil
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
