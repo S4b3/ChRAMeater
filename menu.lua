@@ -76,11 +76,11 @@ function scene:create( event )
 
 	buttons.buttonsInit()
     -- crea bottone Play
-	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 300, native.systemFont, 44 )
+	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, native.systemFont, 45 )
 	playButton:setFillColor( 0.82, 0.86, 1 )
 	playButton:addEventListener("tap", onPlayTap)
 	-- crea bottone Highscores
-	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 220, native.systemFont, 44 )
+	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 1300, native.systemFont, 45 )
 	highScoresButton:setFillColor( 0.75, 0.78, 1 )
     highScoresButton:addEventListener( "tap", onHighscoresTap )
 	
