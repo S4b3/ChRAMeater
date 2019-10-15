@@ -4,13 +4,13 @@
 --
 -----------------------------------------------------------------------------------------
 
--- hide the status bar
+-- nasconde la barra di stato
 display.setStatusBar( display.HiddenStatusBar )
 
 -- include the Corona "composer" module
 local composer = require "composer"
 
--- load menu screen
+-- carica schermata menu
 composer.gotoScene( "menu" )
 
 local physics = require( "physics" )
@@ -92,7 +92,7 @@ local function createObjects()
     local selector = math.random ( 20 )
     local objIndicator
     local objName
-
+--creazione dei tre oggetti del primo livello 
     if(selector <= 15) then
         objIndicator = 4
         objName="ram2GB"
@@ -113,17 +113,17 @@ local function createObjects()
     local whereFrom = math.random( 3 )
 
     if ( whereFrom == 1 ) then
-        -- From the left
+        -- Generazione da sinistra
         newObject.x = -60
         newObject.y = math.random( 500 )
         newObject:setLinearVelocity( math.random( 40,120 ), math.random( 20,60 ) )
     elseif ( whereFrom == 2 ) then
-        -- From the top
+        -- Generazione dall'alto
         newObject.x = math.random( display.contentWidth )
         newObject.y = -60
         newObject:setLinearVelocity( math.random( -40,40 ), math.random( 40,120 ) )
     elseif ( whereFrom == 3 ) then
-        -- From the right
+        -- Generazione da destra
         newObject.x = display.contentWidth + 60
         newObject.y = math.random( 500 )
         newObject:setLinearVelocity( math.random( -120,-40 ), math.random( 20,60 ) )
@@ -136,16 +136,16 @@ local function dragplayerChram( event )
     local playerChram = event.target
     local phase = event.phase
     if ( "began" == phase ) then
-        -- Set touch focus on playerChram
+        -- set del tocco playerChram
         display.currentStage:setFocus( playerChram )
         playerChram.touchOffsetX = event.x - playerChram.x
         playerChram.touchOffsetY = event.y - playerChram.y
     elseif ( "moved" == phase ) then
-        -- Move playerChram to the new touch position
+        -- Movimento di playerChram verso la nuova posizione
         playerChram.x = event.x - playerChram.touchOffsetX
         playerChram.y = event.y - playerChram.touchOffsetY
     elseif ( "ended" == phase or "cancelled" == phase ) then
-        -- Release touch focus on playerChram
+        -- Rilascio del tocco sul playerChram
         display.currentStage:setFocus( nil )
     end
     return true 
@@ -157,7 +157,7 @@ playerChram:addEventListener( "touch", dragplayerChram )
 local function gameLoop()
     createObjects()
  
-    -- Remove rams which have drifted off screen
+    -- Rimozione delle ram che sono uscite fuori dallo schermo
     for i = #objTable, 1, -1 do
         local thisRam = objTable[i]
  
