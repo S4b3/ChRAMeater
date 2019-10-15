@@ -2,6 +2,7 @@ local costanti = {}
 
 local bigRamShape = {   (512/2)*2/10,(-288/2)*2/10, (512/2)*2/10,(288/2)*2/10, (-512/2)*2/10,(288/2)*2/10, (-512/2)*2/10,(-288/2)*2/10    }
 local smallRamShape = { (512/2)*2/10,(-192/2)*2/10, (512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(-192/2)*2/10   }
+costanti.levels = {"liv1","liv2","liv3","liv4"}
 
 function costanti.getBigRamShape()
     return bigRamShape

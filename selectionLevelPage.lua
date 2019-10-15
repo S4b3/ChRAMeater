@@ -1,12 +1,13 @@
 
 local composer = require( "composer" )
 local scene = composer.newScene()
-
+local costanti = require("costanti.costantiOggetti")
 local playBtn -- variabile per il bottone play
 local themeSong -- variabile per la musica di background
 local selectionSound -- variabile per il suono della selezione
-local startY = 200
-local levels = {"liv1","liv2"}
+local startY = 200 -- variabile che indica la Y iniziale per iniziare a printare i bottoni
+local levels = costanti.levels -- variabile che contiene i livelli disponibili
+
 themeSong = audio.loadStream("sounds/menu.mp3")
 selectionSound = audio.loadSound("sounds/select.mp3")
 
