@@ -29,7 +29,7 @@ function scene:create( event )
 	local sceneGroup = self.view
     local buttons = {}
 	-- mostra un'immagine in background
-	local background = display.newImageRect( "images/background.jpg", display.actualContentWidth, display.actualContentHeight )
+	local background = display.newImageRect( "images/highscores.jpg", display.actualContentWidth, display.actualContentHeight )
 	background.anchorX = 0
 	background.anchorY = 0
 	background.x = 0 + display.screenOriginX 
