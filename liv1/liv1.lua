@@ -4,7 +4,7 @@ local gameFunctions = require "utility.gameFunctions"
 local functionLivOne = require "liv1.functionLivOne"
 local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require "levelsFunctions"
-
+local secondsLeft = 120
 local scene = composer.newScene()
 
 local physics = require( "physics" )
@@ -31,6 +31,7 @@ function playerState.setDied(bool)
     playerState.died = bool
 end
 
+local clockText
 local livesText
 local scoreText
 local objTable = {}
@@ -52,6 +53,28 @@ end
 local function updateLives()
     gameFunctions.updateLives(playerChram, playerState,livesText)
 end
+
+local function finishTime()
+    gameFunctions.finishTime(secondsLeft)
+end
+
+local function updateTime( event )
+ 
+    -- Decrement the number of seconds
+    secondsLeft = secondsLeft - 1
+ 
+    -- Time is tracked in seconds; convert it to minutes and seconds
+    local minutes = math.floor( secondsLeft / 60 )
+    local seconds = secondsLeft % 60
+ 
+    -- Make it a formatted string
+    local timeDisplay = string.format( "%02d:%02d", minutes, seconds )
+     
+    -- Update the text object
+    clockText.text = timeDisplay
+end
+
+local countDownTimer = timer.performWithDelay( 1000, updateTime, secondsLeft )
 
 local function onCollision( event )
     if ( event.phase == "began" ) then
@@ -134,9 +157,8 @@ function scene:create( event )
 
 	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
 	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
-
-	playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
-
+    clockText = display.newText( uiGroup,"02:00", 600, 80, native.systemFont, 36 )
+    playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
 end
 
 -- show()
@@ -152,6 +174,7 @@ function scene:show( event )
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
         gameLoopTimer = timer.performWithDelay( 700, gameLoop, 0 )
+        timer.performWithDelay(1000,finishTime,0)
     end
 end
 

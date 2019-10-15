@@ -29,6 +29,12 @@ function gameFunctions.endGame(score)
     composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
 end
 
+function gameFunctions.finishTime(secondsLeft)
+    if secondsLeft == 0 then
+    composer.setVariable( "finalScore", score )
+    composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
+    end
+end
 
 function gameFunctions.updateLives(playerChram, playerState,livesText)
     if ( playerState.died == false ) then
