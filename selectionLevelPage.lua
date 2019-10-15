@@ -45,7 +45,7 @@ function scene:create( event )
 	sceneGroup:insert( background )
     sceneGroup:insert( titleLogo)
 
-	-- creo tanti bottoni in base a quanti livellin sono disponibili
+	-- creo tanti bottoni in base a quanti livelli sono disponibili
 	for a,liv in pairs(levels) do
 		-- mi serve una funzione senza paramentri per dopo
         local function goToLiv()

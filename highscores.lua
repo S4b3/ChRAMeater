@@ -9,6 +9,15 @@ local scene = composer.newScene()
 -- -----------------------------------------------------------------------------------
 
 -- Initialize variables
+--musica
+local themeSong -- variabile per la musica di background
+local selectionSound -- variabile per il suono della selezione
+
+themeSong = audio.loadStream("sounds/menu.mp3")
+selectionSound = audio.loadSound("sounds/select.mp3")
+
+
+--musica
 local json = require( "json" )
  
 local scoresTable = {}
@@ -41,6 +50,7 @@ end
 
 local function gotoMenu()
     composer.gotoScene( "menu", { time=800, effect="crossFade" } )
+    audio.play(selectionSound)
 end
 
 
@@ -95,13 +105,12 @@ function scene:show( event )
 	local sceneGroup = self.view
 	local phase = event.phase
 
-	if ( phase == "will" ) then
-		-- Code here runs when the scene is still off screen (but is about to come on screen)
-
-	elseif ( phase == "did" ) then
-		-- Code here runs when the scene is entirely on screen
-
-	end
+	if phase == "will" then
+		-- chiamata quando la scena è ancora spenta e sta per essere mostrata
+	elseif phase == "did" then
+		-- chiamata quando la scena è già sullo schermo
+		audio.play( themeSong, { channel=1, loops=-1 } )
+	end	
 end
 
 
@@ -116,7 +125,8 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-		composer.removeScene( "highscores")
+        composer.removeScene( "highscores")
+        audio.stop( 1 )
 	end
 end
 
@@ -124,7 +134,9 @@ end
 -- destroy()
 function scene:destroy( event )
 
-	local sceneGroup = self.view
+    local sceneGroup = self.view
+    audio.dispose( themeSong )
+	audio.dispose( selectionSound )
 	-- Code here runs prior to the removal of scene's view
 
 end
