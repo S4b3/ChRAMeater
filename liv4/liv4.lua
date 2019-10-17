@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
-local functionLivTwo = require"liv2.functionLivTwo"
+local functionLivFour = require"liv4.functionLivFour"
 local objectsFunctions = require "utility.objectsFunctions"
 
 local scene = composer.newScene()
@@ -12,7 +12,7 @@ physics.setGravity(0,0)
 
 math.randomseed( os.time() )
 local objectSheet = costanti.objectSheet()
-local playerState = {lives, score, died}
+local playerState = {}
 
 playerState.lives = 3
 playerState.score = 0
@@ -39,7 +39,7 @@ local mainGroup
 local uiGroup
 
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    functionLivTwo.gameLoop(mainGroup,objectSheet,objTable)
+    functionLivFour.gameLoop(mainGroup,objectSheet,objTable)
 end
 
 local function resizeChram() --mi serve poter passare la funzione senza parametri
@@ -48,6 +48,10 @@ end
 
 local function updateLives()
     gameFunctions.updateLives(playerChram, playerState,livesText)
+end
+
+local function getLives()
+    gameFunctions.getLives(playerState)
 end
 
 local function setChramGravity()
@@ -77,6 +81,9 @@ local function onCollision( event )
             elseif(obj2.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, updateLives)
+            elseif(obj2.myName=="heart") then
+                objectsFunctions.removeFromTable(obj2,objTable)
+                timer.performWithDelay(1, getLives)
             end
         end
         if(obj2.myName == "Chram") then
@@ -97,6 +104,9 @@ local function onCollision( event )
             elseif(obj1.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
+            elseif(obj1.myName=="heart") then
+                objectsFunctions.removeFromTable(obj1,objTable)
+                timer.performWithDelay(1, getLives)
             end
         end
     end

@@ -1,5 +1,5 @@
 local costantiOggetti = require("costanti.costantiOggetti")
-local functionLivTwo = {}
+local functionLivFour = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
 local smallRamShape = costantiOggetti.getSmallRamShape();
@@ -74,7 +74,7 @@ local function createObjects(mainGroup,objectSheet,objTable)
     newObject:applyTorque( math.random( -6,6 ) )
 end
 
-function functionLivTwo.gameLoop(mainGroup,objectSheet,objTable)
+function functionLivFour.gameLoop(mainGroup,objectSheet,objTable)
     createObjects(mainGroup,objectSheet,objTable)
     -- Remove rams which have drifted off screen
     for i = #objTable, 1, -1 do
@@ -90,4 +90,4 @@ function functionLivTwo.gameLoop(mainGroup,objectSheet,objTable)
     end
 end
 
-return functionLivTwo
+return functionLivFour

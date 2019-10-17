@@ -54,6 +54,10 @@ function gameFunctions.updateLives(playerChram, playerState,livesText)
     end
 end
 
+function gameFunctions.getLives(playerState)
+    playerState.lives = playerState.lives+1
+end
+
 function gameFunctions.pauseGame()
     physics.pause()
     levelsFunctions.pauseLoop()
