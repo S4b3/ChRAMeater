@@ -17,8 +17,8 @@ local function updateTime( event )
         
     -- Update the text object
     costantiSchermo.clockText.text = timeDisplay
-    if(gameFunctions.finishTime(costantiSchermo.secondsLeft) ) then
---timer.performWithDelay(2000, costantiSchermo.clockTextDelete())
+    if(gameFunctions.finishTime(costantiSchermo.secondsLeft)) then
+        transition.fadeOut(costantiSchermo.clockText,{ time=800 })
     end
 end
 
@@ -28,9 +28,6 @@ function costantiSchermo.clockTextInit(time, seconds)
     timer.performWithDelay(1000, updateTime, costantiSchermo.secondsLeft)
 end
 
-function costantiSchermo.clockTextDelete()
-    costantiSchermo.clockText:removeSelf()  
-end
 
 
 return costantiSchermo
