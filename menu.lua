@@ -8,27 +8,10 @@ local composer = require( "composer" )
 local scene = composer.newScene()
 local buttons = require( "costanti.buttons" )
 
+local selectionSound = sounds.selectionSound
+local themeSong = sounds.menuThemeSong
+
 local playBtn -- variabile per il bottone play
-local themeSong -- variabile per la musica di background
-local selectionSound -- variabile per il suono della selezione
-
-themeSong = audio.loadStream("sounds/menu.mp3")
-selectionSound = audio.loadSound("sounds/select.mp3")
-
-
--- funzione per aprire la scena di Highscores
-local function onHighscoresTap()
-	composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
-	audio.play(sounds.selectionSound)
-	return true
-end
-
-local function onPlayTap()
-	-- vai alla scena level1.lua
-	composer.gotoScene( "selectionLevelPage", { time=800, effect="crossFade" } )
-	audio.play(selectionSound)
-	return true	-- indica il tocco successivo
-end
 
 -- viene chiamato quando la scena non esiste
 function scene:create( event )
@@ -73,23 +56,13 @@ function scene:create( event )
 	local titleLogo = display.newImageRect( "images/Game Title.png", 500, 240 )
 	titleLogo.x = display.contentCenterX
 	titleLogo.y = 200
-
-	buttons.buttonsInit()
-    -- crea bottone Play
-	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, native.systemFont, 45 )
-	playButton:setFillColor( 0.82, 0.86, 1 )
-	playButton:addEventListener("tap", onPlayTap)
-	-- crea bottone Highscores
-	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 1300, native.systemFont, 45 )
-	highScoresButton:setFillColor( 0.75, 0.78, 1 )
-    highScoresButton:addEventListener( "tap", onHighscoresTap )
 	
 	-- tutti gli oggetti del display devono essere inseriti nel gruppo
 	sceneGroup:insert( background )
 	sceneGroup:insert( titleLogo )
-	sceneGroup:insert( playButton )
-	sceneGroup:insert( highScoresButton )
 	sceneGroup:insert( chramEating )
+	buttons.buttonsInit(sceneGroup)
+    buttons.menuButtonsInit(sceneGroup)
 end
 
 function scene:show( event )
@@ -100,7 +73,7 @@ function scene:show( event )
 		-- chiamata quando la scena è ancora spenta e sta per essere mostrata
 	elseif phase == "did" then
 		-- chiamata quando la scena è già sullo schermo
-		audio.play( sounds.menuThemeSong, { channel=1, loops=-1 } )
+		audio.play( themeSong, { channel=1, loops=-1 } )
 	end	
 end
 
@@ -120,8 +93,8 @@ end
 function scene:destroy( event )
 	local sceneGroup = self.view
 	-- Called prior to the removal of scene's "view" (sceneGroup)
-	audio.dispose( sounds.menuThemeSong )
-	audio.dispose( sounds.selectionSound )
+	--audio.dispose( themeSong )
+	--audio.dispose( selectionSound )
 	
 	if playBtn then
 		playBtn:removeSelf()	-- i widgets devono essere rimossi manualmente

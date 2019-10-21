@@ -1,5 +1,7 @@
 local widget = require "widget"
 local gameFunctions = require ("utility.gameFunctions")
+local sounds = require ("costanti.sounds")
+local composer = require "composer"
 
 local buttons = {}
 buttons.musicButton = {}
@@ -99,7 +101,7 @@ function buttons.onSwappableTap(event)
     event.target.onTapEffect(event.target)
 end
 
-function buttons.buttonsInit()
+function buttons.buttonsInit(sceneGroup)
     buttons.buttonsMenu.show = display.newImageRect("images/buttons/buttonsMenu.png", 300, 300)
     buttons.buttonsMenu.show.x = display.contentWidth + 140
     buttons.buttonsMenu.show.y = display.contentCenterY-650
@@ -136,7 +138,58 @@ function buttons.buttonsInit()
     buttons.effectsButton.show:addEventListener("tap", buttons.onSwappableTap)
     buttons.effectsButton.show.onTapEffect = buttons.onEffectsTapEffect
     buttons.effectsButton.show.name = "effectsButton"
+
+    sceneGroup:insert(buttons.buttonsMenu.show)
+    sceneGroup:insert(buttons.buttonsMenu.closeMenuButton.show)
+    sceneGroup:insert(buttons.musicButton.show)
+    sceneGroup:insert(buttons.effectsButton.show)
+end
+
+
+--
+-- FUNZIONI PER I BOTTONI DEL MENU
+--
+
+-- funzione per aprire la scena di Highscores
+local function onHighscoresTap()
+	composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
+	audio.play(sounds.selectionSound)
+	return true
+end
+
+local function onPlayTap()
+	-- vai alla scena level1.lua
+	composer.gotoScene( "selectionLevelPage", { time=800, effect="crossFade" } )
+	audio.play(sounds.selectionSound)
+	return true	-- indica il tocco successivo
 end
 
 --buttons.musicButton:addEventListener("tap", buttons.onTap )
+function buttons.menuButtonsInit(sceneGroup)
+    -- crea bottone Play
+	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, native.systemFont, 45 )
+	playButton:setFillColor( 0.82, 0.86, 1 )
+	playButton:addEventListener("tap", onPlayTap)
+	-- crea bottone Highscores
+	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 1300, native.systemFont, 45 )
+	highScoresButton:setFillColor( 0.75, 0.78, 1 )
+    highScoresButton:addEventListener( "tap", onHighscoresTap )
+
+    sceneGroup:insert(playButton)
+    sceneGroup:insert(highScoresButton)
+end
+
+--
+--FUNZIONI PER IL MENU BUTTON
+--
+local function gotoMenu()
+    composer.gotoScene( "menu", { time=800, effect="crossFade" } )
+    audio.play(sounds.selectionSound)
+end
+
+function buttons.goToMenuInit(sceneGroup, yValue)
+    local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, yValue, native.systemFont, 44 )
+    menuButton:setFillColor( 0.75, 0.78, 1 )
+    menuButton:addEventListener( "tap", gotoMenu )
+end
 return buttons

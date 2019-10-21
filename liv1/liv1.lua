@@ -4,7 +4,7 @@ local gameFunctions = require "utility.gameFunctions"
 local functionLivOne = require "liv1.functionLivOne"
 local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require "utility.levelsFunctions"
-local costantiSchermo = require "costanti.constantiSchermo"
+local costantiSchermo = require "costanti.costantiSchermo"
 
 local scene = composer.newScene()
 

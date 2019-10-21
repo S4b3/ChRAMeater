@@ -1,7 +1,8 @@
 
 local composer = require( "composer" )
-
+local buttons = require("costanti.buttons")
 local scene = composer.newScene()
+local sounds = require("costanti.sounds")
 
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
@@ -10,12 +11,8 @@ local scene = composer.newScene()
 
 -- Initialize variables
 --musica
-local themeSong -- variabile per la musica di background
-local selectionSound -- variabile per il suono della selezione
-
-themeSong = audio.loadStream("sounds/menu.mp3")
-selectionSound = audio.loadSound("sounds/select.mp3")
-
+themeSong = sounds.menuThemeSong
+selectionSound = sounds.selectionSound
 
 --musica
 local json = require( "json" )
@@ -46,11 +43,6 @@ local function saveScores()
         file:write( json.encode( scoresTable ) )
         io.close( file )
     end
-end
-
-local function gotoMenu()
-    composer.gotoScene( "menu", { time=800, effect="crossFade" } )
-    audio.play(selectionSound)
 end
 
 
@@ -92,9 +84,7 @@ function scene:create( event )
             thisScore.anchorX = 0
 		end
 	end
-	local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, 810, native.systemFont, 44 )
-    menuButton:setFillColor( 0.75, 0.78, 1 )
-    menuButton:addEventListener( "tap", gotoMenu )
+	buttons.goToMenuInit(sceneGroup, 1200)
 
 end
 
@@ -135,8 +125,8 @@ end
 function scene:destroy( event )
 
     local sceneGroup = self.view
-    audio.dispose( themeSong )
-	audio.dispose( selectionSound )
+    --audio.dispose( themeSong )
+	--audio.dispose( selectionSound )
 	-- Code here runs prior to the removal of scene's view
 
 end

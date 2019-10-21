@@ -2,14 +2,16 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 local costanti = require("costanti.costantiOggetti")
+local sounds = require("costanti.sounds")
+local buttons = require("costanti.buttons")
 local playBtn -- variabile per il bottone play
 local themeSong -- variabile per la musica di background
 local selectionSound -- variabile per il suono della selezione
 local startY = 200 -- variabile che indica la Y iniziale per iniziare a printare i bottoni
 local levels = costanti.levels -- variabile che contiene i livelli disponibili
 
-themeSong = audio.loadStream("sounds/menu.mp3")
-selectionSound = audio.loadSound("sounds/select.mp3")
+themeSong = sounds.menuThemeSong
+selectionSound = sounds.selectionSound
 
 local function goToLevel(liv)
 	-- mi rimanda alla scena "livX.livX" usata come convenzione per indicare la pagina dei livelli
@@ -18,16 +20,10 @@ local function goToLevel(liv)
 	return true	-- indica il tocco successivo
 end
 
-local function gotoMenu()
-	composer.gotoScene( "menu", { time=800, effect="crossFade" } )
-	audio.play(selectionSound)
-	return true	-- indica il tocco successivo
-end
 
 -- viene chiamato quando la scena non esiste
 function scene:create( event )
 	local sceneGroup = self.view
-    local buttons = {}
 	-- mostra un'immagine in background
 	local background = display.newImageRect( "images/highscores.jpg", display.actualContentWidth, display.actualContentHeight )
 	background.anchorX = 0
@@ -57,10 +53,8 @@ function scene:create( event )
         playButton:addEventListener("tap", goToLiv)
         table.insert(buttons,playButton)
         startY = startY +80
-	end   
-	local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, 1500, native.systemFont, 44 )
-    menuButton:setFillColor( 0.75, 0.78, 1 )
-    menuButton:addEventListener( "tap", gotoMenu )
+	end
+	buttons.goToMenuInit(sceneGroup, 1200)
 end
 
 function scene:show( event )
