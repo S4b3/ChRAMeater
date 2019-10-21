@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 local costantiOggetti = require("costanti.costantiOggetti")
 local objectsFunctions = require "utility.objectsFunctions"
-local levelsFunctions = require("levelsFunctions")
+local levelsFunctions = require("utility.levelsFunctions")
 local gameFunctions = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
@@ -33,6 +33,7 @@ function gameFunctions.finishTime(secondsLeft)
     if secondsLeft == 0 then
     composer.setVariable( "finalScore", score )
     composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
+    return true
     end
 end
 

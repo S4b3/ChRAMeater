@@ -3,7 +3,7 @@ local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
 local functionLivOne = require "liv1.functionLivOne"
 local objectsFunctions = require "utility.objectsFunctions"
-local levelsFunctions = require "levelsFunctions"
+local levelsFunctions = require "utility.levelsFunctions"
 local secondsLeft = 200
 local scene = composer.newScene()
 

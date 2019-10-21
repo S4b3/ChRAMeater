@@ -33,5 +33,4 @@ function levelsFunction.resumeLoop()
     isStopped = false
 end
 
-
 return levelsFunction
