@@ -137,7 +137,7 @@ function scene:create( event )
 	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
 	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
     --clockText = display.newText( uiGroup, "02:00", 600, 80, native.systemFont, 36 )
-    costantiSchermo.clockTextInit("03:30", 4)
+    costantiSchermo.clockTextInit("03:30", 5)
     playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
 end
 
@@ -163,7 +163,7 @@ function scene:hide( event )
 	local phase = event.phase
 	if ( phase == "will" ) then
         -- Code here runs when the scene is on screen (but is about to go off screen)
-		timer.cancel( gameLoopTimer )
+        timer.cancel( gameLoopTimer )
         gameLoopTimer=nil
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen

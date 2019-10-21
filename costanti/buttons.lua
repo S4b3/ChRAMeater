@@ -139,10 +139,6 @@ function buttons.buttonsInit(sceneGroup)
     buttons.effectsButton.show.onTapEffect = buttons.onEffectsTapEffect
     buttons.effectsButton.show.name = "effectsButton"
 
-    sceneGroup:insert(buttons.buttonsMenu.show)
-    sceneGroup:insert(buttons.buttonsMenu.closeMenuButton.show)
-    sceneGroup:insert(buttons.musicButton.show)
-    sceneGroup:insert(buttons.effectsButton.show)
 end
 
 

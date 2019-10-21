@@ -2,6 +2,7 @@ local composer = require( "composer" )
 local costantiOggetti = require("costanti.costantiOggetti")
 local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require("utility.levelsFunctions")
+local costantiSchermo = require("costanti.costantiSchermo")
 local gameFunctions = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
@@ -27,14 +28,6 @@ function gameFunctions.endGame(score)
     --composer.gotoScene( "menu", { time=800, effect="crossFade" } )
     composer.setVariable( "finalScore", score )
     composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
-end
-
-function gameFunctions.finishTime(secondsLeft)
-    if secondsLeft == 0 then
-    composer.setVariable( "finalScore", score )
-    composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
-    return true
-    end
 end
 
 function gameFunctions.updateLives(playerChram, playerState,livesText)
@@ -63,12 +56,14 @@ function gameFunctions.pauseGame()
     physics.pause()
     levelsFunctions.pauseLoop()
     objectsFunctions.pauseDrag()
+    costantiSchermo.pauseLoop()
 end
 
 function gameFunctions.resumeGame()
     physics.start()
     levelsFunctions.resumeLoop()
     objectsFunctions.resumeDrag()
+    costantiSchermo.resumeLoop()
 end
 
 return gameFunctions

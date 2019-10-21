@@ -1,10 +1,30 @@
-
-local gameFunctions = require "utility.gameFunctions"
-
+local composer = require( "composer" )
 local costantiSchermo = {}
+
+local isStopped = false
+
+function costantiSchermo.pauseLoop()
+    isStopped = true
+end
+
+function costantiSchermo.resumeLoop()
+    isStopped = false
+end
+ 
+local function finishTime(secondsLeft)
+    if secondsLeft == 0 then
+    composer.setVariable( "finalScore", score )
+    composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
+    return true
+    end
+end
+
 
 local function updateTime( event )
 
+    if (isStopped == true) then
+        return
+    end
     -- Decrement the number of seconds
     costantiSchermo.secondsLeft = costantiSchermo.secondsLeft - 1
     
@@ -17,15 +37,23 @@ local function updateTime( event )
         
     -- Update the text object
     costantiSchermo.clockText.text = timeDisplay
-    if(gameFunctions.finishTime(costantiSchermo.secondsLeft)) then
+    if(finishTime(costantiSchermo.secondsLeft)) then
         transition.fadeOut(costantiSchermo.clockText,{ time=800 })
+        timer.cancel(costantiSchermo.timer)
+
     end
 end
 
 function costantiSchermo.clockTextInit(time, seconds)
     costantiSchermo.clockText = display.newText( time, 600, 80, native.systemFont, 36 )
+    -- sceneGroup:insert(costantiSchermo.clockText)
     costantiSchermo.secondsLeft = seconds
-    timer.performWithDelay(1000, updateTime, costantiSchermo.secondsLeft)
+    costantiSchermo.timer = timer.performWithDelay(1000, updateTime, 0)
+    
+end
+
+function costantiSchermo.finalizeLoop()
+    timer.cancel(costantiSchermo.timer)
 end
 
 
