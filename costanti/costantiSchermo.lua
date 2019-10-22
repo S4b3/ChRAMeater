@@ -36,20 +36,18 @@ local function updateTime( event )
     local timeDisplay = string.format( "%02d:%02d", minutes, seconds )
         
     -- Update the text object
-    costantiSchermo.clockText.text = timeDisplay
+    costantiSchermo.clockText = timeDisplay
     if(finishTime(costantiSchermo.secondsLeft)) then
-        transition.fadeOut(costantiSchermo.clockText,{ time=800 })
+        --transition.fadeOut(costantiSchermo.clockText,{ time=800 })
         timer.cancel(costantiSchermo.timer)
-
     end
 end
 
 function costantiSchermo.clockTextInit(time, seconds)
-    costantiSchermo.clockText = display.newText( time, 600, 80, native.systemFont, 36 )
+    costantiSchermo.clockText = time
     -- sceneGroup:insert(costantiSchermo.clockText)
     costantiSchermo.secondsLeft = seconds
-    costantiSchermo.timer = timer.performWithDelay(1000, updateTime, 0)
-    
+    costantiSchermo.timer = timer.performWithDelay(1000, updateTime, 0)    
 end
 
 return costantiSchermo
