@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
-local functionLivOne = require "liv1.functionLivOne"
+local functionLivOne = require "liv3.functionLivThree"
 local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require "utility.levelsFunctions"
 local secondsLeft = 200
@@ -13,7 +13,7 @@ physics.setGravity( 0, 0 )
 
 math.randomseed( os.time() )
 local objectSheet = costanti.objectSheet()
-local playerState = {lives, score, died}
+local playerState = {}
 
 playerState.lives = 3
 playerState.score = 0
@@ -52,10 +52,6 @@ end
 
 local function updateLives()
     gameFunctions.updateLives(playerChram, playerState,livesText)
-end
-
-local function finishTime()
-    gameFunctions.finishTime(secondsLeft)
 end
 
 local function updateTime( event )
@@ -174,7 +170,6 @@ function scene:show( event )
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
         gameLoopTimer = timer.performWithDelay( 700, gameLoop, 0 )
-        checktimer = timer.performWithDelay(1000,finishTime,0)
     end
 end
 
@@ -186,13 +181,11 @@ function scene:hide( event )
         -- Code here runs when the scene is on screen (but is about to go off screen)
 		timer.cancel( gameLoopTimer )
         gameLoopTimer=nil
-        timer.cancel( checktimer)
-		checktimer=nil
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
 		physics.pause()
-		composer.removeScene( "liv1.liv1" )
+		composer.removeScene( "liv3.liv3" )
     end
 end
 
