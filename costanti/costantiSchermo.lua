@@ -53,6 +53,7 @@ function costantiSchermo.clockTextInit(time, seconds)
 end
 
 function costantiSchermo.finalizeLoop()
+    transition.fadeOut(costantiSchermo.clockText,  { time = 1 })
     timer.cancel(costantiSchermo.timer)
 end
 
