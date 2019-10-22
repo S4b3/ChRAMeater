@@ -1,7 +1,6 @@
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
-local functionLivOne = require "liv1.functionLivOne"
 local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require "utility.levelsFunctions"
 local costantiSchermo = require "costanti.costantiSchermo"
@@ -137,7 +136,7 @@ function scene:create( event )
 	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
 	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
     --clockText = display.newText( uiGroup, "02:00", 600, 80, native.systemFont, 36 )
-    costantiSchermo.clockTextInit("03:30", 5)
+    costantiSchermo.clockTextInit("03:30", 40)
     playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
 end
 

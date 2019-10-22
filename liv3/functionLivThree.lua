@@ -65,20 +65,4 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
     newObject:applyTorque( math.random( -6,6 ) )
 end
 
-function functionLivOne.gameLoop(mainGroup,objectSheet,objTable)
-    createObjects(mainGroup,objectSheet,objTable)
-    -- Remove rams which have drifted off screen
-    for i = #objTable, 1, -1 do
-        local thisRam = objTable[i]
-        if ( thisRam.x < -100 or
-             thisRam.x > display.contentWidth + 100 or
-             thisRam.y < -100 or
-             thisRam.y > display.contentHeight + 100 )
-        then
-            display.remove( thisRam )
-            table.remove( objTable, i )
-        end
-    end
-end
-
 return functionLivOne

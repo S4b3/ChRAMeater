@@ -11,7 +11,7 @@ physics.start()
 physics.setGravity( 0, 0 )
 
 -------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI------------------------------------------
-local function createObjects(mainGroup,objectSheet,objTable)
+function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
     
     local selector = math.random ( 100 )
     local objIndicator
@@ -72,22 +72,6 @@ local function createObjects(mainGroup,objectSheet,objTable)
     end
 
     newObject:applyTorque( math.random( -6,6 ) )
-end
-
-function functionLivFour.gameLoop(mainGroup,objectSheet,objTable)
-    createObjects(mainGroup,objectSheet,objTable)
-    -- Remove rams which have drifted off screen
-    for i = #objTable, 1, -1 do
-        local thisRam = objTable[i]
-        if ( thisRam.x < -100 or
-             thisRam.x > display.contentWidth + 100 or
-             thisRam.y < -100 or
-             thisRam.y > display.contentHeight + 100 )
-        then
-            display.remove( thisRam )
-            table.remove( objTable, i )
-        end
-    end
 end
 
 return functionLivFour

@@ -52,12 +52,6 @@ function costantiSchermo.clockTextInit(time, seconds)
     
 end
 
-function costantiSchermo.finalizeLoop()
-    timer.cancel(costantiSchermo.timer)
-end
-
-
-
 return costantiSchermo
 
 
