@@ -11,16 +11,16 @@ function costantiSchermo.resumeLoop()
     isStopped = false
 end
  
-local function finishTime(secondsLeft)
+local function finishTime(secondsLeft,playerState)
     if secondsLeft == 0 then
-    composer.setVariable( "finalScore", score )
+    composer.setVariable( "finalScore", playerState.score )
     composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
     return true
     end
 end
 
 
-local function updateTime( event )
+local function updateTime( event,playerState )
 
     if (isStopped == true) then
         return
@@ -37,17 +37,19 @@ local function updateTime( event )
         
     -- Update the text object
     costantiSchermo.clockText = timeDisplay
-    if(finishTime(costantiSchermo.secondsLeft)) then
-        --transition.fadeOut(costantiSchermo.clockText,{ time=800 })
+    if(finishTime(costantiSchermo.secondsLeft,playerState)) then
         timer.cancel(costantiSchermo.timer)
     end
 end
 
-function costantiSchermo.clockTextInit(time, seconds)
+function costantiSchermo.clockTextInit(time, seconds,playerState)
     costantiSchermo.clockText = time
     -- sceneGroup:insert(costantiSchermo.clockText)
     costantiSchermo.secondsLeft = seconds
-    costantiSchermo.timer = timer.performWithDelay(1000, updateTime, 0)    
+    function updateNoParam()
+        updateTime(event,playerState)
+    end
+    costantiSchermo.timer = timer.performWithDelay(1000, updateNoParam, 0)    
 end
 
 function costantiSchermo.finalizeLoop()

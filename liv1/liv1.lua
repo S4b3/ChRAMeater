@@ -13,13 +13,12 @@ physics.setGravity( 0, 0 )
 
 math.randomseed( os.time() )
 local objectSheet = costanti.objectSheet()
-local playerState = {lives, score, died}
+local playerState = {}
 
 playerState.lives = 3
 playerState.score = 0
 playerState.died = false
 
-local testo -- variabile di prova
 function playerState.setScore(value)
     playerState.score = value
 end
@@ -33,6 +32,7 @@ function playerState.setDied(bool)
 end
 
 local clockText
+local timeText -- variabile che mostra il tmepo rimanente
 local livesText
 local scoreText
 local objTable = {}
@@ -136,20 +136,18 @@ function scene:create( event )
 
 	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
 	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
-    --clockText = display.newText( uiGroup, "02:00", 600, 80, native.systemFont, 36 )
-    costantiSchermo.clockTextInit("03:30", 5)
-    testo = costantiSchermo.clockText
-    clockText = display.newText( uiGroup, testo, 600, 80, native.systemFont, 36 )
+    costantiSchermo.clockTextInit("03:30", 15,playerState)
+    timeText = costantiSchermo.clockText
+    clockText = display.newText( uiGroup, timeText, 600, 80, native.systemFont, 36 )
     function uppa()
         clockText.text = costantiSchermo.clockText
     end 
-    timer.performWithDelay(10, uppa, 0)
+    timer.performWithDelay(1, uppa, 0)
     playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
 end
 
 -- show()
 function scene:show( event )
-
 	local sceneGroup = self.view
 	local phase = event.phase
 
