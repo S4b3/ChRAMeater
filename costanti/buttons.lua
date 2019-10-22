@@ -1,23 +1,30 @@
 local widget = require "widget"
 local gameFunctions = require ("utility.gameFunctions")
 local sounds = require ("costanti.sounds")
+local costantiSchermo = require("costanti.costantiSchermo")
 local composer = require "composer"
 
+
+--dichiaro i vari bottoni implementati nella table.
 local buttons = {}
 buttons.musicButton = {}
 buttons.musicButton.show = {}
 buttons.effectsButton = {}
 buttons.effectsButton.show = {}
+buttons.homeButton = {}
+buttons.homeButton.show = {}
 buttons.buttonsMenu = {}
 buttons.buttonsMenu.show = {}
 buttons.buttonsMenu.closeMenuButton = {}
 buttons.buttonsMenu.closeMenuButton.show = {}
 
-
+--Variabile necessaria all'over semitrasparente sullo schermo nel momento in cui premo pausa.
 local blackScreen = display.newRect(display.contentCenterX, display.contentCenterY, display.actualContentWidth, display.actualContentHeight)
 blackScreen:setFillColor("black", 0.5)
 blackScreen.isVisible = false
 
+--Funzione di tap sul bottone "musicale":
+--rimuove o riaggiunge il volume al canale audio responsabile della musica
 function buttons.onMusicTapEffect(button)
     if(not button.pressed) then
         audio.setVolume(0, { channel = 1 } )
@@ -26,6 +33,8 @@ function buttons.onMusicTapEffect(button)
     end
 end
 
+--Funzione di tap sul bottone per gli "effetti"
+--rimuove o riaggiunge il volume al canale audio responsabile degli effetti
 function buttons.onEffectsTapEffect(button)
     if(not button.pressed) then
         audio.setVolume(0, { channel = 2 } )
@@ -34,6 +43,24 @@ function buttons.onEffectsTapEffect(button)
     end
 end
 
+--Funzione di tap sul bottone "Home"
+--TODO: Necessario implementare una funzione di 'abbandono' della partita in corso, vedi composer.scene
+--che fermi il timer e non faccia salvare l'highscore della partita corrente.
+--Potremmo invece implementare direttamente il bottone di abbandono della partita che la interrompa salvandone lo score?
+function buttons.onHomeTapEffect(button)
+    local currentScene = composer.getSceneName("current")
+    if not (currentScene == "menu" or currentScene == "highscores" or
+        currentScene == "selectionLevelPage" or currentScene == "liv2") then
+            costantiSchermo.finalizeLoop()
+        end
+    composer.gotoScene("menu")
+end
+
+--Funzione di tap sul bottone "closeMenuButton"
+--Se il bottone ha pressed = true, allora parte una transizione di movimento della componente del menubottoni
+--verso sinistra con l'apparizione di una rect con alpha 0.5 e pause della partita*.
+--In caso contrario la transizione è verso destra, con rimozione del rect e resume della partita*.
+--*Se si è in partita
 function buttons.onCloseMenuTapEffect(button)
     if(buttons.effectsButton.show.x == nil) then
         buttons.effectsButton.show.x = display.contentWidth - 40
@@ -45,6 +72,7 @@ function buttons.onCloseMenuTapEffect(button)
         transition.to(buttons.buttonsMenu.show, {time = 200, x = buttons.buttonsMenu.show.x - 200})
         transition.to(buttons.musicButton.show, {time = 200, x = buttons.musicButton.show.x - 200})
         transition.to(buttons.effectsButton.show, {time = 200, x = buttons.effectsButton.show.x - 200})
+        transition.to(buttons.homeButton.show, {time = 200, x = buttons.homeButton.show.x - 200})
         transition.to(button, {rotation=180, time = 200, x = button.x - 160})
         buttons.buttonsMenu.closeMenuButton.pressed = true
         blackScreen.isVisible = true
@@ -53,6 +81,7 @@ function buttons.onCloseMenuTapEffect(button)
         transition.to(buttons.buttonsMenu.show, {time = 200, x = buttons.buttonsMenu.show.x + 200})
         transition.to(buttons.musicButton.show, {time = 200, x = buttons.musicButton.show.x + 200})
         transition.to(buttons.effectsButton.show, {time = 200, x = buttons.effectsButton.show.x + 200})
+        transition.to(buttons.homeButton.show, {time = 200, x = buttons.homeButton.show.x + 200})
         transition.to(button, {rotation=0, time = 200, x = button.x + 160})
         buttons.buttonsMenu.closeMenuButton.pressed = false
         blackScreen.isVisible = false
@@ -102,9 +131,9 @@ function buttons.onSwappableTap(event)
 end
 
 function buttons.buttonsInit(sceneGroup)
-    buttons.buttonsMenu.show = display.newImageRect("images/buttons/buttonsMenu.png", 300, 300)
+    buttons.buttonsMenu.show = display.newImageRect("images/buttons/buttonsMenu.png", 300, 400)
     buttons.buttonsMenu.show.x = display.contentWidth + 140
-    buttons.buttonsMenu.show.y = display.contentCenterY-650
+    buttons.buttonsMenu.show.y = display.contentCenterY-600
 
     buttons.buttonsMenu.closeMenuButton.show = display.newImageRect("images/buttons/closeMenuButton.png", 40, 100)
     buttons.buttonsMenu.closeMenuButton.show.x = buttons.buttonsMenu.show.x-160
@@ -138,6 +167,14 @@ function buttons.buttonsInit(sceneGroup)
     buttons.effectsButton.show:addEventListener("tap", buttons.onSwappableTap)
     buttons.effectsButton.show.onTapEffect = buttons.onEffectsTapEffect
     buttons.effectsButton.show.name = "effectsButton"
+
+    buttons.homeButton.show = display.newImageRect("images/buttons/homeButton.png", 100, 100)
+    buttons.homeButton.show.x = display.contentWidth + 140
+    buttons.homeButton.show.y = display.contentCenterY -500
+    buttons.homeButton.show.pressed = false
+    buttons.homeButton.show:addEventListener("tap", buttons.onNonSwappableTap)
+    buttons.homeButton.show.onTapEffect = buttons.onHomeTapEffect
+    buttons.homeButton.show.name = "homeButton"
 
 end
 

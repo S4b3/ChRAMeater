@@ -50,6 +50,11 @@ function costantiSchermo.clockTextInit(time, seconds)
     costantiSchermo.timer = timer.performWithDelay(1000, updateTime, 0)    
 end
 
+function costantiSchermo.finalizeLoop()
+    transition.fadeOut(costantiSchermo.clockText,  { time = 1 })
+    timer.cancel(costantiSchermo.timer)
+end
+
 return costantiSchermo
 
 
