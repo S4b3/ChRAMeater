@@ -57,8 +57,6 @@ function costantiSchermo.finalizeLoop()
     timer.cancel(costantiSchermo.timer)
 end
 
-
-
 return costantiSchermo
 
 

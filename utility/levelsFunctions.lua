@@ -1,6 +1,9 @@
-local liv1 = require("liv1.functionLivOne")
-
 local levelsFunction = {}
+local liv1 = require("liv1.functionLivOne")
+local liv2 = require("liv2.functionLivTwo")
+local liv3 = require("liv3.functionLivThree")
+local liv4 = require("liv4.functionLivFour")
+local levels= {liv1,liv2,liv3,liv4}
 
 local isStopped = false
 
@@ -9,8 +12,9 @@ function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
         return
     end
     if(intLevel == 1) then
-        liv1.createObjects(mainGroup,objectSheet,objTable)
+        --liv1.createObjects(mainGroup,objectSheet,objTable)
     end
+    levels[intLevel].createObjects(mainGroup,objectSheet,objTable)
     -- Remove rams which have drifted off screen
     for i = #objTable, 1, -1 do
         local thisRam = objTable[i]

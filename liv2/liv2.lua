@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
-local functionLivTwo = require"liv2.functionLivTwo"
+local levelsFunctions = require"utility.levelsFunctions"
 local objectsFunctions = require "utility.objectsFunctions"
 
 local scene = composer.newScene()
@@ -12,7 +12,7 @@ physics.setGravity(0,0)
 
 math.randomseed( os.time() )
 local objectSheet = costanti.objectSheet()
-local playerState = {lives, score, died}
+local playerState = {}
 
 playerState.lives = 3
 playerState.score = 0
@@ -39,7 +39,7 @@ local mainGroup
 local uiGroup
 
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    functionLivTwo.gameLoop(mainGroup,objectSheet,objTable)
+    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable,2)
 end
 
 local function resizeChram() --mi serve poter passare la funzione senza parametri
