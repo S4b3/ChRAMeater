@@ -29,6 +29,8 @@ function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
     end
 end
 
+
+
 function levelsFunction.pauseLoop()
     isStopped = true
 end
