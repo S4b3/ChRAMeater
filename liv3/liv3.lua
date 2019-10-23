@@ -128,7 +128,7 @@ function scene:create( event )
 	background.x = display.contentCenterX
 	background.y = display.contentCenterY
 
-    playerChram = display.newImageRect(mainGroup, objectSheet, 2, 120, 120)
+    playerChram = display.newImageRect(mainGroup, objectSheet, 2, 180, 180)
 	playerChram.x = display.contentCenterX
 	playerChram.y = display.contentHeight - 150
 	physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
@@ -174,8 +174,8 @@ function scene:hide( event )
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
 		physics.pause()
-		composer.removeScene( "liv3.liv3" )
-    end
+        composer.removeScene( "liv3.liv3" )
+        end
 end
 
 -- destroy()

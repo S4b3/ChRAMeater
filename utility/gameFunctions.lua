@@ -17,7 +17,7 @@ physics.setGravity( 0, 0 )
 function gameFunctions.resizeChram(playerChram)
     if(playerChram.contentWidth == nil or playerChram.contentHeight == nil) then
         return end
-    playerChram : scale(1.009, 1.009)
+    playerChram : scale(1.011, 1.011)
     timer.performWithDelay(1)
     physics.removeBody(playerChram)
     physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )

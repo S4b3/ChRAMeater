@@ -27,7 +27,7 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
     if(mainGroup==nil or objectSheet==nil) then
         return end
     local newObject = display.newImage( mainGroup, objectSheet, objIndicator)
-    newObject:scale(0.2, 0.2)
+    newObject:scale(0.25, 0.25)
     table.insert( objTable, newObject )
 
     --{ radius=(newObject.contentWidth/2, newObject.contentHeight/2), bounce=0.8 }
