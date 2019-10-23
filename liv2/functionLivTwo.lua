@@ -30,7 +30,7 @@ function functionLivTwo.createObjects(mainGroup,objectSheet,objTable)
     if(mainGroup==nil or objectSheet==nil) then
         return end
     local newObject = display.newImage( mainGroup, objectSheet, objIndicator)
-    newObject:scale(0.2, 0.2)
+    newObject:scale(0.25, 0.25)
     table.insert( objTable, newObject )
 
     if(objName=="ram2GB") then

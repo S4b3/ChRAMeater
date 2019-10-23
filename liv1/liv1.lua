@@ -128,7 +128,7 @@ function scene:create( event )
 	background.x = display.contentCenterX
 	background.y = display.contentCenterY
 
-    playerChram = display.newImageRect(mainGroup, objectSheet, 2, 120, 120)
+    playerChram = display.newImageRect(mainGroup, objectSheet, 2, 180, 180)
 	playerChram.x = display.contentCenterX
 	playerChram.y = display.contentHeight - 150
 	physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
@@ -136,7 +136,7 @@ function scene:create( event )
 
 	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
 	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
-    costantiSchermo.clockTextInit("03:30", 15,playerState)
+    costantiSchermo.clockTextInit("02:00", 120,playerState)
     timeText = costantiSchermo.clockText
     clockText = display.newText( uiGroup, timeText, 600, 80, native.systemFont, 36 )
     function uppa()

@@ -49,10 +49,11 @@ end
 --Potremmo invece implementare direttamente il bottone di abbandono della partita che la interrompa salvandone lo score?
 function buttons.onHomeTapEffect(button)
     local currentScene = composer.getSceneName("current")
-    if not (currentScene == "menu" or currentScene == "highscores" or
-        currentScene == "selectionLevelPage" or currentScene == "liv2") then
-            costantiSchermo.finalizeLoop()
-        end
+    if (currentScene == "menu" or currentScene == "highscores" or currentScene == "selectionLevelPage" or currentScene == "liv2.liv2" or currentScene == "liv4.liv4") then
+        composer.gotoScene("menu")
+        return
+    end
+    costantiSchermo.finalizeLoop()
     composer.gotoScene("menu")
 end
 
@@ -73,7 +74,7 @@ function buttons.onCloseMenuTapEffect(button)
         transition.to(buttons.musicButton.show, {time = 200, x = buttons.musicButton.show.x - 200})
         transition.to(buttons.effectsButton.show, {time = 200, x = buttons.effectsButton.show.x - 200})
         transition.to(buttons.homeButton.show, {time = 200, x = buttons.homeButton.show.x - 200})
-        transition.to(button, {rotation=180, time = 200, x = button.x - 160})
+        transition.to(button, {rotation=180, time = 200, x = button.x - 153})
         buttons.buttonsMenu.closeMenuButton.pressed = true
         blackScreen.isVisible = true
         gameFunctions.pauseGame()
@@ -82,7 +83,7 @@ function buttons.onCloseMenuTapEffect(button)
         transition.to(buttons.musicButton.show, {time = 200, x = buttons.musicButton.show.x + 200})
         transition.to(buttons.effectsButton.show, {time = 200, x = buttons.effectsButton.show.x + 200})
         transition.to(buttons.homeButton.show, {time = 200, x = buttons.homeButton.show.x + 200})
-        transition.to(button, {rotation=0, time = 200, x = button.x + 160})
+        transition.to(button, {rotation=0, time = 200, x = button.x + 153})
         buttons.buttonsMenu.closeMenuButton.pressed = false
         blackScreen.isVisible = false
         
@@ -135,9 +136,9 @@ function buttons.buttonsInit(sceneGroup)
     buttons.buttonsMenu.show.x = display.contentWidth + 140
     buttons.buttonsMenu.show.y = display.contentCenterY-600
 
-    buttons.buttonsMenu.closeMenuButton.show = display.newImageRect("images/buttons/closeMenuButton.png", 40, 100)
+    buttons.buttonsMenu.closeMenuButton.show = display.newImageRect("images/buttons/closeMenuButton.png", 50, 125)
     buttons.buttonsMenu.closeMenuButton.show.x = buttons.buttonsMenu.show.x-160
-    buttons.buttonsMenu.closeMenuButton.show.y = buttons.buttonsMenu.show.y/2+100 --+ 120
+    buttons.buttonsMenu.closeMenuButton.show.y = buttons.buttonsMenu.show.y --+ 120
     buttons.buttonsMenu.closeMenuButton.show.pressed = false
 
     buttons.buttonsMenu.closeMenuButton.show:addEventListener("tap", buttons.onNonSwappableTap)
