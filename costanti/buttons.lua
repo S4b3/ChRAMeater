@@ -208,11 +208,11 @@ end
 --buttons.musicButton:addEventListener("tap", buttons.onTap )
 function buttons.menuButtonsInit(sceneGroup)
     -- crea bottone Play
-	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, native.systemFont, 45 )
+	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, native.systemFont, 70 )
 	playButton:setFillColor( 0.82, 0.86, 1 )
 	playButton:addEventListener("tap", onPlayTap)
 	-- crea bottone Highscores
-	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 1300, native.systemFont, 45 )
+	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 1300, native.systemFont, 70 )
 	highScoresButton:setFillColor( 0.75, 0.78, 1 )
     highScoresButton:addEventListener( "tap", onHighscoresTap )
 
@@ -229,7 +229,7 @@ local function gotoMenu()
 end
 
 function buttons.goToMenuInit(sceneGroup, yValue)
-    local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, yValue, native.systemFont, 44 )
+    local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, yValue, native.systemFont, 70 )
     menuButton:setFillColor( 0.75, 0.78, 1 )
     menuButton:addEventListener( "tap", gotoMenu )
 end
