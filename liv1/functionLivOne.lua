@@ -40,7 +40,7 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
     end
     newObject.myName = objName
 
-    local whereFrom = math.random( 3 )
+    local whereFrom = math.random( 4 )
 
     if ( whereFrom == 1 ) then
         -- From the left
@@ -48,12 +48,12 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
         newObject.y = math.random( 500 )
         --newObject:setLinearVelocity( math.random( 40,120 ), math.random( 20,60 ) )
         newObject:setLinearVelocity( math.random( 80,160 ), math.random( 40,70 ) )
-    elseif ( whereFrom == 2 ) then
+    elseif ( whereFrom == 2 or whereFrom == 4) then
         -- From the top
         newObject.x = math.random( display.contentWidth )
-        newObject.y = -60
+        newObject.y = 0
         --newObject:setLinearVelocity( math.random( -40,40 ), math.random( 40,120 ) )
-        newObject:setLinearVelocity( math.random( -70,70 ), math.random( 80,160 ) )
+        newObject:setLinearVelocity( math.random( -110,110 ), math.random( 120,360 ) )
     elseif ( whereFrom == 3 ) then
         -- From the right
         newObject.x = display.contentWidth + 60

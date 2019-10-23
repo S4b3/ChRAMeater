@@ -157,7 +157,7 @@ function scene:show( event )
         -- Code here runs when the scene is entirely on screen
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
-        gameLoopTimer = timer.performWithDelay( 700, gameLoop, 0 )
+        gameLoopTimer = timer.performWithDelay( 400, gameLoop, 0 )
     end
 end
 
