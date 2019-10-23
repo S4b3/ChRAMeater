@@ -159,7 +159,7 @@ function scene:show( event )
         gameFunctions.versus("images/versus/RAMzillaVs.png")
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
-        gameLoopTimer = timer.performWithDelay( 700, gameLoop, 0 )
+        gameLoopTimer = timer.performWithDelay( 400, gameLoop, 0 )
     end
 end
 
