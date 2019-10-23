@@ -1,10 +1,10 @@
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
-local functionLivOne = require "liv1.functionLivOne"
 local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require "utility.levelsFunctions"
-local secondsLeft = 200
+local costantiSchermo = require "costanti.costantiSchermo"
+
 local scene = composer.newScene()
 
 local physics = require( "physics" )
@@ -13,7 +13,7 @@ physics.setGravity( 0, 0 )
 
 math.randomseed( os.time() )
 local objectSheet = costanti.objectSheet()
-local playerState = {lives, score, died}
+local playerState = {}
 
 playerState.lives = 3
 playerState.score = 0
@@ -32,6 +32,7 @@ function playerState.setDied(bool)
 end
 
 local clockText
+local timeText -- variabile che mostra il tempo rimanente
 local livesText
 local scoreText
 local objTable = {}
@@ -53,28 +54,6 @@ end
 local function updateLives()
     gameFunctions.updateLives(playerChram, playerState,livesText)
 end
-
-local function finishTime()
-    gameFunctions.finishTime(secondsLeft)
-end
-
-local function updateTime( event )
- 
-    -- Decrement the number of seconds
-    secondsLeft = secondsLeft - 1
- 
-    -- Time is tracked in seconds; convert it to minutes and seconds
-    local minutes = math.floor( secondsLeft / 60 )
-    local seconds = secondsLeft % 60
- 
-    -- Make it a formatted string
-    local timeDisplay = string.format( "%02d:%02d", minutes, seconds )
-     
-    -- Update the text object
-    clockText.text = timeDisplay
-end
-
-local countDownTimer = timer.performWithDelay( 1000, updateTime, secondsLeft )
 
 local function onCollision( event )
     if ( event.phase == "began" ) then
@@ -126,14 +105,14 @@ end
 -- -----------------------------------------------------------------------------------
 
 -- -----------------------------------------------------------------------------------
--- Scene event functions
+-- Funzioni della scena evento
 -- -----------------------------------------------------------------------------------
 
 -- create()
 function scene:create( event )
 
 	local sceneGroup = self.view
-	-- Code here runs when the scene is first created but has not yet appeared on screen
+	-- Il codice viene eseguito quando la scena è creata ma non è ancora apparsa sullo schermo
 	physics.pause()
 
 	backGroup = display.newGroup()
@@ -157,7 +136,13 @@ function scene:create( event )
 
 	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
 	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
-    clockText = display.newText( uiGroup,"02:00", 600, 80, native.systemFont, 36 )
+    costantiSchermo.clockTextInit("03:00", 180,playerState)
+    timeText = costantiSchermo.clockText
+    clockText= display.newText( uiGroup, timeText, 600, 80,native.systemFont, 36)
+    function uppa()
+        clockText.text = costantiSchermo.clockText
+    end 
+    timer.performWithDelay(1, uppa, 0)
     playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
 end
 
@@ -174,7 +159,6 @@ function scene:show( event )
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
         gameLoopTimer = timer.performWithDelay( 700, gameLoop, 0 )
-        checktimer = timer.performWithDelay(1000,finishTime,0)
     end
 end
 
@@ -186,13 +170,11 @@ function scene:hide( event )
         -- Code here runs when the scene is on screen (but is about to go off screen)
 		timer.cancel( gameLoopTimer )
         gameLoopTimer=nil
-        timer.cancel( checktimer)
-		checktimer=nil
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
 		physics.pause()
-		composer.removeScene( "liv1.liv1" )
+		composer.removeScene( "liv3.liv3" )
     end
 end
 
