@@ -136,7 +136,7 @@ function scene:create( event )
 
 	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
 	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
-    costantiSchermo.clockTextInit("03:30", 15,playerState)
+    costantiSchermo.clockTextInit("01:30",90,playerState)
     timeText = costantiSchermo.clockText
     clockText = display.newText( uiGroup, timeText, 600, 80, native.systemFont, 36 )
     function uppa()
