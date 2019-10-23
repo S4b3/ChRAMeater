@@ -92,6 +92,7 @@ function buttons.onCloseMenuTapEffect(button)
 end
 
 function buttons.buttonSwitcheroo(button, target)
+    --creazione del clone dell'immagine che andrà a sostituire la precedente
     button.x = target.x
     button.y = target.y
     button.imageIfTapped = target.imageIfTapped
@@ -99,6 +100,7 @@ function buttons.buttonSwitcheroo(button, target)
     button.onTapEffect = target.onTapEffect
     button.name = target.name
     button:addEventListener("tap", buttons.onSwappableTap)
+    --cancellazione dell'immagine precedente
     target:removeSelf()
 end
 
@@ -111,18 +113,23 @@ function buttons.onSwappableTap(event)
 
     if(event.target.name == "musicButton") then
         if(buttons.musicButton.show.pressed) then
+            --creazione dell'icona audio se non toccata
+
             buttons.musicButton.show = display.newImageRect(buttons.musicButton.show.imageIfNotTapped, 100, 100)
             buttons.musicButton.show.pressed = false
         else
+            --creazione dell'icona audio sbarrata se toccata
             buttons.musicButton.show = display.newImageRect(buttons.musicButton.show.imageIfTapped, 100, 100)
             buttons.musicButton.show.pressed = true
         end
         buttons.buttonSwitcheroo(buttons.musicButton.show, event.target)
     elseif(event.target.name == "effectsButton") then
         if(buttons.effectsButton.show.pressed) then
+            --creazione dell'icona effetti se non toccata
             buttons.effectsButton.show = display.newImageRect(buttons.effectsButton.show.imageIfNotTapped, 100, 100)
             buttons.effectsButton.show.pressed = false
         else
+            --creazione dell'icona effetti sbarrata se toccata
             buttons.effectsButton.show = display.newImageRect(buttons.effectsButton.show.imageIfTapped, 100, 100)
             buttons.effectsButton.show.pressed = true
         end
