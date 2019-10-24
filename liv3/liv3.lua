@@ -134,11 +134,11 @@ function scene:create( event )
 	physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
 	playerChram.myName = "Chram"
 
-	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
-	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
-    costantiSchermo.clockTextInit("03:00", 180,playerState)
+	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 130, native.systemFont, 50 )
+	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 500, 130, native.systemFont, 50 )
+    costantiSchermo.clockTextInit("01:30",90,playerState)
     timeText = costantiSchermo.clockText
-    clockText= display.newText( uiGroup, timeText, 600, 80,native.systemFont, 36)
+    clockText = display.newText( uiGroup, timeText, 800, 130, native.systemFont, 50 )
     function uppa()
         clockText.text = costantiSchermo.clockText
     end 

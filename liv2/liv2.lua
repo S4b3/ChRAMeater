@@ -138,8 +138,8 @@ function scene:create( event )
     playerChram.gravityScale = 0.0
 	playerChram.myName = "Chram"
 
-	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
-	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
+	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 130, native.systemFont, 50 )
+	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 500, 130, native.systemFont, 50 )
 
 	playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
 
