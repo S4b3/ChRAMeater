@@ -65,4 +65,24 @@ function gameFunctions.resumeGame()
     costantiSchermo.resumeLoop()
 end
 
+
+function gameFunctions.versus(enemy)
+    gameFunctions.pauseGame()
+
+    local chram = display.newImageRect("images/versus/ChRAMvs.png", 1111*1.30, 1795*1.30)
+    chram.x = 2*display.contentCenterX
+    chram.y = display.contentCenterY
+    local opponent = display.newImageRect(enemy, 1111*1.30, 1795*1.30)
+    opponent.x = -display.contentCenterX
+    opponent.y = display.contentCenterY
+    function fadeout()
+        
+        transition.fadeOut(chram, {time = 1500, delay = 500})
+        transition.fadeOut(opponent, {time = 1500, delay = 500, onComplete = gameFunctions.resumeGame})
+    end
+    transition.to(chram, {time = 300, x = display.contentCenterX})
+    transition.to(opponent, {time = 300, x = display.contentCenterX, onComplete = fadeout})
+
+end
+
 return gameFunctions

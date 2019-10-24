@@ -152,9 +152,11 @@ function scene:show( event )
 	local phase = event.phase
 
 	if ( phase == "will" ) then
-		-- Code here runs when the scene is still off screen (but is about to come on screen)
+        -- Code here runs when the scene is still off screen (but is about to come on screen)
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
+
+        gameFunctions.versus("images/versus/RAMzillaVs.png")
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
         gameLoopTimer = timer.performWithDelay( 400, gameLoop, 0 )
