@@ -1,8 +1,8 @@
 local levelsFunction = {}
-local liv1 = require("liv1.functionLivOne")
-local liv2 = require("liv2.functionLivTwo")
-local liv3 = require("liv3.functionLivThree")
-local liv4 = require("liv4.functionLivFour")
+local liv1 = require("levels.liv1.functionLivOne")
+local liv2 = require("levels.liv2.functionLivTwo")
+local liv3 = require("levels.liv3.functionLivThree")
+local liv4 = require("levels.liv4.functionLivFour")
 local levels= {liv1,liv2,liv3,liv4}
 
 local isStopped = false

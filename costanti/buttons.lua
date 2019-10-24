@@ -49,7 +49,7 @@ end
 --Potremmo invece implementare direttamente il bottone di abbandono della partita che la interrompa salvandone lo score?
 function buttons.onHomeTapEffect(button)
     local currentScene = composer.getSceneName("current")
-    if (currentScene == "menu" or currentScene == "highscores" or currentScene == "selectionLevelPage" or currentScene == "liv2.liv2" or currentScene == "liv4.liv4") then
+    if (currentScene == "menu" or currentScene == "highscores" or currentScene == "selectionLevelPage" or currentScene == "levels.liv2.liv2" or currentScene == "levels.sliv4.liv4") then
         composer.gotoScene("menu")
         return
     end

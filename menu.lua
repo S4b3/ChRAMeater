@@ -31,7 +31,7 @@ function scene:create( event )
 		numFrames = 25
 	}
 	-- variabile immagine Chrome statica
-	local sheetChram = graphics.newImageSheet( "sprites/ChramSprite.png", sheetChramOptions )
+	local sheetChram = graphics.newImageSheet( "images/sprites/ChramSprite.png", sheetChramOptions )
 	
 	-- sequenza di immagini consecutive
 	local sequences_chram = {
@@ -68,7 +68,6 @@ end
 function scene:show( event )
 	local sceneGroup = self.view
 	local phase = event.phase
-	
 	if phase == "will" then
 		-- chiamata quando la scena è ancora spenta e sta per essere mostrata
 	elseif phase == "did" then

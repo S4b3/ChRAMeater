@@ -15,7 +15,7 @@ selectionSound = sounds.selectionSound
 
 local function goToLevel(liv)
 	-- mi rimanda alla scena "livX.livX" usata come convenzione per indicare la pagina dei livelli
-	composer.gotoScene( liv .. "." .. liv, { time=800, effect="crossFade" } )
+	composer.gotoScene( "levels." .. liv .. "." .. liv, { time=800, effect="crossFade" } )
 	audio.play(selectionSound)
 	return true	-- indica il tocco successivo
 end
