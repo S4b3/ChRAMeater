@@ -57,6 +57,10 @@ function scene:create( event )
 	titleLogo.x = display.contentCenterX
 	titleLogo.y = 200
 	
+	--GOTOMOZILLAFIGHT
+	local goToMozillaFight = display.newText("GO TO BOSS FIGHT", display.contentCenterX, display.contentHeight - 700,native.systemFont, 100)
+	goToMozillaFight:addEventListener("tap", function () composer.gotoScene("levels.boss.ramzillaLevel") goToMozillaFight:removeSelf() end)
+
 	-- tutti gli oggetti del display devono essere inseriti nel gruppo
 	sceneGroup:insert( background )
 	sceneGroup:insert( titleLogo )

@@ -44,7 +44,7 @@ local uiGroup
 --Passiamo riferimento al livello corrente,
 --questo ci permetterà di accedere alla funzione di creazione oggetti corretta
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable, 1)
+    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable, "ramzilla")
 end
 
 local function resizeChram() --mi serve poter passare la funzione senza parametri
@@ -76,6 +76,8 @@ local function onCollision( event )
             elseif(obj2.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, updateLives)
+            elseif(obj2.myName=="projectile") then
+                timer.performWithDelay(1, updateLives)
             end
         end
         if(obj2.myName == "Chram") then
@@ -93,6 +95,8 @@ local function onCollision( event )
                 scoreText.text = "Score: " .. playerState.score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj1,objTable)
+                timer.performWithDelay(1, updateLives)
+            elseif(obj1.myName=="projectile") then
                 timer.performWithDelay(1, updateLives)
             end
         end
@@ -169,7 +173,7 @@ function scene:show( event )
         --
         
         Runtime:addEventListener( "collision", onCollision )
-        gameLoopTimer = timer.performWithDelay( 400, gameLoop, 0 )
+        gameLoopTimer = timer.performWithDelay( 1000, gameLoop, 0 )
     end
 end
 

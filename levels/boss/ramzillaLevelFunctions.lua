@@ -1,5 +1,5 @@
 local costantiOggetti = require("costanti.costantiOggetti")
-local functionLivOne = {}
+local ramzillaLevelsFunctions = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
 local smallRamShape = costantiOggetti.getSmallRamShape();
@@ -10,15 +10,15 @@ physics.setGravity( 0, 0 )
 
 local isStopped = false
 -------------------------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------------------
-function functionLivOne.stopCreating()
+function ramzillaLevelsFunctions.stopCreating()
     isStopped = true
 end
 
-function functionLivOne.startCreating()
+function ramzillaLevelsFunctions.startCreating()
     isStopped = false
 end
 
-function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
+function ramzillaLevelsFunctions.createObjects(mainGroup,objectSheet,objTable)
     if(isStopped) then
         return
     end
@@ -79,4 +79,4 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
     newObject:applyTorque( math.random( -6,6 ) )
 end
 
-return functionLivOne
+return ramzillaLevelsFunctions

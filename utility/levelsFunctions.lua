@@ -5,6 +5,9 @@ local liv3 = require("levels.liv3.functionLivThree")
 local liv4 = require("levels.liv4.functionLivFour")
 local levels= {liv1,liv2,liv3,liv4}
 
+local ramzillaLF = require("levels.boss.ramzillaLevelFunctions")
+
+
 local isStopped = false
 
 function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
@@ -14,7 +17,11 @@ function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
     if(intLevel == 1) then
         --liv1.createObjects(mainGroup,objectSheet,objTable)
     end
-    levels[intLevel].createObjects(mainGroup,objectSheet,objTable)
+    if(intLevel == "ramzilla") then
+        ramzillaLF.createObjects(mainGroup, objectSheet, objTable)
+    else
+        levels[intLevel].createObjects(mainGroup,objectSheet,objTable)
+    end
     -- Remove rams which have drifted off screen
     for i = #objTable, 1, -1 do
         local thisRam = objTable[i]
@@ -28,8 +35,6 @@ function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
         end
     end
 end
-
-
 
 function levelsFunction.pauseLoop()
     isStopped = true
