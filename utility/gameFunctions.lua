@@ -3,6 +3,7 @@ local costantiOggetti = require("costanti.costantiOggetti")
 local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require("utility.levelsFunctions")
 local costantiSchermo = require("costanti.costantiSchermo")
+local player = require("costanti.player")
 local gameFunctions = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
@@ -25,6 +26,7 @@ end
 
 function gameFunctions.endGame(score)
     --composer.gotoScene( "menu", { time=800, effect="crossFade" } )
+    levelsFunctions.removeBoss()
     composer.setVariable( "finalScore", score )
     composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
 end
@@ -83,6 +85,64 @@ function gameFunctions.versus(enemy)
     transition.to(chram, {time = 300, x = display.contentCenterX})
     transition.to(opponent, {time = 300, x = display.contentCenterX, onComplete = fadeout})
 
+end
+
+local function resizeChram() --mi serve poter passare la funzione senza parametri
+    gameFunctions.resizeChram(player.playerChram)
+end
+
+local function updateLives()
+    gameFunctions.updateLives(player.playerChram, costantiOggetti.playerState, costantiSchermo.livesText)
+end
+
+function gameFunctions.onCollision( event, objTable )
+    if ( event.phase == "began" ) then
+        local obj1 = event.object1
+        local obj2 = event.object2
+
+        if(obj1.myName == "Chram") then
+            if(obj2.myName == "ram2GB" ) then
+                display.remove(obj2)
+                objectsFunctions.removeFromTable(obj2,objTable)
+                timer.performWithDelay( 1, resizeChram)
+                costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 2)
+                costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
+            elseif(obj2.myName=="ram8GB") then
+                display.remove(obj2)
+                objectsFunctions.removeFromTable(obj2,objTable)
+                timer.performWithDelay( 1, resizeChram,4)
+                costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 8)
+                costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
+            elseif(obj2.myName=="cacheCleaner") then
+                objectsFunctions.removeFromTable(obj2,objTable)
+                timer.performWithDelay(1, updateLives)
+            elseif(obj2.myName=="projectile") then
+                objectsFunctions.removeFromTable(obj1,objTable)
+                timer.performWithDelay(1, updateLives)
+            end
+        end
+        if(obj2.myName == "Chram") then
+            if(obj1.myName == "ram2GB" ) then
+                display.remove(obj1)
+                objectsFunctions.removeFromTable(obj1,objTable)
+                timer.performWithDelay( 1, resizeChram)
+                costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 2)
+                costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
+            elseif(obj1.myName=="ram8GB") then--
+                display.remove(obj1)
+                objectsFunctions.removeFromTable(obj1,objTable)
+                timer.performWithDelay( 1, resizeChram)
+                costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 8)
+                costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
+            elseif(obj1.myName=="cacheCleaner") then
+                objectsFunctions.removeFromTable(obj1,objTable)
+                timer.performWithDelay(1, updateLives)
+            elseif(obj1.myName=="projectile") then
+                objectsFunctions.removeFromTable(obj1,objTable)
+                timer.performWithDelay(1, updateLives)
+            end
+        end
+    end
 end
 
 return gameFunctions

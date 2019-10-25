@@ -1,16 +1,34 @@
 local costantiOggetti = require("costanti.costantiOggetti")
+local player = require("costanti.player")
 local functionLivFour = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
 local smallRamShape = costantiOggetti.getSmallRamShape();
 
 local physics = require( "physics" )
-
-
 physics.start()
 physics.setGravity( 0, 0 )
 
--------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI------------------------------------------
+local isStopped = false
+-------------------------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------------------
+function functionLivFour.stopCreating()
+    isStopped = true
+end
+
+function functionLivFour.startCreating()
+    isStopped = false
+end
+
+function functionLivFour.spawnBoss(sceneGroup)
+    --FuturoBoss
+    isStopped = true
+end
+
+function functionLivFour.removeBoss()
+    --FuturoBoss
+    isStopped = false
+end
+
 function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
     
     local selector = math.random ( 100 )

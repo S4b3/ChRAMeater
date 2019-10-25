@@ -4,18 +4,23 @@ local liv2 = require("levels.liv2.functionLivTwo")
 local liv3 = require("levels.liv3.functionLivThree")
 local liv4 = require("levels.liv4.functionLivFour")
 local levels= {liv1,liv2,liv3,liv4}
+local costantiSchermo = require("costanti.costantiSchermo")
 
 local ramzillaLF = require("levels.boss.ramzillaLevelFunctions")
 
 
 local isStopped = false
+local isBossSpawned = false
+local currentLevel
 
 function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
+    currentLevel = intLevel
     if (isStopped == true) then
         return
     end
-    if(intLevel == 1) then
-        --liv1.createObjects(mainGroup,objectSheet,objTable)
+    if(costantiSchermo.secondsLeft == 0 and not isBossSpawned) then
+        levels[intLevel].spawnBoss(mainGroup)
+        isBossSpawned = true
     end
     if(intLevel == "ramzilla") then
         ramzillaLF.createObjects(mainGroup, objectSheet, objTable)
@@ -33,6 +38,13 @@ function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
             display.remove( thisRam )
             table.remove( objTable, i )
         end
+    end
+end
+
+function levelsFunction.removeBoss()
+    if(isBossSpawned) then
+        isBossSpawned = false
+        levels[currentLevel].removeBoss()
     end
 end
 

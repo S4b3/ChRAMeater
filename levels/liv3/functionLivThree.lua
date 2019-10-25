@@ -1,5 +1,7 @@
 local costantiOggetti = require("costanti.costantiOggetti")
-local functionLivOne = {}
+--local futuroboss
+local player = require("costanti.player")
+local functionLivThree = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
 local smallRamShape = costantiOggetti.getSmallRamShape();
@@ -8,8 +10,31 @@ local physics = require( "physics" )
 physics.start()
 physics.setGravity( 0, 0 )
 
+local isStopped = false
 -------------------------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------------------
-function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
+function functionLivThree.stopCreating()
+    isStopped = true
+end
+
+function functionLivThree.startCreating()
+    isStopped = false
+end
+
+function functionLivThree.spawnBoss(sceneGroup)
+    --futureBossInit
+    isStopped = true
+end
+
+function functionLivThree.removeBoss()
+    --futureBossRemove
+    isStopped = false
+end
+
+function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
+    if(isStopped) then
+        return
+    end
+
     local selector = math.random ( 100 )
     local objIndicator
     local objName
@@ -65,7 +90,7 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
     newObject:applyTorque( math.random( -6,6 ) )
 end
 
-function functionLivOne.gameLoop(mainGroup,objectSheet,objTable)
+function functionLivThree.gameLoop(mainGroup,objectSheet,objTable)
     createObjects(mainGroup,objectSheet,objTable)
     -- Remove rams which have drifted off screen
     for i = #objTable, 1, -1 do
@@ -81,4 +106,4 @@ function functionLivOne.gameLoop(mainGroup,objectSheet,objTable)
     end
 end
 
-return functionLivOne
+return functionLivThree

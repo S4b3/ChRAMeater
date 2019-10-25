@@ -1,9 +1,9 @@
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
-local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require "utility.levelsFunctions"
 local costantiSchermo = require "costanti.costantiSchermo"
+local player = require "costanti.player"
 
 local scene = composer.newScene()
 
@@ -13,30 +13,10 @@ physics.setGravity( 0, 0 )
 
 math.randomseed( os.time() )
 local objectSheet = costanti.objectSheet()
-local playerState = {}
-
-playerState.lives = 3
-playerState.score = 0
-playerState.died = false
-
-function playerState.setScore(value)
-    playerState.score = value
-end
-
-function playerState.decrementLives()
-    playerState.lives = playerState.lives-1
-end
-
-function playerState.setDied(bool)
-    playerState.died = bool
-end
 
 local clockText
-local timeText -- variabile che mostra il tempo rimanente
-local livesText
-local scoreText
+local timeText -- variabile che mostra il tmepo rimanente
 local objTable = {}
-local playerChram
 local backGroup
 local mainGroup
 local uiGroup
@@ -44,59 +24,11 @@ local uiGroup
 --Passiamo riferimento al livello corrente,
 --questo ci permetterà di accedere alla funzione di creazione oggetti corretta
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable, 1)
-end
-
-local function resizeChram() --mi serve poter passare la funzione senza parametri
-    gameFunctions.resizeChram(playerChram)
-end
-
-local function updateLives()
-    gameFunctions.updateLives(playerChram, playerState,livesText)
+    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable, 3)
 end
 
 local function onCollision( event )
-    if ( event.phase == "began" ) then
-        local obj1 = event.object1
-        local obj2 = event.object2
-
-        if(obj1.myName == "Chram") then
-            if(obj2.myName == "ram2GB" ) then
-                display.remove(obj2)
-                objectsFunctions.removeFromTable(obj2,objTable)
-                timer.performWithDelay( 1, resizeChram)
-                playerState.setScore(playerState.score + 2)
-                scoreText.text = "Score: " .. playerState.score .. "GB"
-            elseif(obj2.myName=="ram8GB") then
-                display.remove(obj2)
-                objectsFunctions.removeFromTable(obj2,objTable)
-                timer.performWithDelay( 1, resizeChram,4)
-                playerState.setScore(playerState.score + 8)
-                scoreText.text = "Score: " .. playerState.score .. "GB"
-            elseif(obj2.myName=="cacheCleaner") then
-                objectsFunctions.removeFromTable(obj2,objTable)
-                timer.performWithDelay(1, updateLives)
-            end
-        end
-        if(obj2.myName == "Chram") then
-            if(obj1.myName == "ram2GB" ) then
-                display.remove(obj1)
-                objectsFunctions.removeFromTable(obj1,objTable)
-                timer.performWithDelay( 1, resizeChram)
-                playerState.setScore(playerState.score + 2)
-                scoreText.text = "Score: " .. playerState.score .. "GB"
-            elseif(obj1.myName=="ram8GB") then--
-                display.remove(obj1)
-                objectsFunctions.removeFromTable(obj1,objTable)
-                timer.performWithDelay( 1, resizeChram)
-                playerState.setScore(playerState.score + 8)
-                scoreText.text = "Score: " .. playerState.score .. "GB"
-            elseif(obj1.myName=="cacheCleaner") then
-                objectsFunctions.removeFromTable(obj1,objTable)
-                timer.performWithDelay(1, updateLives)
-            end
-        end
-    end
+    gameFunctions.onCollision( event, objTable )
 end
 
 -- -----------------------------------------------------------------------------------
@@ -128,30 +60,21 @@ function scene:create( event )
 	background.x = display.contentCenterX
 	background.y = display.contentCenterY
 
-    playerChram = display.newImageRect(mainGroup, objectSheet, 2, 180, 180)
-	playerChram.x = display.contentCenterX
-	playerChram.y = display.contentHeight - 150
-	physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
-	playerChram.myName = "Chram"
-
-	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
-	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
-    costantiSchermo.clockTextInit("03:00", 180,playerState)
+    player.playerInit(mainGroup)
+    costanti.playerStateInit(3)
+    costantiSchermo.allTextInit(uiGroup, "01:30", 90, costanti.playerState, 1)
     timeText = costantiSchermo.clockText
     clockText= display.newText( uiGroup, timeText, 600, 80,native.systemFont, 36)
     function uppa()
         clockText.text = costantiSchermo.clockText
-    end 
+    end
     timer.performWithDelay(1, uppa, 0)
-    playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
 end
 
 -- show()
 function scene:show( event )
-
 	local sceneGroup = self.view
 	local phase = event.phase
-
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
     elseif ( phase == "did" ) then

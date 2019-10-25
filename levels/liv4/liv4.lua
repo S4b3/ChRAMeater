@@ -2,7 +2,8 @@ local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
 local levelsFunctions = require"utility.levelsFunctions"
-local objectsFunctions = require "utility.objectsFunctions"
+local costantiSchermo = require "costanti.costantiSchermo"
+local player = require "costanti.player"
 
 local scene = composer.newScene()
 
@@ -12,28 +13,10 @@ physics.setGravity(0,0)
 
 math.randomseed( os.time() )
 local objectSheet = costanti.objectSheet()
-local playerState = {}
 
-playerState.lives = 3
-playerState.score = 0
-playerState.died = false
-
-function playerState.setScore(value)
-    playerState.score = value
-end
-
-function playerState.decrementLives()
-    playerState.lives = playerState.lives-1
-end
-
-function playerState.setDied(bool)
-    playerState.died = bool
-end
---
-local livesText
-local scoreText
+local clockText
+local timeText -- variabile che mostra il tmepo rimanente
 local objTable = {}
-local playerChram
 local backGroup
 local mainGroup
 local uiGroup
@@ -42,74 +25,8 @@ local function gameLoop() --porkaround mi serve poter passare gameloop senza par
     levelsFunctions.gameLoop(mainGroup,objectSheet,objTable,4)
 end
 
-local function resizeChram() --mi serve poter passare la funzione senza parametri
-    gameFunctions.resizeChram(playerChram)
-end
-
-local function updateLives()
-    gameFunctions.updateLives(playerChram, playerState,livesText)
-end
-
-local function getLives()
-    gameFunctions.getLives(playerState)
-end
-
-local function setChramGravity()
-    playerChram.gravityScale = 0.0
-end
-
-local function onCollision( event )
-    if ( event.phase == "began" ) then
-        local obj1 = event.object1
-        local obj2 = event.object2
-
-        if(obj1.myName == "Chram") then
-            if(obj2.myName == "ram2GB" ) then
-                display.remove(obj2)
-                objectsFunctions.removeFromTable(obj2,objTable)
-                timer.performWithDelay( 1, resizeChram)
-                timer.performWithDelay(1, setChramGravity)
-                playerState.setScore(playerState.score + 2)
-                scoreText.text = "Score: " .. playerState.score .. "GB"
-            elseif(obj2.myName=="ram8GB") then
-                display.remove(obj2)
-                objectsFunctions.removeFromTable(obj2,objTable)
-                timer.performWithDelay( 1, resizeChram,4)
-                timer.performWithDelay(1, setChramGravity)
-                playerState.setScore(playerState.score + 8)
-                scoreText.text = "Score: " .. playerState.score .. "GB"
-            elseif(obj2.myName=="cacheCleaner") then
-                objectsFunctions.removeFromTable(obj2,objTable)
-                timer.performWithDelay(1, updateLives)
-            elseif(obj2.myName=="heart") then
-                objectsFunctions.removeFromTable(obj2,objTable)
-                timer.performWithDelay(1, getLives)
-            end
-        end
-        if(obj2.myName == "Chram") then
-            if(obj1.myName == "ram2GB" ) then
-                display.remove(obj1)
-                objectsFunctions.removeFromTable(obj1,objTable)
-                timer.performWithDelay( 1, resizeChram)
-                timer.performWithDelay(1, setChramGravity)
-                playerState.setScore(playerState.score + 2)
-                scoreText.text = "Score: " .. playerState.score .. "GB"
-            elseif(obj1.myName=="ram8GB") then--
-                display.remove(obj1)
-                objectsFunctions.removeFromTable(obj1,objTable)
-                timer.performWithDelay( 1, resizeChram)
-                timer.performWithDelay(1, setChramGravity)
-                playerState.setScore(playerState.score + 8)
-                scoreText.text = "Score: " .. playerState.score .. "GB"
-            elseif(obj1.myName=="cacheCleaner") then
-                objectsFunctions.removeFromTable(obj1,objTable)
-                timer.performWithDelay(1, updateLives)
-            elseif(obj1.myName=="heart") then
-                objectsFunctions.removeFromTable(obj1,objTable)
-                timer.performWithDelay(1, getLives)
-            end
-        end
-    end
+local function onCollision(event)
+    gameFunctions.onCollision(event, objTable)
 end
 
 -- -----------------------------------------------------------------------------------
@@ -141,17 +58,10 @@ function scene:create( event )
 	background.x = display.contentCenterX
 	background.y = display.contentCenterY
 
-	playerChram = display.newImageRect(mainGroup, objectSheet, 2, 180, 180)
-	playerChram.x = display.contentCenterX
-	playerChram.y = display.contentHeight - 150
-    physics.addBody( playerChram,"dynamic", { radius=playerChram.contentHeight/2, isSensor=true} )
-    playerChram.gravityScale = 0.0
-	playerChram.myName = "Chram"
+	player.playerInit(mainGroup)
+    costanti.playerStateInit(3)
 
-	livesText = display.newText( uiGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
-	scoreText = display.newText( uiGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
-
-	playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
+    costantiSchermo.livesScoreTextInit(uiGroup, costanti.playerState)
 
 end
 

@@ -1,8 +1,30 @@
 local costanti = {}
 
+local objectsFunctions = require("utility.objectsFunctions")
+
 local bigRamShape = {   (512/2)*2/10,(-288/2)*2/10, (512/2)*2/10,(288/2)*2/10, (-512/2)*2/10,(288/2)*2/10, (-512/2)*2/10,(-288/2)*2/10    }
 local smallRamShape = { (512/2)*2/10,(-192/2)*2/10, (512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(-192/2)*2/10   }
 costanti.levels = {"liv1","liv2","liv3","liv4"}
+
+costanti.playerState = {}
+
+function costanti.playerStateInit(lives)
+    costanti.playerState.lives = lives
+    costanti.playerState.score = 0
+    costanti.playerState.died = false
+end
+
+function costanti.playerState.setScore(value)
+    costanti.playerState.score = value
+end
+
+function costanti.playerState.decrementLives()
+    costanti.playerState.lives = costanti.playerState.lives-1
+end
+
+function costanti.playerState.setDied(bool)
+    costanti.playerState.died = bool
+end
 
 -- ritorna la forma della ram grande
 function costanti.getBigRamShape()
@@ -44,7 +66,6 @@ local sheetOptions = {
             height = 192
         },
     },
-
 }
 -- ritorna il caricamento del foglio immagine in memoria
 function costanti.objectSheet()

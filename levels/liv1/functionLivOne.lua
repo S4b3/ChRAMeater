@@ -1,4 +1,6 @@
 local costantiOggetti = require("costanti.costantiOggetti")
+local ramzilla = require("levels.boss.ramzilla")
+local player = require("costanti.player")
 local functionLivOne = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
@@ -15,6 +17,16 @@ function functionLivOne.stopCreating()
 end
 
 function functionLivOne.startCreating()
+    isStopped = false
+end
+
+function functionLivOne.spawnBoss(sceneGroup)
+    ramzilla.ramzillaInit(player.playerChram, sceneGroup)
+    isStopped = true
+end
+
+function functionLivOne.removeBoss()
+    ramzilla.ramzillaRemove()
     isStopped = false
 end
 

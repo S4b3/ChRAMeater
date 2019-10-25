@@ -1,17 +1,40 @@
 local costantiOggetti = require("costanti.costantiOggetti")
+--require del futuro boss
+local player = require("costanti.player")
 local functionLivTwo = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
 local smallRamShape = costantiOggetti.getSmallRamShape();
 
 local physics = require( "physics" )
-
-
 physics.start()
 physics.setGravity( 0, 0 )
 
+local isStopped = false
 -------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI------------------------------------------
+function functionLivTwo.stopCreating()
+    isStopped = true
+end
+
+function functionLivTwo.startCreating()
+    isStopped = false
+end
+
+function functionLivTwo.spawnBoss(sceneGroup)
+    --boss.boosInit(player.playerChram, sceneGroup)
+    isStopped = true
+end
+
+function functionLivTwo.removeBoss()
+    --boss.bossRemove()
+    isStopped = false
+end
+
+
 function functionLivTwo.createObjects(mainGroup,objectSheet,objTable)
+    if(isStopped) then
+        return
+    end
     
     local selector = math.random ( 100 )
     local objIndicator

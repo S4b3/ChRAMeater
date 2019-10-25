@@ -56,11 +56,6 @@ function scene:create( event )
 	local titleLogo = display.newImageRect( "images/Game Title.png", 500, 240 )
 	titleLogo.x = display.contentCenterX
 	titleLogo.y = 200
-	
-	--GOTOMOZILLAFIGHT
-	local goToMozillaFight = display.newText("GO TO BOSS FIGHT", display.contentCenterX, display.contentHeight - 700,native.systemFont, 100)
-	goToMozillaFight:addEventListener("tap", function () composer.gotoScene("levels.boss.ramzillaLevel") goToMozillaFight:removeSelf() end)
-
 	-- tutti gli oggetti del display devono essere inseriti nel gruppo
 	sceneGroup:insert( background )
 	sceneGroup:insert( titleLogo )
@@ -98,7 +93,6 @@ function scene:destroy( event )
 	-- Called prior to the removal of scene's "view" (sceneGroup)
 	--audio.dispose( themeSong )
 	--audio.dispose( selectionSound )
-	
 	if playBtn then
 		playBtn:removeSelf()	-- i widgets devono essere rimossi manualmente
 		playBtn = nil

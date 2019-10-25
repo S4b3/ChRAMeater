@@ -1,7 +1,9 @@
 local composer = require( "composer" )
+local costanti = require("costanti.costantiOggetti")
 local costantiSchermo = {}
 
 local isStopped = false
+local noBoss
 
 function costantiSchermo.pauseLoop()
     isStopped = true
@@ -13,8 +15,10 @@ end
  
 local function finishTime(secondsLeft,playerState)
     if secondsLeft == 0 then
-    composer.setVariable( "finalScore", playerState.score )
-    composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
+        if(noBoss) then
+            composer.setVariable( "finalScore", playerState.score )
+            composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
+        end
     return true
     end
 end
@@ -50,6 +54,19 @@ function costantiSchermo.clockTextInit(time, seconds,playerState)
         updateTime(event,playerState)
     end
     costantiSchermo.timer = timer.performWithDelay(1000, updateNoParam, 0)    
+end
+
+function costantiSchermo.livesScoreTextInit(sceneGroup, playerState)
+    costantiSchermo.livesText = display.newText( sceneGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
+	costantiSchermo.scoreText = display.newText( sceneGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
+end
+
+function costantiSchermo.allTextInit(sceneGroup, time, seconds, playerState, flag)
+    --DA RIMUOVERE
+    noBoss = flag
+    --
+    costantiSchermo.clockTextInit(time, seconds, playerState)
+    costantiSchermo.livesScoreTextInit(sceneGroup, playerState)
 end
 
 function costantiSchermo.finalizeLoop()
