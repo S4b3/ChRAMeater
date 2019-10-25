@@ -79,6 +79,7 @@ function scene:show( event )
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
+        gameFunctions.versus("images/versus/SAFEariVs.png")
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
         gameLoopTimer = timer.performWithDelay( 700, gameLoop, 0 )

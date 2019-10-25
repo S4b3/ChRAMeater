@@ -1,5 +1,5 @@
 local costantiOggetti = require("costanti.costantiOggetti")
-local safariLevelsFunctions = {}
+local safeariLevelsFunctions = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
 local smallRamShape = costantiOggetti.getSmallRamShape();
@@ -10,15 +10,15 @@ physics.setGravity( 0, 0 )
 
 local isStopped = false
 -------------------------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------------------
-function safariLevelsFunctions.stopCreating()
+function safeariLevelsFunctions.stopCreating()
     isStopped = true
 end
 
-function safariLevelsFunctions.startCreating()
+function safeariLevelsFunctions.startCreating()
     isStopped = false
 end
 
-function safariLevelsFunctions.createObjects(mainGroup,objectSheet,objTable)
+function safeariLevelsFunctions.createObjects(mainGroup,objectSheet,objTable)
     if(isStopped) then
         return
     end
@@ -79,4 +79,4 @@ function safariLevelsFunctions.createObjects(mainGroup,objectSheet,objTable)
     newObject:applyTorque( math.random( -6,6 ) )
 end
 
-return safariLevelsFunctions
+return safeariLevelsFunctions
