@@ -63,12 +63,12 @@ function scene:create( event )
     player.playerInit(mainGroup)
     costanti.playerStateInit(3)
 
-    costantiSchermo.allTextInit(uiGroup, "01:00", 60, costanti.playerState)
+    costantiSchermo.allTextInit(uiGroup, "01:00", 15, costanti.playerState)
     timeText = costantiSchermo.clockText
-    clockText = display.newText( uiGroup, timeText, 600, 80, native.systemFont, 36 )
+    clockText = display.newText( uiGroup, timeText, 800, 130, native.systemFont, 50 )
     function uppa()
         clockText.text = costantiSchermo.clockText
-    end
+    end 
     timer.performWithDelay(1, uppa, 0)
 end
 
@@ -82,7 +82,7 @@ function scene:show( event )
         -- Code here runs when the scene is entirely on screen
         gameFunctions.versus("images/versus/RAMzillaVs.png")
         physics.start()
-        Runtime:addEventListener( "collision", onCollision )
+        Runtime:addEventListener( "collision", onCollision )  
         gameLoopTimer = timer.performWithDelay( 400, gameLoop, 0 )
     end
 end

@@ -29,7 +29,8 @@ function player.playerInit(sceneGroup)
     player.playerChram.myName = "Chram"
     player.playerChram.gravityScale = 0.0
     player.playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
-    player.playerChram:addEventListener( "tap" , player.shoot)
+   -- player.playerChram:addEventListener( "tap" , player.shoot)
+
 end
 
 return player

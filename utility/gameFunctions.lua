@@ -71,7 +71,6 @@ end
 
 function gameFunctions.versus(enemy)
     gameFunctions.pauseGame()
-
     local chram = display.newImageRect("images/versus/ChRAMvs.png", 1111*1.30, 1795*1.30)
     chram.x = 2*display.contentCenterX
     chram.y = display.contentCenterY
@@ -79,7 +78,6 @@ function gameFunctions.versus(enemy)
     opponent.x = -display.contentCenterX
     opponent.y = display.contentCenterY
     function fadeout()
-        
         transition.fadeOut(chram, {time = 1500, delay = 500})
         transition.fadeOut(opponent, {time = 1500, delay = 500, onComplete = gameFunctions.resumeGame})
     end

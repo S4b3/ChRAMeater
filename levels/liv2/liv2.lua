@@ -14,8 +14,6 @@ physics.setGravity(0,0)
 math.randomseed( os.time() )
 local objectSheet = costanti.objectSheet()
 
-local clockText
-local timeText
 local objTable = {}
 local playerChram
 local backGroup

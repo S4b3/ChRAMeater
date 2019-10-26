@@ -1,4 +1,5 @@
 local composer = require( "composer" )
+local player = require("costanti.player")
 
 local ramzilla = {}
 ramzilla.show = {}
@@ -29,6 +30,7 @@ local function shoot()
 end
 
 function ramzilla.ramzillaInit(target, sceneGroup)
+    player.playerChram:addEventListener( "tap" , player.shoot)
     ramzilla.show = display.newImageRect(sceneGroup, "images/bosses/firefox.png", 500, 500)
     ramzilla.show.x = display.contentCenterX
     ramzilla.show.y = -100

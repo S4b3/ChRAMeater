@@ -57,8 +57,8 @@ function costantiSchermo.clockTextInit(time, seconds,playerState)
 end
 
 function costantiSchermo.livesScoreTextInit(sceneGroup, playerState)
-    costantiSchermo.livesText = display.newText( sceneGroup, "Lives : " .. playerState.lives , 200, 80, native.systemFont, 36 )
-	costantiSchermo.scoreText = display.newText( sceneGroup, "Score : " .. playerState.score .. "GB", 400, 80, native.systemFont, 36 )
+    costantiSchermo.livesText = display.newText( sceneGroup, "Lives : " .. playerState.lives , 200, 130, native.systemFont, 50 )
+	costantiSchermo.scoreText = display.newText( sceneGroup, "Score : " .. playerState.score .. "GB", 500, 130, native.systemFont, 50 )
 end
 
 function costantiSchermo.allTextInit(sceneGroup, time, seconds, playerState, flag)

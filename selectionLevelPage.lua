@@ -48,11 +48,11 @@ function scene:create( event )
             goToLevel(liv)
 		end
 		--mi creo un bottone che mi rimanda al livello corrispondente
-        playButton = display.newText( sceneGroup,liv, display.contentCenterX, startY+80 , native.systemFont, 44 )
+        playButton = display.newText( sceneGroup,liv, display.contentCenterX, startY+100 , native.systemFont, 70 )
         playButton:setFillColor( 0.82, 0.86, 1 )
         playButton:addEventListener("tap", goToLiv)
         table.insert(buttons,playButton)
-        startY = startY +80
+        startY = startY +100
 	end
 	buttons.goToMenuInit(sceneGroup, 1200)
 end
