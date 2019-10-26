@@ -1,7 +1,5 @@
 local costantiOggetti = require("costanti.costantiOggetti")
-local safeari = require("levels.boss.safeari")
-local player = require("costanti.player")
-local functionLivThree = {}
+local safeariLevelsFunctions = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
 local smallRamShape = costantiOggetti.getSmallRamShape();
@@ -12,25 +10,15 @@ physics.setGravity( 0, 0 )
 
 local isStopped = false
 -------------------------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------------------
-function functionLivThree.stopCreating()
+function safeariLevelsFunctions.stopCreating()
     isStopped = true
 end
 
-function functionLivThree.startCreating()
+function safeariLevelsFunctions.startCreating()
     isStopped = false
 end
 
-function functionLivThree.spawnBoss(sceneGroup)
-    safeari.safariInit(player.playerChram, sceneGroup)
-    isStopped = true
-end
-
-function functionLivThree.removeBoss()
-    safeari.safariRemove()
-    isStopped = false
-end
-
-function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
+function safeariLevelsFunctions.createObjects(mainGroup,objectSheet,objTable)
     if(isStopped) then
         return
     end
@@ -52,6 +40,7 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
     if(mainGroup==nil or objectSheet==nil) then
         return end
     local newObject = display.newImage( mainGroup, objectSheet, objIndicator)
+    newObject:toBack()
     newObject:scale(0.25, 0.25)
     table.insert( objTable, newObject )
 
@@ -65,7 +54,7 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
     end
     newObject.myName = objName
 
-    local whereFrom = math.random( 3 )
+    local whereFrom = math.random( 4 )
 
     if ( whereFrom == 1 ) then
         -- From the left
@@ -73,12 +62,12 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
         newObject.y = math.random( 500 )
         --newObject:setLinearVelocity( math.random( 40,120 ), math.random( 20,60 ) )
         newObject:setLinearVelocity( math.random( 80,160 ), math.random( 40,70 ) )
-    elseif ( whereFrom == 2 ) then
+    elseif ( whereFrom == 2 or whereFrom == 4) then
         -- From the top
         newObject.x = math.random( display.contentWidth )
-        newObject.y = -60
+        newObject.y = 0
         --newObject:setLinearVelocity( math.random( -40,40 ), math.random( 40,120 ) )
-        newObject:setLinearVelocity( math.random( -70,70 ), math.random( 80,160 ) )
+        newObject:setLinearVelocity( math.random( -110,110 ), math.random( 120,360 ) )
     elseif ( whereFrom == 3 ) then
         -- From the right
         newObject.x = display.contentWidth + 60
@@ -90,20 +79,4 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
     newObject:applyTorque( math.random( -6,6 ) )
 end
 
-function functionLivThree.gameLoop(mainGroup,objectSheet,objTable)
-    createObjects(mainGroup,objectSheet,objTable)
-    -- Remove rams which have drifted off screen
-    for i = #objTable, 1, -1 do
-        local thisRam = objTable[i]
-        if ( thisRam.x < -100 or
-             thisRam.x > display.contentWidth + 100 or
-             thisRam.y < -100 or
-             thisRam.y > display.contentHeight + 100 )
-        then
-            display.remove( thisRam )
-            table.remove( objTable, i )
-        end
-    end
-end
-
-return functionLivThree
+return safeariLevelsFunctions

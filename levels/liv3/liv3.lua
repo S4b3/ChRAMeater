@@ -62,7 +62,7 @@ function scene:create( event )
 
     player.playerInit(mainGroup)
     costanti.playerStateInit(3)
-    costantiSchermo.allTextInit(uiGroup, "01:30", 90, costanti.playerState, 1)
+    costantiSchermo.allTextInit(uiGroup, "01:00", 60, costanti.playerState)
     timeText = costantiSchermo.clockText
     clockText= display.newText( uiGroup, timeText, 600, 80,native.systemFont, 36)
     function uppa()
@@ -79,6 +79,7 @@ function scene:show( event )
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
+        gameFunctions.versus("images/versus/SAFEariVs.png")
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
         gameLoopTimer = timer.performWithDelay( 700, gameLoop, 0 )

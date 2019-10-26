@@ -1,6 +1,9 @@
 local costantiOggetti = require("costanti.costantiOggetti")
-local safeari = require("levels.boss.safeari")
+<<<<<<< Updated upstream:levels/liv3/functionLivThree.lua
+--local futuroboss
 local player = require("costanti.player")
+=======
+>>>>>>> Stashed changes:liv3/functionLivThree.lua
 local functionLivThree = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
@@ -12,6 +15,7 @@ physics.setGravity( 0, 0 )
 
 local isStopped = false
 -------------------------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------------------
+<<<<<<< Updated upstream:levels/liv3/functionLivThree.lua
 function functionLivThree.stopCreating()
     isStopped = true
 end
@@ -21,12 +25,12 @@ function functionLivThree.startCreating()
 end
 
 function functionLivThree.spawnBoss(sceneGroup)
-    safeari.safariInit(player.playerChram, sceneGroup)
+    --futureBossInit
     isStopped = true
 end
 
 function functionLivThree.removeBoss()
-    safeari.safariRemove()
+    --futureBossRemove
     isStopped = false
 end
 
@@ -35,6 +39,9 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
         return
     end
 
+=======
+function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
+>>>>>>> Stashed changes:liv3/functionLivThree.lua
     local selector = math.random ( 100 )
     local objIndicator
     local objName
