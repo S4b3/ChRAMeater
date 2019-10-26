@@ -4,6 +4,7 @@ local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require("utility.levelsFunctions")
 local costantiSchermo = require("costanti.costantiSchermo")
 local player = require("costanti.player")
+local ramzilla = require("levels.boss.ramzilla")
 local gameFunctions = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
@@ -140,6 +141,15 @@ function gameFunctions.onCollision( event, objTable )
             elseif(obj1.myName=="projectile") then
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
+            end
+        end
+        if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
+            if( ramzilla.onHit() ) then
+                gameFunctions.endGame(costantiOggetti.playerState.score)
+            end
+        elseif (obj1.myName == "Ramzilla" and obj2.myName == "ramShooten") then
+            if( ramzilla.onHit() ) then
+                gameFunctions.endGame(costantiOggetti.playerState.score)
             end
         end
     end
