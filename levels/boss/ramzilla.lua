@@ -30,16 +30,16 @@ local function shoot()
 end
 
 function ramzilla.ramzillaInit(target, sceneGroup)
-    player.playerChram:addEventListener( "tap" , player.shoot)
     ramzilla.show = display.newImageRect(sceneGroup, "images/bosses/firefox.png", 500, 500)
     ramzilla.show.x = display.contentCenterX
     ramzilla.show.y = -100
+    physics.addBody(ramzilla.show, {radius = ramzilla.show.contentHeight/2, isSensor = true })
     ramzilla.show.hp = 10
     ramzilla.show:toFront()
     ramzilla.show.myName = "Ramzilla"
     transition.to(ramzilla.show, {time = 3000, y = 350, onComplete =
          function () 
-            physics.addBody(ramzilla.show, {radius = ramzilla.show.contentHeight/2, isSensor = true })
+            player.playerChram:addEventListener( "tap" , player.shoot)
             Movements = timer.performWithDelay(800, movements, 0) end
     })
     physics.addBody( ramzilla.show, {radius = ramzilla.show.contentHeight/2, isSensor = true})

@@ -1,5 +1,6 @@
 local objectsFunctions = require("utility.objectsFunctions")
 local costanti = require("costanti.costantiOggetti")
+local costantiSchermo = require "costanti.costantiSchermo"
 
 local player = {}
 local scene
@@ -18,6 +19,8 @@ function player.shoot(event)
     ramShooten.x = player.playerChram.x
     ramShooten.y = player.playerChram.y
     transition.to(ramShooten, {y = -10, time = 500, onComplete = function () ramShooten:removeSelf() end })
+    costantiSchermo.scoreText.text =  "Score : " .. costanti.playerState.score .. "GB"
+
 end
 
 function player.playerInit(sceneGroup)
