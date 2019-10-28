@@ -54,7 +54,9 @@ function objectsFunctions.restorePlayerCharm(playerChram, playerState)
     transition.to( playerChram, { alpha=1, time=2000,
         onComplete = function()
             playerChram.isBodyActive = true
-            physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
+            if(playerChram.contentHeight ~= nil) then
+                physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
+            end
             playerState.setDied(false) --non serve se lo sposto
         end
     } )

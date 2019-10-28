@@ -4,16 +4,21 @@ local player = require("costanti.player")
 local ramzilla = {}
 ramzilla.show = {}
 ramzilla.life = 100
+ramzilla.isDead = false
 
 local function movements()
     transition.to(ramzilla.show, {time = 800, x = math.random(0, display.contentWidth), y = math.random(350, 500)})
 end
 function ramzilla.onHit()
+    if(ramzilla.isDead) then
+        return
+    end
     print("hit!")
     ramzilla.show.hp = ramzilla.show.hp - 5
     print(ramzilla.show.hp)
     if(ramzilla.show.hp <= 0 ) then
-        return true
+        ramzilla.isDead = true
+        return ramzilla.isDead
     end
     transition.to(ramzilla.show, {yScale = 1.1, xScale = 1.1, time = 300, onComplete = function () transition.to(ramzilla.show, {yScale = 1, xScale = 1, time = 300} ) end } )
 end
@@ -30,6 +35,7 @@ local function shoot()
 end
 
 function ramzilla.ramzillaInit(target, sceneGroup)
+    ramzilla.isDead = false
     ramzilla.show = display.newImageRect(sceneGroup, "images/bosses/firefox.png", 500, 500)
     ramzilla.show.x = display.contentCenterX
     ramzilla.show.y = -100
@@ -45,10 +51,12 @@ function ramzilla.ramzillaInit(target, sceneGroup)
     physics.addBody( ramzilla.show, {radius = ramzilla.show.contentHeight/2, isSensor = true})
     ramzilla.sceneGroup = sceneGroup
     ramzilla.target = target
-    timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(600, shoot, 0) end)
+    timer.performWithDelay(3000, function () ShootTimer = timer.performWithDelay(600, shoot, 0) end)
 end
 function ramzilla.ramzillaRemove()
-    timer.cancel(ShootTimer)
+    if(ShootTimer ~= nil ) then
+        timer.cancel(ShootTimer)
+    end
     timer.cancel(Movements)
     ramzilla.show:removeSelf()
 end
