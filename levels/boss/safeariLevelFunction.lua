@@ -1,4 +1,4 @@
-local costantiOggetti = require("costanti.costantiOggetti")
+--[[local costantiOggetti = require("costanti.costantiOggetti")
 local safeariLevelsFunctions = {}
 
 local bigRamShape = costantiOggetti.getBigRamShape();
@@ -7,9 +7,10 @@ local smallRamShape = costantiOggetti.getSmallRamShape();
 local physics = require( "physics" )
 physics.start()
 physics.setGravity( 0, 0 )
-
-local isStopped = false
+--[[
+local isStopped = false]--
 -------------------------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------------------
+--[[
 function safeariLevelsFunctions.stopCreating()
     isStopped = true
 end
@@ -17,7 +18,6 @@ end
 function safeariLevelsFunctions.startCreating()
     isStopped = false
 end
-
 function safeariLevelsFunctions.createObjects(mainGroup,objectSheet,objTable)
     if(isStopped) then
         return
@@ -78,5 +78,5 @@ function safeariLevelsFunctions.createObjects(mainGroup,objectSheet,objTable)
 
     newObject:applyTorque( math.random( -6,6 ) )
 end
-
+]]--
 return safeariLevelsFunctions
