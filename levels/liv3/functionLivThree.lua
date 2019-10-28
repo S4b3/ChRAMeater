@@ -1,5 +1,5 @@
 local costantiOggetti = require("costanti.costantiOggetti")
-local safeari = require("levels.boss.safeari")
+local safaram = require("levels.boss.safaram")
 local player = require("costanti.player")
 local functionLivThree = {}
 
@@ -21,12 +21,12 @@ function functionLivThree.startCreating()
 end
 
 function functionLivThree.spawnBoss(sceneGroup)
-    safeari.safariInit(player.playerChram, sceneGroup)
+    safaram.safariInit(player.playerChram, sceneGroup)
     isStopped = true
 end
 
 function functionLivThree.removeBoss()
-    safeari.safariRemove()
+    safaram.safariRemove()
     isStopped = false
 end
 
