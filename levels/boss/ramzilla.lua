@@ -3,7 +3,6 @@ local player = require("costanti.player")
 
 local ramzilla = {}
 ramzilla.show = {}
-ramzilla.life = 100
 ramzilla.isDead = false
 
 local function movements()
@@ -40,7 +39,7 @@ function ramzilla.ramzillaInit(target, sceneGroup)
     ramzilla.show.x = display.contentCenterX
     ramzilla.show.y = -100
     physics.addBody(ramzilla.show, {radius = ramzilla.show.contentHeight/2, isSensor = true })
-    ramzilla.show.hp = 10
+    ramzilla.show.hp = 100
     ramzilla.show:toFront()
     ramzilla.show.myName = "Ramzilla"
     transition.to(ramzilla.show, {time = 3000, y = 350, onComplete =

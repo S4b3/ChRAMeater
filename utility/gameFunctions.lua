@@ -18,7 +18,11 @@ physics.setGravity( 0, 0 )
 -------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------
 function gameFunctions.resizeChram(playerChram)
     if(playerChram.contentWidth == nil or playerChram.contentHeight == nil) then
-        return end
+        return
+    end
+    if(playerChram.contentHeight >= 250) then
+        return
+    end
     playerChram : scale(1.011, 1.011)
     timer.performWithDelay(1)
     physics.removeBody(playerChram)
