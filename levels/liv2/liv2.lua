@@ -24,7 +24,7 @@ local uiGroup
 --Passiamo riferimento al livello corrente,
 --questo ci permetterà di accedere alla funzione di creazione oggetti corretta
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable, 2)
+    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable,2)
 end
 
 local function onCollision(event)
@@ -80,9 +80,8 @@ function scene:show( event )
         -- Code here runs when the scene is still off screen (but is about to come on screen)
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
-        gameFunctions.versus("images/versus/RAMzillaVs.png")
         physics.start()
-        Runtime:addEventListener( "collision", onCollision )  
+        Runtime:addEventListener( "collision", onCollision )
         gameLoopTimer = timer.performWithDelay( 400, gameLoop, 0 )
     end
 end
@@ -96,7 +95,7 @@ function scene:hide( event )
         gameLoopTimer=nil
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
-        Runtime:removeEventListener( "collision", gameFunctions.onCollision )
+        Runtime:removeEventListener( "collision", onCollision )
         physics.pause()
 		composer.removeScene( "levels.liv2.liv2" )
     end

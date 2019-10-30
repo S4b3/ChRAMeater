@@ -1,5 +1,6 @@
 local costantiOggetti = require("costanti.costantiOggetti")
 --require del futuro boss
+local boss = require("levels.boss.ramzilla")
 local player = require("costanti.player")
 local functionLivTwo = {}
 
@@ -21,12 +22,12 @@ function functionLivTwo.startCreating()
 end
 
 function functionLivTwo.spawnBoss(sceneGroup)
-    --boss.boosInit(player.playerChram, sceneGroup)
+    boss.ramzillaInit(player.playerChram, sceneGroup)
     isStopped = true
 end
 
 function functionLivTwo.removeBoss()
-    --boss.bossRemove()
+    boss.ramzillaRemove()
     isStopped = false
 end
 

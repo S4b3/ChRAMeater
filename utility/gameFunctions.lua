@@ -31,6 +31,9 @@ end
 
 function gameFunctions.endGame(score)
     --composer.gotoScene( "menu", { time=800, effect="crossFade" } )
+    if(costantiSchermo.timer ~= nil) then
+        timer.cancel(costantiSchermo.timer)
+    end
     levelsFunctions.removeBoss()
     composer.setVariable( "finalScore", score )
     composer.gotoScene( "highscores", { time=800, effect="crossFade" } )

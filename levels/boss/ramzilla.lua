@@ -12,9 +12,7 @@ function ramzilla.onHit()
     if(ramzilla.isDead) then
         return
     end
-    print("hit!")
-    ramzilla.show.hp = ramzilla.show.hp - 5
-    print(ramzilla.show.hp)
+    ramzilla.show.hp = ramzilla.show.hp - 10
     if(ramzilla.show.hp <= 0 ) then
         ramzilla.isDead = true
         return ramzilla.isDead

@@ -3,7 +3,7 @@ local costanti = require("costanti.costantiOggetti")
 local costantiSchermo = {}
 
 local isStopped = false
-local noBoss
+local noBoss = true
 
 function costantiSchermo.pauseLoop()
     isStopped = true
@@ -15,7 +15,7 @@ end
  
 local function finishTime(secondsLeft,playerState)
     if secondsLeft == 0 then
-        if(noBoss) then
+        if(noBoss == true) then
             composer.setVariable( "finalScore", playerState.score )
             composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
         end

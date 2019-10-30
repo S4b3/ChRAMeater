@@ -82,7 +82,7 @@ function scene:show( event )
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
         physics.start()
-        Runtime:addEventListener( "collision", onCollision )  
+        Runtime:addEventListener( "collision", onCollision )
         gameLoopTimer = timer.performWithDelay( 400, gameLoop, 0 )
     end
 end
@@ -96,7 +96,7 @@ function scene:hide( event )
         gameLoopTimer=nil
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
-        Runtime:removeEventListener( "collision", gameFunctions.onCollision )
+        Runtime:removeEventListener( "collision", onCollision )
         physics.pause()
 		composer.removeScene( "levels.liv1.liv1" )
     end
