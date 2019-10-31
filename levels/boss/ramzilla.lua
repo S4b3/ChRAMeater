@@ -5,7 +5,21 @@ local ramzilla = {}
 ramzilla.show = {}
 ramzilla.isDead = false
 
+local isPaused
+
+function ramzilla.pause()
+    isPaused=true
+end
+
+function ramzilla.resume()
+    isPaused=false
+end
+
+
 local function movements()
+    if(isPaused==true) then
+        return
+    end
     transition.to(ramzilla.show, {time = 800, x = math.random(0, display.contentWidth), y = math.random(350, 500)})
 end
 function ramzilla.onHit()
@@ -20,6 +34,9 @@ function ramzilla.onHit()
     transition.to(ramzilla.show, {yScale = 1.1, xScale = 1.1, time = 300, onComplete = function () transition.to(ramzilla.show, {yScale = 1, xScale = 1, time = 300} ) end } )
 end
 local function shoot()
+  if(isPaused==true) then
+        return
+    end
     local projectile = display.newImageRect(ramzilla.sceneGroup, "images/bosses/thunderbird.png", 100, 100)
     projectile.x = ramzilla.show.x
     projectile.y = ramzilla.show.y
@@ -32,6 +49,7 @@ local function shoot()
 end
 
 function ramzilla.ramzillaInit(target, sceneGroup)
+    isPaused=false
     ramzilla.isDead = false
     ramzilla.show = display.newImageRect(sceneGroup, "images/bosses/firefox.png", 500, 500)
     ramzilla.show.x = display.contentCenterX

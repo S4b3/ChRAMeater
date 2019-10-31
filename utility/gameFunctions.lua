@@ -3,6 +3,7 @@ local costantiOggetti = require("costanti.costantiOggetti")
 local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require("utility.levelsFunctions")
 local costantiSchermo = require("costanti.costantiSchermo")
+local bossFunctions = require "levels.boss.bossFunctions"
 local player = require("costanti.player")
 local ramzilla = require("levels.boss.ramzilla")
 local gameFunctions = {}
@@ -63,6 +64,7 @@ end
 
 function gameFunctions.pauseGame()
     physics.pause()
+    bossFunctions.pauseBoss()
     levelsFunctions.pauseLoop()
     objectsFunctions.pauseDrag()
     costantiSchermo.pauseLoop()
@@ -70,6 +72,7 @@ end
 
 function gameFunctions.resumeGame()
     physics.start()
+    bossFunctions.resumeBoss()
     levelsFunctions.resumeLoop()
     objectsFunctions.resumeDrag()
     costantiSchermo.resumeLoop()
