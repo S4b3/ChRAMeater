@@ -6,21 +6,16 @@ ramzilla.show = {}
 ramzilla.isDead = false
 
 local isPaused
+local currentTransitions ={}
 
-function ramzilla.pause()
-    isPaused=true
-end
 
-function ramzilla.resume()
-    isPaused=false
-end
 
 
 local function movements()
     if(isPaused==true) then
         return
     end
-    transition.to(ramzilla.show, {time = 800, x = math.random(0, display.contentWidth), y = math.random(350, 500)})
+    table.insert(currentTransitions ,transition.to(ramzilla.show, {time = 800, x = math.random(0, display.contentWidth), y = math.random(350, 500)}))
 end
 function ramzilla.onHit()
     if(ramzilla.isDead) then
@@ -45,7 +40,7 @@ local function shoot()
     projectile.isBullet = true
     projectile:toBack()
     projectile.myName ="projectile"
-    transition.to ( projectile, { x = ramzilla.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end})
+    table.insert(currentTransitions, transition.to ( projectile, { x = ramzilla.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end}))
 end
 
 function ramzilla.ramzillaInit(target, sceneGroup)
@@ -67,6 +62,26 @@ function ramzilla.ramzillaInit(target, sceneGroup)
     ramzilla.sceneGroup = sceneGroup
     ramzilla.target = target
     timer.performWithDelay(3000, function () ShootTimer = timer.performWithDelay(600, shoot, 0) end)
+end
+
+function ramzilla.pause()
+    isPaused=true
+    for i = #currentTransitions, 1, -1 do
+        local trans = currentTransitions[i]
+        if (trans ~= nil) then
+            transition.pause(trans)
+        end
+    end
+end
+
+function ramzilla.resume()
+    isPaused=false
+    for i = #currentTransitions, 1, -1 do
+        local trans = currentTransitions[i]
+        if (trans ~= nil) then
+            transition.resume(trans)
+        end
+    end
 end
 function ramzilla.ramzillaRemove()
     if(ShootTimer ~= nil ) then

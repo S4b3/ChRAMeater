@@ -2,27 +2,20 @@ local composer = require( "composer" )
 local player = require("costanti.player")
 
 
+
 local safaram = {}
 safaram.show = {}
 safaram.life = 100
 safaram.isDead = false
 
 local isPaused
-
-function safaram.pause()
-    isPaused=true
-end
-
-function safaram.resume()
-    isPaused=false
-end
-
+local currentTransitions = {}
 
 local function movements()
     if(isPaused==true) then
         return
     end
-    transition.to(safaram.show, {time=800, x = math.random(0,display.contentWidth), y= math.random(350, 500)})
+    table.insert( currentTransitions, transition.to(safaram.show, {time=800, x = math.random(0,display.contentWidth), y= math.random(350, 500)}) )
 end
 
 function safaram.onHit()
@@ -51,7 +44,8 @@ local function shoot()
     projectile.isBullet = true
     projectile:toBack()
     projectile.myName ="projectile"
-    transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end})
+    --local currTrans = transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end})
+    table.insert( currentTransitions, transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end}) )
 end
 
 function safaram.safariInit(target, sceneGroup)
@@ -75,6 +69,27 @@ function safaram.safariInit(target, sceneGroup)
     safaram.target = target
     timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(600, shoot, 0) end)
 end
+
+function safaram.pause()
+    isPaused=true
+    for i = #currentTransitions, 1, -1 do
+        local trans = currentTransitions[i]
+        if (trans ~= nil) then
+            transition.pause(trans)
+        end
+    end
+end
+
+function safaram.resume()
+    isPaused=false
+    for i = #currentTransitions, 1, -1 do
+        local trans = currentTransitions[i]
+        if (trans ~= nil) then
+            transition.resume(trans)
+        end
+    end
+end
+
 function safaram.safariRemove()
     if(ShootTimer ~= nil ) then
         timer.cancel(ShootTimer)
