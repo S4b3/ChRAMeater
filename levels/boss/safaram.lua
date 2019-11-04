@@ -36,7 +36,7 @@ local function shoot()
     if(isPaused==true) then
         return
     end
-    local projectile = display.newImageRect(safaram.sceneGroup, "images/bosses/apple.png", 100, 100)
+    local projectile = display.newImageRect(safaram.sceneGroup, "images/bosses/apple.png", 150, 150)
     projectile.x = safaram.show.x
     projectile.y = safaram.show.y
     --projectile:setFillColor(255, 255, 0)
@@ -67,7 +67,7 @@ function safaram.safariInit(target, sceneGroup)
     physics.addBody( safaram.show, {radius = safaram.show.contentHeight/2, isSensor = true})
     safaram.sceneGroup = sceneGroup
     safaram.target = target
-    timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(600, shoot, 0) end)
+    timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(1600, shoot, 0) end)
 end
 
 function safaram.pause()
