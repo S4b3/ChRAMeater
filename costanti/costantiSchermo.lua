@@ -4,7 +4,7 @@ local costantiSchermo = {}
 
 local isStopped = false
 local noBoss = true
-
+local printedPowerUps = {}
 function costantiSchermo.pauseLoop()
     isStopped = true
 end
@@ -22,7 +22,6 @@ local function finishTime(secondsLeft,playerState)
     return true
     end
 end
-
 
 local function updateTime( event,playerState )
 
@@ -72,6 +71,34 @@ end
 function costantiSchermo.finalizeLoop()
     transition.fadeOut(costantiSchermo.clockText,  { time = 1 })
     timer.cancel(costantiSchermo.timer)
+end
+
+local uiGroup
+
+local function ondaTap(event)
+    costanti.removePowerUp(event.target.myName)
+    print(event.target.myName)
+    display.remove(event.target)
+    costantiSchermo.printPowerUps(uiGroup)
+    return
+end
+
+function costantiSchermo.printPowerUps()
+    --uiGroup = sceneGroup
+    local currentY = display.contentHeight *3 / 4
+    for i,item in pairs(costanti.playerState.powerUps) do
+        --local toPrint = costanti.playerState.powerUps[i]
+        if(item.myName == "powerUpOnda") then
+            --L'IMMAGINE C'HA INDIRIZZO SBAGLIATO
+            item.show = display.newImage( costanti.objectSheet(), 5, display.contentWidth - 100, currentY)
+            item.show:scale(0.2,0.2)
+            if(item.hasListener == false) then
+                item.show:addEventListener("tap", ondaTap)
+                item.hasListener = true
+            end
+            currentY = currentY - 150
+        end
+    end
 end
 
 return costantiSchermo

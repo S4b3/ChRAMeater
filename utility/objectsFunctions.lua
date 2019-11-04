@@ -1,4 +1,6 @@
 local objectsFunctions = {}
+local costanti = require("costanti.costantiOggetti")
+local costantiSchermo = require("costanti.costantiSchermo")
 
 local physics = require( "physics" )
 physics.start()
@@ -44,6 +46,15 @@ function objectsFunctions.removeFromTable(obj,objTable)
             break
         end
     end
+end
+
+function objectsFunctions.addPowerUp(obj, sceneGroup)
+    costanti.addPowerUp(obj)
+    costantiSchermo.printPowerUps()
+end
+
+function objectsFunctions.removePowerUp(objname)
+    costanti.removePowerUp(objname)
 end
 
 function objectsFunctions.restorePlayerCharm(playerChram, playerState)

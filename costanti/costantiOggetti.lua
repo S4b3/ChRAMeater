@@ -1,12 +1,11 @@
 local costanti = {}
 
-local objectsFunctions = require("utility.objectsFunctions")
-
 local bigRamShape = {   (512/2)*2/10,(-288/2)*2/10, (512/2)*2/10,(288/2)*2/10, (-512/2)*2/10,(288/2)*2/10, (-512/2)*2/10,(-288/2)*2/10    }
 local smallRamShape = { (512/2)*2/10,(-192/2)*2/10, (512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(-192/2)*2/10   }
 costanti.levels = {"liv1","liv2","liv3","liv4"}
 
 costanti.playerState = {}
+costanti.playerState.powerUps = {}
 
 function costanti.playerStateInit(lives)
     costanti.playerState.lives = lives
@@ -33,6 +32,20 @@ end
 -- ritorna la forma della ram piccola
 function costanti.getSmallRamShape()
     return smallRamShape
+end
+
+function costanti.addPowerUp(obj)
+    table.insert(costanti.playerState.powerUps, obj)
+
+end
+
+function costanti.removePowerUp(objName)
+    for i = #costanti.playerState.powerUps, -1, 1 do
+        if(costanti.playerState.powerUps[i].myName == objName) then
+            table.remove(costanti.playerState.powerUps, i)
+            break
+        end
+    end
 end
 
 -- configurazione foglio immagine 
@@ -65,11 +78,17 @@ local sheetOptions = {
             width = 512,
             height = 192
         },
+        {-- powerUp Onda d'urto
+            x = 0,
+            y = 1505,
+            width = 512,
+            height = 512
+        },
     },
 }
 -- ritorna il caricamento del foglio immagine in memoria
 function costanti.objectSheet()
-    return graphics.newImageSheet("images/GameObjects2.png", sheetOptions)
+    return graphics.newImageSheet("images/GameObjects.png", sheetOptions)
 end
 
 return costanti

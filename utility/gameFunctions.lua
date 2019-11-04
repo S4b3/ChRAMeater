@@ -116,6 +116,7 @@ function gameFunctions.onCollision( event, objTable )
                 timer.performWithDelay( 1, resizeChram)
                 costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 2)
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
+                print("AOOORAM")
             elseif(obj2.myName=="ram8GB") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2,objTable)
@@ -126,8 +127,13 @@ function gameFunctions.onCollision( event, objTable )
                 objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, updateLives)
             elseif(obj2.myName=="projectile") then
-                objectsFunctions.removeFromTable(obj1,objTable)
+                objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, updateLives)
+            elseif(obj2.myName=="powerUpOnda") then
+                print("AOOOOOOO")
+                display.remove(obj2)
+                objectsFunctions.removeFromTable(obj2, objTable)
+                objectsFunctions.addPowerUp(obj2, objTable)
             end
         end
         if(obj2.myName == "Chram") then
@@ -137,6 +143,7 @@ function gameFunctions.onCollision( event, objTable )
                 timer.performWithDelay( 1, resizeChram)
                 costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 2)
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
+                print("RAM2GBAO")
             elseif(obj1.myName=="ram8GB") then--
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1,objTable)
@@ -149,6 +156,11 @@ function gameFunctions.onCollision( event, objTable )
             elseif(obj1.myName=="projectile") then
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
+            elseif(obj1.myName=="powerUpOnda") then
+                print("AOOOOOOO")
+                display.remove(obj1)
+                objectsFunctions.removeFromTable(obj1, objTable)
+                objectsFunctions.addPowerUp(obj1, objTable)
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
