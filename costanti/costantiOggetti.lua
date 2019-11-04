@@ -40,9 +40,11 @@ function costanti.addPowerUp(obj)
 end
 
 function costanti.removePowerUp(objName)
-    for i = #costanti.playerState.powerUps, -1, 1 do
-        if(costanti.playerState.powerUps[i].myName == objName) then
+    for i,item in pairs(costanti.playerState.powerUps) do
+        print("curr name :", item.myName , " | to delete : " , objName)
+        if(item.myName == objName) then
             table.remove(costanti.playerState.powerUps, i)
+            print("removed")
             break
         end
     end

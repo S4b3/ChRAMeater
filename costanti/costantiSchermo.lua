@@ -75,29 +75,36 @@ end
 
 local uiGroup
 
+local lastItem
+
+local function tableSupport()
+    local length = 0
+    for i,item in pairs(costanti.playerState.powerUps) do
+        length = length+1
+    end
+    return length
+end
+
 local function ondaTap(event)
+    local function remove()
+        display.remove(lastItem)
+    end
+    timer.performWithDelay(1, remove)
     costanti.removePowerUp(event.target.myName)
-    print(event.target.myName)
-    display.remove(event.target)
-    costantiSchermo.printPowerUps(uiGroup)
+    timer.performWithDelay(1,costantiSchermo.printPowerUps )
     return
 end
 
 function costantiSchermo.printPowerUps()
     --uiGroup = sceneGroup
     local currentY = display.contentHeight *3 / 4
-    for i,item in pairs(costanti.playerState.powerUps) do
-        --local toPrint = costanti.playerState.powerUps[i]
-        if(item.myName == "powerUpOnda") then
-            --L'IMMAGINE C'HA INDIRIZZO SBAGLIATO
-            item.show = display.newImage( costanti.objectSheet(), 5, display.contentWidth - 100, currentY)
-            item.show:scale(0.2,0.2)
-            if(item.hasListener == false) then
-                item.show:addEventListener("tap", ondaTap)
-                item.hasListener = true
-            end
-            currentY = currentY - 150
-        end
+    for i = 1, tableSupport() do
+        local pwUp = display.newImage( costanti.objectSheet(), 5, display.contentWidth - 100, currentY)
+        pwUp.myName = "powerUpOnda"
+        pwUp:scale(0.2,0.2)
+        pwUp:addEventListener("tap", ondaTap)
+        lastItem = pwUp
+        currentY = currentY - 150
     end
 end
 
