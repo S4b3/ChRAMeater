@@ -36,7 +36,7 @@ local function shoot()
     if(isPaused==true) then
         return
     end
-    local projectile = display.newImageRect(safaram.sceneGroup, "images/bosses/safari.png", 100, 100)
+    local projectile = display.newImageRect(safaram.sceneGroup, "images/bosses/apple.png", 100, 100)
     projectile.x = safaram.show.x
     projectile.y = safaram.show.y
     --projectile:setFillColor(255, 255, 0)
