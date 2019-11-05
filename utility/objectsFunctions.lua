@@ -1,43 +1,12 @@
 local objectsFunctions = {}
 local costanti = require("costanti.costantiOggetti")
-local costantiSchermo = require("costanti.costantiSchermo")
+local player = require("costanti.player")
 
 local physics = require( "physics" )
 physics.start()
 physics.setGravity( 0, 0 )
 
 local isStopped = false
-
-function objectsFunctions.pauseDrag()
-    isStopped = true
-end
-
-function objectsFunctions.resumeDrag()
-    isStopped = false
-end
-
-
-function objectsFunctions.dragPlayerChram( event )
-    if(isStopped ) then
-        return
-    end
-    local playerChram = event.target
-    local phase = event.phase
-    if ( "began" == phase ) then
-        -- Set touch focus on playerChram
-        display.currentStage:setFocus( playerChram )
-        playerChram.touchOffsetX = event.x - playerChram.x
-        playerChram.touchOffsetY = event.y - playerChram.y
-    elseif ( "moved" == phase ) then
-        -- Move playerChram to the new touch position
-        playerChram.x = event.x - playerChram.touchOffsetX
-        playerChram.y = event.y - playerChram.touchOffsetY
-    elseif ( "ended" == phase or "cancelled" == phase ) then
-        -- Release touch focus on playerChram
-        display.currentStage:setFocus( nil )
-    end
-    return true 
-end
 
 function objectsFunctions.removeFromTable(obj,objTable)
     for i = #objTable, 1, -1 do
@@ -50,7 +19,7 @@ end
 
 function objectsFunctions.addPowerUp(obj, sceneGroup)
     costanti.addPowerUp(obj)
-    costantiSchermo.printPowerUps(sceneGroup)
+    objectsFunctions.printPowerUps(sceneGroup)
 end
 
 function objectsFunctions.removePowerUp(objname)
@@ -71,6 +40,62 @@ function objectsFunctions.restorePlayerCharm(playerChram, playerState)
             playerState.setDied(false) --non serve se lo sposto
         end
     } )
+end
+
+local lastItem
+local items = {}
+
+local function ondaTap(event)
+    if(isStopped) then
+        return
+    end
+    local function remove()
+        display.remove(lastItem)
+        table.remove(items,#items)
+        lastItem = items[#items]
+    end
+
+    local shockWave = display.newCircle(player.playerChram.x,player.playerChram.y, 600)
+
+    local function shockFunc()
+        shockWave: scale(1.015, 1.015)
+        timer.performWithDelay(1, function ()
+            physics.addBody( shockWave, "dynamic" ,{bounce=1000000, radius=shockWave.contentHeight/2 } )
+            physics.removeBody(shockWave)
+        end
+        )
+    end
+    shockWave.alpha=0.2
+    timer.performWithDelay(1, shockFunc , 20)
+    timer.performWithDelay(1, remove)
+    costanti.removePowerUp(event.target.myName)
+    timer.performWithDelay(800, function() shockWave:removeSelf() end)
+    return
+end
+
+function objectsFunctions.printPowerUps(sceneGroup)
+    local currentY = display.contentHeight *3 / 4
+    for i = 1, #costanti.playerState.powerUps do
+        if( i == #items+1 ) then
+            items[i] = display.newImage(sceneGroup, costanti.objectSheet(), 5, display.contentWidth - 100, currentY)
+            items[i].myName = "powerUpOnda"
+            items[i]:scale(0.25,0.25)
+            items[i]:addEventListener("tap", ondaTap)
+            lastItem = items[i]
+        end
+        currentY = currentY - 160
+    end
+end
+
+function objectsFunctions.removeAllPwups()
+
+    print(#items, #costanti.playerState.powerUps)
+    for i = 1, #costanti.playerState.powerUps do
+        --print(items[i].myName)
+        items[i] = nil
+        costanti.playerState.powerUps[i] = nil
+    end
+    print(#items , #costanti.playerState.powerUps)
 end
 
 

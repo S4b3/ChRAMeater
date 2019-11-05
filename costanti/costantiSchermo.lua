@@ -74,50 +74,6 @@ function costantiSchermo.finalizeLoop()
     costantiSchermo.removeAllPwups()
 end
 
-local uiGroup
-local lastItem
-local items = {}
-
-local function ondaTap(event)
-    if(isStopped) then
-        return
-    end
-    local function remove()
-        display.remove(lastItem)
-        table.remove(items,#items)
-        lastItem = items[#items]
-    end
-    timer.performWithDelay(1, remove)
-    costanti.removePowerUp(event.target.myName)
-    return
-end
-
-function costantiSchermo.printPowerUps(sceneGroup)
-    print("SO PARTITAAAA")
-    --uiGroup = sceneGroup
-    local currentY = display.contentHeight *3 / 4
-    for i = 1, #costanti.playerState.powerUps do
-        if( i == #items+1 ) then
-            items[i] = display.newImage(sceneGroup, costanti.objectSheet(), 5, display.contentWidth - 100, currentY)
-            items[i].myName = "powerUpOnda"
-            items[i]:scale(0.25,0.25)
-            items[i]:addEventListener("tap", ondaTap)
-            lastItem = items[i]
-        end
-        currentY = currentY - 160
-    end
-end
-
-function costantiSchermo.removeAllPwups()
-
-    print(#items , #costanti.playerState.powerUps)
-    for i = 1, #costanti.playerState.powerUps do
-        --print(items[i].myName)
-        items[i] = nil
-        costanti.playerState.powerUps[i] = nil
-    end
-    print(#items , #costanti.playerState.powerUps)
-end
 
 return costantiSchermo
 

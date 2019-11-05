@@ -8,9 +8,6 @@ local player = require("costanti.player")
 local ramzilla = require("levels.boss.ramzilla")
 local gameFunctions = {}
 
-local bigRamShape = costantiOggetti.getBigRamShape();
-local smallRamShape = costantiOggetti.getSmallRamShape();
-
 local physics = require( "physics" )
 
 physics.start()
@@ -34,7 +31,7 @@ function gameFunctions.endGame(score)
     --composer.gotoScene( "menu", { time=800, effect="crossFade" } )
     if(costantiSchermo.timer ~= nil) then
         timer.cancel(costantiSchermo.timer)
-        costantiSchermo.removeAllPwups()
+        objectsFunctions.removeAllPwups()
     end
     levelsFunctions.removeBoss()
     composer.setVariable( "finalScore", score )
@@ -67,7 +64,7 @@ function gameFunctions.pauseGame()
     physics.pause()
     bossFunctions.pauseBoss()
     levelsFunctions.pauseLoop()
-    objectsFunctions.pauseDrag()
+    player.pauseDrag()
     costantiSchermo.pauseLoop()
 end
 
@@ -75,7 +72,7 @@ function gameFunctions.resumeGame()
     physics.start()
     bossFunctions.resumeBoss()
     levelsFunctions.resumeLoop()
-    objectsFunctions.resumeDrag()
+    player.resumeDrag()
     costantiSchermo.resumeLoop()
 end
 
