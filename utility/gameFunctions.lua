@@ -104,7 +104,7 @@ local function updateLives()
     gameFunctions.updateLives(player.playerChram, costantiOggetti.playerState, costantiSchermo.livesText)
 end
 
-function gameFunctions.onCollision( event, objTable )
+function gameFunctions.onCollision( event, objTable, sceneGroup )
     if ( event.phase == "began" ) then
         local obj1 = event.object1
         local obj2 = event.object2
@@ -131,7 +131,7 @@ function gameFunctions.onCollision( event, objTable )
             elseif(obj2.myName=="powerUpOnda") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
-                objectsFunctions.addPowerUp(obj2, objTable)
+                objectsFunctions.addPowerUp(obj2, sceneGroup)
             end
         end
         if(obj2.myName == "Chram") then
@@ -156,7 +156,7 @@ function gameFunctions.onCollision( event, objTable )
             elseif(obj1.myName=="powerUpOnda") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
-                objectsFunctions.addPowerUp(obj1, objTable)
+                objectsFunctions.addPowerUp(obj1, sceneGroup)
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then

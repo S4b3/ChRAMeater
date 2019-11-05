@@ -50,7 +50,7 @@ end
 
 function objectsFunctions.addPowerUp(obj, sceneGroup)
     costanti.addPowerUp(obj)
-    costantiSchermo.printPowerUps()
+    costantiSchermo.printPowerUps(sceneGroup)
 end
 
 function objectsFunctions.removePowerUp(objname)
