@@ -125,6 +125,9 @@ function gameFunctions.onCollision( event, objTable )
             elseif(obj2.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, updateLives)
+            elseif(obj2.myName=="life") then
+                objectsFunctions.removeFromTable(obj2,objTable)
+                timer.performWithDelay(1, updateLives)
             elseif(obj2.myName=="projectile") then
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
@@ -144,6 +147,9 @@ function gameFunctions.onCollision( event, objTable )
                 costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 8)
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
+                objectsFunctions.removeFromTable(obj1,objTable)
+                timer.performWithDelay(1, updateLives)
+            elseif(obj1.myName=="life") then
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
             elseif(obj1.myName=="projectile") then
