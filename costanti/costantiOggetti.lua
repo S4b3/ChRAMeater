@@ -41,13 +41,14 @@ end
 
 function costanti.removePowerUp(objName)
     for i,item in pairs(costanti.playerState.powerUps) do
-        print("curr name :", item.myName , " | to delete : " , objName)
         if(item.myName == objName) then
             table.remove(costanti.playerState.powerUps, i)
+            --goto loopend
             print("removed")
-            break
+            return 0
         end
     end
+--::loopend::
 end
 
 -- configurazione foglio immagine 

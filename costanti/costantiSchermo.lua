@@ -93,23 +93,21 @@ local function ondaTap(event)
     end
     timer.performWithDelay(1, remove)
     costanti.removePowerUp(event.target.myName)
-    costantiSchermo.printPowerUps(uiGroup)
     return
 end
 
 function costantiSchermo.printPowerUps()
-    
+    print("SO PARTITAAAA")
     --uiGroup = sceneGroup
     local currentY = display.contentHeight *3 / 4
     for i = 1, #costanti.playerState.powerUps do
-        local pwUp = display.newImage( costanti.objectSheet(), 5, display.contentWidth - 100, currentY)
-        pwUp.myName = "powerUpOnda"
-        pwUp:scale(0.2,0.2)
-        pwUp:addEventListener("tap", ondaTap)
-        items[#items+1] = pwUp
-        --table.insert(items,pwUp)
-        print("inserisco pwup n° ",#items )
-        lastItem = pwUp
+        if( i == #items+1 ) then
+            items[i] = display.newImage( costanti.objectSheet(), 5, display.contentWidth - 100, currentY)
+            items[i].myName = "powerUpOnda"
+            items[i]:scale(0.2,0.2)
+            items[i]:addEventListener("tap", ondaTap)
+            lastItem = items[i]
+        end
         currentY = currentY - 150
     end
 end
