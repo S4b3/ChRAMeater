@@ -65,11 +65,17 @@ local sheetOptions = {
             width = 512,
             height = 192
         },
+        {-- life
+        x = 0,
+        y = 1505,
+        width = 512,
+        height = 512
+    },
     },
 }
 -- ritorna il caricamento del foglio immagine in memoria
 function costanti.objectSheet()
-    return graphics.newImageSheet("images/GameObjects2.png", sheetOptions)
+    return graphics.newImageSheet("images/GameObjects3.png", sheetOptions)
 end
 
 return costanti

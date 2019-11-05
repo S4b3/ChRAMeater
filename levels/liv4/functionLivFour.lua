@@ -31,19 +31,26 @@ end
 
 function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
     
+    if(isStopped) then
+        return
+    end
+
     local selector = math.random ( 100 )
     local objIndicator
     local objName
 
-    if(selector <= 35) then
+    if(selector <= 50) then
         objIndicator = 4
         objName="ram2GB"
-    elseif (selector > 35 and selector <= 45) then
+    elseif (selector > 50 and selector <= 60) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector >= 45) then
+    elseif (selector >= 60 and selector < 95) then
         objIndicator = 1
         objName="cacheCleaner"
+    elseif (selector >= 95) then
+        objIndicator = 5
+        objName="life"
     end
     if(mainGroup==nil or objectSheet==nil) then
         return end
@@ -56,6 +63,8 @@ function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
     elseif(objName=="ram8GB") then
         physics.addBody( newObject, "dynamic", { shape = bigRamShape } )
     elseif(objName=="cacheCleaner") then
+        physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
+    elseif(objName=="life") then
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
     end
     newObject.myName = objName
