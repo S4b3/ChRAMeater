@@ -7,20 +7,20 @@ levelsFunction.levels= {liv1,liv2,liv3,liv4}
 local costantiSchermo = require("costanti.costantiSchermo")
 
 local isStopped = false
-local isFreezed = false
+levelsFunction.isFreezed = false
 local isBossSpawned = false
 local currentLevel
 
 function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
     currentLevel = intLevel
-    if (isStopped or isFreezed) then
+    if (isStopped or levelsFunction.isFreezed) then
         return
     end
     if(costantiSchermo.secondsLeft == 0 and not isBossSpawned) then
         levelsFunction.levels[intLevel].spawnBoss(mainGroup)
         isBossSpawned = true
     end
-    --if(isStopped == false and isFreezed == false) then 
+    --if(isStopped == false and levelsFunction.isFreezed == false) then 
         levelsFunction.levels[intLevel].createObjects(mainGroup,objectSheet,objTable)
    -- end
     -- Remove rams which have drifted off screen
@@ -49,11 +49,11 @@ function levelsFunction.pauseLoop()
 end
 
 function levelsFunction.freezeLoop()
-    isFreezed = true
+    levelsFunction.isFreezed = true
 end
 
 function levelsFunction.resumeFreezeLoop()
-    isFreezed = false
+    levelsFunction.isFreezed = false
 end
 
 function levelsFunction.resumeLoop()

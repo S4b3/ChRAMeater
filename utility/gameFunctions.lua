@@ -129,7 +129,11 @@ function gameFunctions.onCollision( event, objTable)
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
                 --objectsFunctions.addPowerUp(obj2, objTable)
-                objectsFunctions.freeze(objTable,levelsFunctions)
+                if levelsFunctions.isFreezed == false then
+                    objectsFunctions.freeze(objTable,levelsFunctions)
+                elseif levelsFunctions.isFreezed == true then
+                    objectsFunctions.freezeGap = objectsFunctions.freezeGap + 5
+                end
             end
         end
         if(obj2.myName == "Chram") then
@@ -154,12 +158,12 @@ function gameFunctions.onCollision( event, objTable)
             elseif(obj1.myName=="powerUpOnda") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
-                --objectsFunctions.addPowerUp(obj1, objTable)
-                local function freeze()
+                --objectsFunctions.addPowerUp(obj2, objTable)
+                if levelsFunctions.isFreezed == false then
                     objectsFunctions.freeze(objTable,levelsFunctions)
-                end   
-                timer.performWithDelay(1, freeze)
-
+                elseif levelsFunctions.isFreezed == true then
+                    objectsFunctions.freezeGap = objectsFunctions.freezeGap + 3
+                end
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then

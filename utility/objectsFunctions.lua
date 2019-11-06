@@ -74,6 +74,7 @@ end
 local linearVelocityXTable = {}
 local linearVelocityYTable = {}
 local angularVelocityTable = {}
+objectsFunctions.freezeGap = 3
 
 function objectsFunctions.freeze(objTable, levelsFunction) 
     levelsFunction.freezeLoop() -- da problemi
@@ -101,13 +102,14 @@ function objectsFunctions.freeze(objTable, levelsFunction)
     uppaTimer = timer.performWithDelay(1, uppa, 0)
 
     local function controlla ()
-        if (time == intialtime-5) then --  and currentLevel == "levels.liv1.liv1"
+        if (time == intialtime-objectsFunctions.freezeGap) then --  and currentLevel == "levels.liv1.liv1"
             levelsFunction.resumeFreezeLoop()
             resumeVelocity()
             timer.cancel(controllaTimer)
+            objectsFunctions.freezeGap = 3
         end 
     end
-    controllaTimer = timer.performWithDelay(1000, controlla, 0)
+    controllaTimer = timer.performWithDelay(1, controlla, 0)
 end
 
 return objectsFunctions
