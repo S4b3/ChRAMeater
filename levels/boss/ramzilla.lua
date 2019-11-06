@@ -1,5 +1,6 @@
 local composer = require( "composer" )
 local player = require("costanti.player")
+local costantiSchermo = require("costanti.costantiSchermo")
 
 local ramzilla = {}
 ramzilla.show = {}
@@ -26,10 +27,10 @@ function ramzilla.onHit()
         ramzilla.isDead = true
         return ramzilla.isDead
     end
-    transition.to(ramzilla.show, {yScale = 1.1, xScale = 1.1, time = 300, onComplete = function () transition.to(ramzilla.show, {yScale = 1, xScale = 1, time = 300} ) end } )
+    transition.to(ramzilla.show, {yScale = 1.1, xScale = 1.1, time = 300, onComplete = function () table.insert(currentTransitions, transition.to(ramzilla.show, {yScale = 1, xScale = 1, time = 300} ) ) end } )
 end
 local function shoot()
-  if(isPaused==true) then
+  if(isPaused==true or ramzilla.sceneGroup == nil) then
         return
     end
     local projectile = display.newImageRect(ramzilla.sceneGroup, "images/bosses/thunderbird.png", 100, 100)
@@ -53,15 +54,16 @@ function ramzilla.ramzillaInit(target, sceneGroup)
     ramzilla.show.hp = 100
     ramzilla.show:toFront()
     ramzilla.show.myName = "Ramzilla"
-    transition.to(ramzilla.show, {time = 3000, y = 350, onComplete =
+    table.insert(currentTransitions, transition.to(ramzilla.show, {time = 3000, y = 350, onComplete =
          function () 
             player.playerChram:addEventListener( "tap" , player.shoot)
-            Movements = timer.performWithDelay(800, movements, 0) end
-    })
-    physics.addBody( ramzilla.show, {radius = ramzilla.show.contentHeight/2, isSensor = true})
+            Movements = timer.performWithDelay(800, movements, 0)
+            ShootTimer = timer.performWithDelay(600, shoot, 0) 
+            print(ShootTimer) end
+    }) )
+    physics.addBody( ramzilla.show, {radius = ramzilla.show.contentHeight/2, isSensor = true}) 
     ramzilla.sceneGroup = sceneGroup
     ramzilla.target = target
-    timer.performWithDelay(3000, function () ShootTimer = timer.performWithDelay(600, shoot, 0) end)
 end
 
 function ramzilla.pause()
@@ -84,11 +86,21 @@ function ramzilla.resume()
     end
 end
 function ramzilla.ramzillaRemove()
-    if(ShootTimer ~= nil ) then
+    if(ShootTimer ~= nil) then
         timer.cancel(ShootTimer)
     end
-    timer.cancel(Movements)
-    ramzilla.show:removeSelf()
+    isPaused = true
+    if(Movements ~= nil) then
+        timer.cancel(Movements)
+    end
+    if(ramzilla.show ~= nil) then
+        ramzilla.show:removeSelf()
+    end
+    if(#currentTransitions > 0) then
+        for i = 1, #currentTransitions do
+           currentTransitions[i] = nil
+        end
+    end
 end
 
 return ramzilla

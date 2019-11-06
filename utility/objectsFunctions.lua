@@ -88,14 +88,14 @@ function objectsFunctions.printPowerUps(sceneGroup)
 end
 
 function objectsFunctions.removeAllPwups()
-
-    print(#items, #costanti.playerState.powerUps)
+    if(#costanti.playerState.powerUps ==0) then
+        return
+    end
     for i = 1, #costanti.playerState.powerUps do
         --print(items[i].myName)
         items[i] = nil
         costanti.playerState.powerUps[i] = nil
     end
-    print(#items , #costanti.playerState.powerUps)
 end
 
 

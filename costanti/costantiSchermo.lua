@@ -71,9 +71,6 @@ end
 function costantiSchermo.finalizeLoop()
     transition.fadeOut(costantiSchermo.clockText,  { time = 1 })
     timer.cancel(costantiSchermo.timer)
-    if(#costanti.playerState.powerUps > 0) then
-        costantiSchermo.removeAllPwups()
-    end
 end
 
 

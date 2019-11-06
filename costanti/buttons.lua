@@ -1,7 +1,9 @@
 local widget = require "widget"
 local gameFunctions = require ("utility.gameFunctions")
+local objectFunctions = require("utility.objectsFunctions")
 local sounds = require ("costanti.sounds")
 local costantiSchermo = require("costanti.costantiSchermo")
+local levelsFunctions = require("utility.levelsFunctions")
 local composer = require "composer"
 
 
@@ -53,7 +55,10 @@ function buttons.onHomeTapEffect(button)
         composer.gotoScene("menu")
         return
     end
+    levelsFunctions.removeBoss()
     costantiSchermo.finalizeLoop()
+    objectFunctions.removeAllPwups()
+    levelsFunctions.resumeLoop()
     composer.gotoScene("menu")
 end
 
