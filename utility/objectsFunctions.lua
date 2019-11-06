@@ -102,7 +102,7 @@ function objectsFunctions.freeze(objTable, levelsFunction)
     uppaTimer = timer.performWithDelay(1, uppa, 0)
 
     local function controlla ()
-        if (time == intialtime-objectsFunctions.freezeGap) then --  and currentLevel == "levels.liv1.liv1"
+        if (time == intialtime-objectsFunctions.freezeGap or time == 0) then --  and currentLevel == "levels.liv1.liv1"
             levelsFunction.resumeFreezeLoop()
             resumeVelocity()
             timer.cancel(controllaTimer)
