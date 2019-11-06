@@ -2,7 +2,6 @@ local objectsFunctions = {}
 local costanti = require("costanti.costantiOggetti")
 local costantiSchermo = require("costanti.costantiSchermo")
 local physics = require( "physics" )
-
 physics.start()
 physics.setGravity( 0, 0 )
 
@@ -77,7 +76,7 @@ local linearVelocityYTable = {}
 local angularVelocityTable = {}
 
 function objectsFunctions.freeze(objTable, levelsFunction) 
-    levelsFunction.freezeLoop()
+    levelsFunction.freezeLoop() -- da problemi
     for i = 1 , #objTable do --funziona
         local vx,vy = objTable[i]:getLinearVelocity()
         linearVelocityXTable[i] = vx
@@ -86,27 +85,29 @@ function objectsFunctions.freeze(objTable, levelsFunction)
         objTable[i]:setLinearVelocity(0,0)
         objTable[i].angularVelocity = 0
     end
-    -- timer.performWithDelay(5000,levelsFunction.startAndStopLoop)  --bug da problemi quando si mette in pausa o torno alla home
     local function resumeVelocity() --funziona
+        print("ripartito")
         for i = 1 , #objTable do
             objTable[i]:setLinearVelocity(linearVelocityXTable[i] ,linearVelocityYTable[i] )
             objTable[i].angularVelocity = angularVelocityTable[i]
         end
+        timer.cancel(uppaTimer)
     end
-    --timer.performWithDelay(5000,resumeVelocity) --bug da problemi quando si mette in pausa o torno alla home
     local time = costantiSchermo.secondsLeft
     local intialtime = time
-    local function uppa()
+    local function uppa() -- mi serve per aggiornare il tempo che passa
         time = costantiSchermo.secondsLeft
     end 
-    timer.performWithDelay(1, uppa, 0)
+    uppaTimer = timer.performWithDelay(1, uppa, 0)
+
     local function controlla ()
-        if (time == intialtime-5) then
+        if (time == intialtime-5) then --  and currentLevel == "levels.liv1.liv1"
+            levelsFunction.resumeFreezeLoop()
             resumeVelocity()
-            levelsFunction.StopFreezeLoop()
+            timer.cancel(controllaTimer)
         end 
     end
-    timer.performWithDelay(1, controlla, 0)
+    controllaTimer = timer.performWithDelay(1000, controlla, 0)
 end
 
 return objectsFunctions
