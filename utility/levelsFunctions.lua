@@ -3,29 +3,28 @@ local liv1 = require("levels.liv1.functionLivOne")
 local liv2 = require("levels.liv2.functionLivTwo")
 local liv3 = require("levels.liv3.functionLivThree")
 local liv4 = require("levels.liv4.functionLivFour")
-local levels= {liv1,liv2,liv3,liv4}
+levelsFunction.levels= {liv1,liv2,liv3,liv4}
 local costantiSchermo = require("costanti.costantiSchermo")
 
 local ramzillaLF = require("levels.boss.ramzillaLevelFunctions")
 
 
 local isStopped = false
+local isFreezed = false
 local isBossSpawned = false
 local currentLevel
 
 function levelsFunction.gameLoop(mainGroup,objectSheet,objTable, intLevel)
     currentLevel = intLevel
-    if (isStopped == true) then
+    if (isStopped == true or isFreezed == true) then
         return
     end
     if(costantiSchermo.secondsLeft == 0 and not isBossSpawned) then
-        levels[intLevel].spawnBoss(mainGroup)
+        levelsFunction.levels[intLevel].spawnBoss(mainGroup)
         isBossSpawned = true
     end
-    if(intLevel == "ramzilla") then
-        ramzillaLF.createObjects(mainGroup, objectSheet, objTable)
-    else
-        levels[intLevel].createObjects(mainGroup,objectSheet,objTable)
+    if(isStopped == false and isFreezed == false) then
+        levelsFunction.levels[intLevel].createObjects(mainGroup,objectSheet,objTable)
     end
     -- Remove rams which have drifted off screen
     for i = #objTable, 1, -1 do
@@ -44,12 +43,20 @@ end
 function levelsFunction.removeBoss()
     if(isBossSpawned) then
         isBossSpawned = false
-        levels[currentLevel].removeBoss()
+        levelsFunction.levels[currentLevel].removeBoss()
     end
 end
 
 function levelsFunction.pauseLoop()
     isStopped = true
+end
+
+function levelsFunction.freezeLoop()
+    isStopped = true
+end
+
+function levelsFunction.StopFreezeLoop()
+    isStopped = false
 end
 
 function levelsFunction.resumeLoop()

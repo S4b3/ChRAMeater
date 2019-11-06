@@ -1,8 +1,8 @@
 local objectsFunctions = {}
 local costanti = require("costanti.costantiOggetti")
 local costantiSchermo = require("costanti.costantiSchermo")
-
 local physics = require( "physics" )
+
 physics.start()
 physics.setGravity( 0, 0 )
 
@@ -15,7 +15,6 @@ end
 function objectsFunctions.resumeDrag()
     isStopped = false
 end
-
 
 function objectsFunctions.dragPlayerChram( event )
     if(isStopped ) then
@@ -73,5 +72,41 @@ function objectsFunctions.restorePlayerCharm(playerChram, playerState)
     } )
 end
 
+local linearVelocityXTable = {}
+local linearVelocityYTable = {}
+local angularVelocityTable = {}
+
+function objectsFunctions.freeze(objTable, levelsFunction) 
+    levelsFunction.freezeLoop()
+    for i = 1 , #objTable do --funziona
+        local vx,vy = objTable[i]:getLinearVelocity()
+        linearVelocityXTable[i] = vx
+        linearVelocityYTable[i] = vy
+        angularVelocityTable[i] = objTable[i].angularVelocity
+        objTable[i]:setLinearVelocity(0,0)
+        objTable[i].angularVelocity = 0
+    end
+    -- timer.performWithDelay(5000,levelsFunction.startAndStopLoop)  --bug da problemi quando si mette in pausa o torno alla home
+    local function resumeVelocity() --funziona
+        for i = 1 , #objTable do
+            objTable[i]:setLinearVelocity(linearVelocityXTable[i] ,linearVelocityYTable[i] )
+            objTable[i].angularVelocity = angularVelocityTable[i]
+        end
+    end
+    --timer.performWithDelay(5000,resumeVelocity) --bug da problemi quando si mette in pausa o torno alla home
+    local time = costantiSchermo.secondsLeft
+    local intialtime = time
+    local function uppa()
+        time = costantiSchermo.secondsLeft
+    end 
+    timer.performWithDelay(1, uppa, 0)
+    local function controlla ()
+        if (time == intialtime-5) then
+            resumeVelocity()
+            levelsFunction.StopFreezeLoop()
+        end 
+    end
+    timer.performWithDelay(1, controlla, 0)
+end
 
 return objectsFunctions
