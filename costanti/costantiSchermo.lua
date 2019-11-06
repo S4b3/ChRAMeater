@@ -12,7 +12,7 @@ end
 function costantiSchermo.resumeLoop()
     isStopped = false
 end
- 
+
 local function finishTime(secondsLeft,playerState)
     if secondsLeft == 0 then
         if(noBoss == true) then
@@ -78,6 +78,3 @@ end
 
 
 return costantiSchermo
-
-
-    
