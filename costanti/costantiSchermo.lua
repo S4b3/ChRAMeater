@@ -4,7 +4,7 @@ local costantiSchermo = {}
 
 local isStopped = false
 local noBoss = true
-
+local printedPowerUps = {}
 function costantiSchermo.pauseLoop()
     isStopped = true
 end
@@ -12,7 +12,7 @@ end
 function costantiSchermo.resumeLoop()
     isStopped = false
 end
- 
+
 local function finishTime(secondsLeft,playerState)
     if secondsLeft == 0 then
         if(noBoss == true) then
@@ -22,7 +22,6 @@ local function finishTime(secondsLeft,playerState)
     return true
     end
 end
-
 
 local function updateTime( event,playerState )
 
@@ -72,9 +71,10 @@ end
 function costantiSchermo.finalizeLoop()
     transition.fadeOut(costantiSchermo.clockText,  { time = 1 })
     timer.cancel(costantiSchermo.timer)
+    if(#costanti.playerState.powerUps > 0) then
+        costantiSchermo.removeAllPwups()
+    end
 end
 
+
 return costantiSchermo
-
-
-    

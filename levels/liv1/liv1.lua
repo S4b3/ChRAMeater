@@ -28,7 +28,7 @@ local function gameLoop() --porkaround mi serve poter passare gameloop senza par
 end
 
 local function onCollision(event)
-    gameFunctions.onCollision(event, objTable)
+    gameFunctions.onCollision(event, objTable, uiGroup)
 end
 
 -- -----------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ function scene:create( event )
     player.playerInit(mainGroup)
     costanti.playerStateInit(3)
 
-    costantiSchermo.allTextInit(uiGroup, "01:00", 5, costanti.playerState)
+    costantiSchermo.allTextInit(uiGroup, "01:00", 60, costanti.playerState)
     timeText = costantiSchermo.clockText
     clockText = display.newText( uiGroup, timeText, 800, 130, native.systemFont, 50 )
     function uppa()
