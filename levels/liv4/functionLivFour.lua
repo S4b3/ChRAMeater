@@ -48,7 +48,7 @@ function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
     elseif (selector >= 60 and selector < 98) then
         objIndicator = 1
         objName="cacheCleaner"
-    elseif (selector >= 98) then
+    elseif (selector >=98 ) then
         objIndicator = 5
         objName="life"
     end
@@ -86,7 +86,7 @@ function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
         newObject.x = display.contentWidth + 60
         newObject.y = math.random( 500 )
         newObject:setLinearVelocity( math.random( -120,-40 ), math.random( 20,60 ) )
-    elseif  ( whereFrom == 4 and newObject.myName == "cacheCleaner" )then
+    elseif  ( whereFrom == 4 and newObject.myName == "cacheCleaner" )then --cache cleaner sparato dall'alto
         newObject.x = math.random( display.contentWidth )
         newObject.y = -60
         newObject:setLinearVelocity( math.random( -40,40 ), math.random( 40,120 ) )
