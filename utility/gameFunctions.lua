@@ -59,6 +59,27 @@ function gameFunctions.updateLives(playerChram, playerState,livesText)
 end
 
 
+function gameFunctions.updateLivesCattiva(playerChram, playerState,livesText)
+    if ( playerState.died == false ) then
+        playerState.setDied(true)
+        -- Update lives
+        playerState.decrementLives()
+        livesText.text = "Lives: " .. playerState.lives
+        playerState.decrementScore(20)
+        costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
+        if ( playerState.lives == 0 ) then
+			display.remove( playerChram )
+			timer.performWithDelay( 2000, gameFunctions.endGame(playerState.score) )
+        else
+            playerChram.alpha = 0
+            playerChram.isBodyActive = false
+            objectsFunctions.restorePlayerCharm(playerChram, playerState)
+            playerChram.isBodyActive = true
+        end
+    end
+end
+
+
 
 function gameFunctions.pauseGame()
     physics.pause()
@@ -100,11 +121,18 @@ end
 
 local function increaseLives()
     costantiOggetti.playerState.lives = costantiOggetti.playerState.lives +1
+    costantiSchermo.livesText.text = "Lives: " .. costantiOggetti.playerState.lives
 end
 
 local function updateLives()
     gameFunctions.updateLives(player.playerChram, costantiOggetti.playerState, costantiSchermo.livesText)
 end
+
+
+local function updateLivesCattiva()
+    gameFunctions.updateLivesCattiva(player.playerChram, costantiOggetti.playerState, costantiSchermo.livesText)
+end
+
 
 function gameFunctions.onCollision( event, objTable )
     if ( event.phase == "began" ) then
@@ -126,12 +154,11 @@ function gameFunctions.onCollision( event, objTable )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj2,objTable)
-                timer.performWithDelay(1, updateLives)
+                timer.performWithDelay(1, updateLivesCattiva)
             elseif(obj2.myName=="life") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, increaseLives)
-                costantiSchermo.livesText.text = "Lives: " .. costantiOggetti.playerState.lives
             elseif(obj2.myName=="projectile") then
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
@@ -152,12 +179,11 @@ function gameFunctions.onCollision( event, objTable )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj1,objTable)
-                timer.performWithDelay(1, updateLives)
+                timer.performWithDelay(1, updateLivesCattiva)
             elseif(obj1.myName=="life") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, increaseLives)
-                costantiSchermo.livesText.text = "Lives: " .. costantiOggetti.playerState.lives
             elseif(obj1.myName=="projectile") then
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
