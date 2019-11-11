@@ -87,9 +87,9 @@ local sheetOptions = {
             width = 512,
             height = 512
         },
-        {-- life
+        {-- invincibilità
             x = 0,
-            y = 1505,
+            y = 2017,
             width = 512,
             height = 512
         },
@@ -97,7 +97,7 @@ local sheetOptions = {
 }
 -- ritorna il caricamento del foglio immagine in memoria
 function costanti.objectSheet()
-    return graphics.newImageSheet("images/GameObjects.png", sheetOptions)
+    return graphics.newImageSheet("images/GameObjectsTest.png", sheetOptions)
 end
 
 return costanti

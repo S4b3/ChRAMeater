@@ -39,7 +39,7 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
     local objIndicator
     local objName
 
-    if(selector <= 50) then
+    if(selector >30 and selector<= 50) then
         objIndicator = 4
         objName="ram2GB"
     elseif (selector > 50 and selector <= 60) then
@@ -50,7 +50,10 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
         objName="cacheCleaner"
     elseif (selector >= 98) then
         objIndicator = 5
-        objName="life"
+        objName="onda"
+    elseif (selector >1 and selector <=30) then
+        objIndicator = 6
+        objName="invicibility"
     end
     if(mainGroup==nil or objectSheet==nil) then
         return end
@@ -65,8 +68,11 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
         physics.addBody( newObject, "dynamic", { shape = bigRamShape } )
     elseif(objName=="cacheCleaner") then
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
-    elseif(objName=="life") then
+    elseif(objName=="onda") then
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
+    elseif(objName=="invicibility")then
+        physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
+
     end
     newObject.myName = objName
 

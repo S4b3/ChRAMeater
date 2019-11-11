@@ -37,6 +37,7 @@ local function shoot()
         return
     end
     local projectile = display.newImageRect(safaram.sceneGroup, "images/bosses/apple.png", 150, 150)
+    --test
     projectile.x = safaram.show.x
     projectile.y = safaram.show.y
     --projectile:setFillColor(255, 255, 0)
