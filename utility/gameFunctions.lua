@@ -10,6 +10,8 @@ local gameFunctions = {}
 
 local physics = require( "physics" )
 
+local invincibility=false
+
 physics.start()
 physics.setGravity( 0, 0 )
 
@@ -124,7 +126,9 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj2,objTable)
-                timer.performWithDelay(1, updateLives)
+                if invincibility==false then
+                    timer.performWithDelay(1, updateLives)
+                end
             elseif(obj2.myName=="life") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2,objTable)
@@ -140,6 +144,7 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
             elseif(obj2.myName=="invicibility") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
+                invincibility=true
             end
         end
         if(obj2.myName == "Chram") then
@@ -157,7 +162,9 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj1,objTable)
-                timer.performWithDelay(1, updateLives)
+                if invincibility==false then
+                    timer.performWithDelay(1, updateLives)
+                end
             elseif(obj1.myName=="life") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1,objTable)
@@ -173,6 +180,7 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
             elseif(obj1.myName=="invicibility") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
+                invincibility=true
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
