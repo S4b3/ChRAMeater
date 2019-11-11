@@ -137,6 +137,9 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
                 objectsFunctions.addPowerUp(obj2, sceneGroup)
+            elseif(obj2.myName=="invicibility") then
+                display.remove(obj2)
+                objectsFunctions.removeFromTable(obj2, objTable)
             end
         end
         if(obj2.myName == "Chram") then
@@ -167,6 +170,9 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
                 objectsFunctions.addPowerUp(obj1, sceneGroup)
+            elseif(obj1.myName=="invicibility") then
+                display.remove(obj1)
+                objectsFunctions.removeFromTable(obj1, objTable)
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
