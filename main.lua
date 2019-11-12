@@ -2,6 +2,7 @@ local composer = require( "composer" )
  
 -- Nascondi la barra di stato
 display.setStatusBar( display.HiddenStatusBar )
+system.activate( "multitouch" )
  
 -- Generazione numero random
 math.randomseed( os.time() )

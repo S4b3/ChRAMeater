@@ -1,4 +1,3 @@
-local composer = require( "composer" )
 local player = require("costanti.player")
 local costantiSchermo = require("costanti.costantiSchermo")
 
@@ -56,7 +55,7 @@ function ramzilla.ramzillaInit(target, sceneGroup)
     ramzilla.show.myName = "Ramzilla"
     table.insert(currentTransitions, transition.to(ramzilla.show, {time = 3000, y = 350, onComplete =
          function () 
-            player.playerChram:addEventListener( "tap" , player.shoot)
+            costantiSchermo.background:addEventListener( "tap" , player.shoot)
             Movements = timer.performWithDelay(800, movements, 0)
             ShootTimer = timer.performWithDelay(600, shoot, 0) 
             print(ShootTimer) end

@@ -54,10 +54,6 @@ function scene:create( event )
 	uiGroup = display.newGroup()
 	sceneGroup:insert(uiGroup)
 
-	local background = display.newImageRect( backGroup, "images/background7.jpg", display.actualContentWidth, display.actualContentHeight)
-	background.x = display.contentCenterX
-	background.y = display.contentCenterY
-
 	player.playerInit(mainGroup)
     costanti.playerStateInit(3)
 
@@ -67,12 +63,11 @@ end
 
 -- show()
 function scene:show( event )
-
 	local sceneGroup = self.view
 	local phase = event.phase
-
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
+		costantiSchermo.backgroundInit(backGroup, 4)
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
         physics.start()

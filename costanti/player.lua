@@ -13,7 +13,7 @@ local function dragPlayerChram( event )
     local phase = event.phase
     if ( "began" == phase ) then
         -- Set touch focus on playerChram
-        display.currentStage:setFocus( playerChram )
+        display.currentStage:setFocus( playerChram, event.id )
         playerChram.touchOffsetX = event.x - playerChram.x
         playerChram.touchOffsetY = event.y - playerChram.y
     elseif ( "moved" == phase ) then
@@ -22,9 +22,9 @@ local function dragPlayerChram( event )
         playerChram.y = event.y - playerChram.touchOffsetY
     elseif ( "ended" == phase or "cancelled" == phase ) then
         -- Release touch focus on playerChram
-        display.currentStage:setFocus( nil )
+        display.currentStage:setFocus( playerChram, nil )
+        return true
     end
-    return true 
 end
 
 function player.shoot(event)
@@ -42,7 +42,7 @@ function player.shoot(event)
     ramShooten.y = player.playerChram.y
     transition.to(ramShooten, {y = -10, time = 500, onComplete = function () ramShooten:removeSelf() end })
     costantiSchermo.scoreText.text =  "Score : " .. costanti.playerState.score .. "GB"
-
+    return true
 end
 
 function player.playerInit(sceneGroup)
