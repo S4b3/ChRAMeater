@@ -94,6 +94,7 @@ function scene:hide( event )
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
         physics.pause()
+        costantiSchermo.backgroundRemove()
 		composer.removeScene( "levels.liv2.liv2" )
     end
 end

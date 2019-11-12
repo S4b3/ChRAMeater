@@ -94,7 +94,8 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
-		physics.pause()
+        physics.pause()
+        costantiSchermo.backgroundRemove()
         composer.removeScene( "levels.liv3.liv3" )
         end
 end
