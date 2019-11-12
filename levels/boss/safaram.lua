@@ -1,5 +1,6 @@
 local composer = require( "composer" )
 local player = require("costanti.player")
+local costantiSchermo = require ("costanti.costantiSchermo")
 
 
 
@@ -22,9 +23,7 @@ function safaram.onHit()
     if(safaram.isDead) then
         return
     end
-    print("hit!")
     safaram.show.hp = safaram.show.hp - 5
-    print(safaram.show.hp)
     if(safaram.show.hp <= 0 ) then
         safaram.isDead = true
         return safaram.isDead
@@ -60,7 +59,7 @@ function safaram.safariInit(target, sceneGroup)
     transition.to(safaram.show, {time = 3000, y = 350, onComplete =
     
          function () 
-            player.playerChram:addEventListener( "tap" , player.shoot)
+            costantiSchermo.background:addEventListener( "tap" , player.shoot)
             Movements = timer.performWithDelay(800, movements, 0) end
         })
     
