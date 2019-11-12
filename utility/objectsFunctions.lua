@@ -1,6 +1,7 @@
 local objectsFunctions = {}
 local costanti = require("costanti.costantiOggetti")
 local player = require("costanti.player")
+local costantiSchermo = require("costanti.costantiSchermo")
 
 local physics = require( "physics" )
 physics.start()
@@ -97,6 +98,21 @@ function objectsFunctions.removeAllPwups()
         costanti.playerState.powerUps[i] = nil
     end
 end
+function objectsFunctions.invincibility()
+
+    local time = costantiSchermo.secondsLeft
+    local inizialTime = time
+    local function controlTime()
+        time = costantiSchermo.secondsLeft
+        if(time== inizialTime - 5 or time==0) then
+            timer.cancel(controlTimer)
+            return true
+            
+    end
+    controlTimer=timer.performWithDelay(1,controlTime, 0)
+end
+end
+
 
 
 return objectsFunctions

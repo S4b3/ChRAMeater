@@ -145,6 +145,9 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
                 invincibility=true
+                if(objectsFunctions.invincibility()) then
+                    invincibility=false
+                end 
             end
         end
         if(obj2.myName == "Chram") then
@@ -162,8 +165,10 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj1,objTable)
-                if invincibility==false then
-                    timer.performWithDelay(1, updateLives)
+                if invincibility then
+                    return
+                end
+                timer.performWithDelay(1, updateLives)
                 end
             elseif(obj1.myName=="life") then
                 display.remove(obj1)
@@ -181,8 +186,10 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
                 invincibility=true
+                if(objectsFunctions.invincibility()) then
+                    invincibility=false
+                end 
             end
-        end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
             if( ramzilla.onHit() ) then
                 gameFunctions.endGame(costantiOggetti.playerState.score)

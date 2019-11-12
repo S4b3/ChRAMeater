@@ -39,19 +39,19 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
     local objIndicator
     local objName
 
-    if(selector >30 and selector<= 50) then
+    if(selector >20 and selector<= 50) then
         objIndicator = 4
         objName="ram2GB"
     elseif (selector > 50 and selector <= 60) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector >= 60 and selector < 98) then
+    elseif (selector > 60 and selector < 98) then
         objIndicator = 1
         objName="cacheCleaner"
     elseif (selector >= 98) then
         objIndicator = 5
         objName="onda"
-    elseif (selector >1 and selector <=30) then
+    elseif (selector >0 and selector <=20) then
         objIndicator = 6
         objName="invicibility"
     end
@@ -72,9 +72,10 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
     elseif(objName=="invicibility")then
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
-
     end
     newObject.myName = objName
+
+    print(newObject, newObject.myName)
 
     local whereFrom = math.random( 3 )
 
