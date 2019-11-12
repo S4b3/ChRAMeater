@@ -101,6 +101,7 @@ local function increaseLives()
 end
 
 local function updateLives()
+    system.vibrate()
     gameFunctions.updateLives(player.playerChram, costantiOggetti.playerState, costantiSchermo.livesText)
 end
 
@@ -124,7 +125,6 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj2,objTable)
-                system.vibrate()
                 timer.performWithDelay(1, updateLives)
             elseif(obj2.myName=="life") then
                 display.remove(obj2)
@@ -133,7 +133,6 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.livesText.text = "Lives: " .. costantiOggetti.playerState.lives
             elseif(obj2.myName=="projectile") then
                 objectsFunctions.removeFromTable(obj2,objTable)
-                system.vibrate()
                 timer.performWithDelay(1, updateLives)
             elseif(obj2.myName=="powerUpOnda") then
                 display.remove(obj2)
@@ -156,7 +155,6 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj1,objTable)
-                system.vibrate()
                 timer.performWithDelay(1, updateLives)
             elseif(obj1.myName=="life") then
                 display.remove(obj1)
@@ -165,7 +163,6 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.livesText.text = "Lives: " .. costantiOggetti.playerState.lives
             elseif(obj1.myName=="projectile") then
                 objectsFunctions.removeFromTable(obj1,objTable)
-                system.vibrate()
                 timer.performWithDelay(1, updateLives)
             elseif(obj1.myName=="powerUpOnda") then
                 display.remove(obj1)
