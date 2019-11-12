@@ -74,7 +74,7 @@ function scene:show( event )
 	local phase = event.phase
 	if ( phase == "will" ) then
         -- Code here runs when the scene is still off screen (but is about to come on screen)
-        costantiSchermo.backgroundInit(backGroup)
+        costantiSchermo.backgroundInit(backGroup,1)
         gameFunctions.versus("images/versus/RAMzillaVs.png")
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
