@@ -19,6 +19,9 @@ settings =
 		{
 			"android.permission.INTERNET",
 		},
+		{
+            "android.permission.VIBRATE",
+        },
 	},
 
 	--
