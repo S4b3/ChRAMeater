@@ -141,13 +141,14 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
                 objectsFunctions.addPowerUp(obj2, sceneGroup)
-            elseif(obj2.myName=="invicibility") then
+            elseif(obj2.myName=="invincibility") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
                 invincibility=true
-                if(objectsFunctions.invincibility()) then
+                if(objectsFunctions.invincibility() == true) then
                     invincibility=false
-                end 
+                    print(invincibility)
+                end
             end
         end
         if(obj2.myName == "Chram") then
@@ -169,7 +170,6 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                     return
                 end
                 timer.performWithDelay(1, updateLives)
-                end
             elseif(obj1.myName=="life") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1,objTable)
@@ -182,14 +182,16 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
                 objectsFunctions.addPowerUp(obj1, sceneGroup)
-            elseif(obj1.myName=="invicibility") then
+            elseif(obj1.myName=="invincibility") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
                 invincibility=true
-                if(objectsFunctions.invincibility()) then
+                if(objectsFunctions.invincibility() == true) then
                     invincibility=false
-                end 
+                    print(invincibility)
+                end
             end
+        end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
             if( ramzilla.onHit() ) then
                 gameFunctions.endGame(costantiOggetti.playerState.score)

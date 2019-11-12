@@ -101,16 +101,18 @@ end
 function objectsFunctions.invincibility()
 
     local time = costantiSchermo.secondsLeft
-    local inizialTime = time
+    local initialTime = time
+
     local function controlTime()
         time = costantiSchermo.secondsLeft
-        if(time== inizialTime - 5 or time==0) then
+        print(initialTime, time)
+        if(time == initialTime - 5 or time==0) then
+            print("deleting timer")
             timer.cancel(controlTimer)
             return true
-            
     end
-    controlTimer=timer.performWithDelay(1,controlTime, 0)
 end
+    controlTimer = timer.performWithDelay(500,controlTime, 0)
 end
 
 

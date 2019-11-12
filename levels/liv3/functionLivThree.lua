@@ -53,7 +53,7 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
         objName="onda"
     elseif (selector >0 and selector <=20) then
         objIndicator = 6
-        objName="invicibility"
+        objName="invincibility"
     end
     if(mainGroup==nil or objectSheet==nil) then
         return end
@@ -70,12 +70,10 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
     elseif(objName=="onda") then
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
-    elseif(objName=="invicibility")then
+    elseif(objName=="invincibility")then
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
     end
     newObject.myName = objName
-
-    print(newObject, newObject.myName)
 
     local whereFrom = math.random( 3 )
 
