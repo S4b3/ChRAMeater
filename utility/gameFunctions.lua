@@ -138,6 +138,15 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
                 objectsFunctions.addPowerUp(obj2, sceneGroup)
+            elseif(obj2.myName=="freeze") then
+                display.remove(obj2)
+                objectsFunctions.removeFromTable(obj2, objTable)
+                --objectsFunctions.addPowerUp(obj2, objTable)
+                if levelsFunctions.isFreezed == false then
+                    objectsFunctions.freeze(objTable,levelsFunctions)
+                elseif levelsFunctions.isFreezed == true then
+                    objectsFunctions.freezeGap = objectsFunctions.freezeGap + 5
+                end
             end
         end
         if(obj2.myName == "Chram") then
@@ -168,6 +177,15 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
                 objectsFunctions.addPowerUp(obj1, sceneGroup)
+            elseif(obj1.myName=="freeze") then
+                display.remove(obj1)
+                objectsFunctions.removeFromTable(obj1, objTable)
+                --objectsFunctions.addPowerUp(obj2, objTable)
+                if levelsFunctions.isFreezed == false then
+                    objectsFunctions.freeze(objTable,levelsFunctions)
+                elseif levelsFunctions.isFreezed == true then
+                    objectsFunctions.freezeGap = objectsFunctions.freezeGap + 3
+                end
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
