@@ -97,6 +97,7 @@ function ramzilla.ramzillaRemove()
     end
     if(#currentTransitions > 0) then
         for i = 1, #currentTransitions do
+            transition.cancel(currentTransitions[i])
            currentTransitions[i] = nil
         end
     end
