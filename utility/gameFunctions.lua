@@ -8,9 +8,6 @@ local player = require("costanti.player")
 local ramzilla = require("levels.boss.ramzilla")
 local gameFunctions = {}
 
-local bigRamShape = costantiOggetti.getBigRamShape();
-local smallRamShape = costantiOggetti.getSmallRamShape();
-
 local physics = require( "physics" )
 
 physics.start()
@@ -34,6 +31,7 @@ function gameFunctions.endGame(score)
     --composer.gotoScene( "menu", { time=800, effect="crossFade" } )
     if(costantiSchermo.timer ~= nil) then
         timer.cancel(costantiSchermo.timer)
+        objectsFunctions.removeAllPwups()
     end
     levelsFunctions.removeBoss()
     composer.setVariable( "finalScore", score )
@@ -85,7 +83,7 @@ function gameFunctions.pauseGame()
     physics.pause()
     bossFunctions.pauseBoss()
     levelsFunctions.pauseLoop()
-    objectsFunctions.pauseDrag()
+    player.pauseDrag()
     costantiSchermo.pauseLoop()
 end
 
@@ -93,7 +91,7 @@ function gameFunctions.resumeGame()
     physics.start()
     bossFunctions.resumeBoss()
     levelsFunctions.resumeLoop()
-    objectsFunctions.resumeDrag()
+    player.resumeDrag()
     costantiSchermo.resumeLoop()
 end
 
@@ -125,16 +123,15 @@ local function increaseLives()
 end
 
 local function updateLives()
+    system.vibrate()
     gameFunctions.updateLives(player.playerChram, costantiOggetti.playerState, costantiSchermo.livesText)
 end
-
 
 local function updateLivesCattiva()
     gameFunctions.updateLivesCattiva(player.playerChram, costantiOggetti.playerState, costantiSchermo.livesText)
 end
 
-
-function gameFunctions.onCollision( event, objTable )
+function gameFunctions.onCollision( event, objTable, sceneGroup )
     if ( event.phase == "began" ) then
         local obj1 = event.object1
         local obj2 = event.object2
@@ -160,8 +157,21 @@ function gameFunctions.onCollision( event, objTable )
                 objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, increaseLives)
             elseif(obj2.myName=="projectile") then
-                objectsFunctions.removeFromTable(obj1,objTable)
+                objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, updateLives)
+            elseif(obj2.myName=="powerUpOnda") then
+                display.remove(obj2)
+                objectsFunctions.removeFromTable(obj2, objTable)
+                objectsFunctions.addPowerUp(obj2, sceneGroup)
+            elseif(obj2.myName=="freeze") then
+                display.remove(obj2)
+                objectsFunctions.removeFromTable(obj2, objTable)
+                --objectsFunctions.addPowerUp(obj2, objTable)
+                if levelsFunctions.isFreezed == false then
+                    objectsFunctions.freeze(objTable,levelsFunctions)
+                elseif levelsFunctions.isFreezed == true then
+                    objectsFunctions.freezeGap = objectsFunctions.freezeGap + 5
+                end
             end
         end
         if(obj2.myName == "Chram") then
@@ -187,6 +197,19 @@ function gameFunctions.onCollision( event, objTable )
             elseif(obj1.myName=="projectile") then
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
+            elseif(obj1.myName=="powerUpOnda") then
+                display.remove(obj1)
+                objectsFunctions.removeFromTable(obj1, objTable)
+                objectsFunctions.addPowerUp(obj1, sceneGroup)
+            elseif(obj1.myName=="freeze") then
+                display.remove(obj1)
+                objectsFunctions.removeFromTable(obj1, objTable)
+                --objectsFunctions.addPowerUp(obj2, objTable)
+                if levelsFunctions.isFreezed == false then
+                    objectsFunctions.freeze(objTable,levelsFunctions)
+                elseif levelsFunctions.isFreezed == true then
+                    objectsFunctions.freezeGap = objectsFunctions.freezeGap + 3
+                end
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then

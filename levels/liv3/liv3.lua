@@ -56,10 +56,6 @@ function scene:create( event )
 	uiGroup = display.newGroup()
 	sceneGroup:insert(uiGroup)
 
-	local background = display.newImageRect( backGroup, "images/levelBackground/safaribackground.png", display.actualContentWidth, display.actualContentHeight)
-	background.x = display.contentCenterX
-	background.y = display.contentCenterY
-
     player.playerInit(mainGroup)
     costanti.playerStateInit(3)
     costantiSchermo.allTextInit(uiGroup, "01:00", 15, costanti.playerState)
@@ -76,9 +72,8 @@ function scene:show( event )
 	local sceneGroup = self.view
 	local phase = event.phase
     if ( phase == "will" ) then
+        costantiSchermo.backgroundInit(backGroup, 3)
         gameFunctions.versus("images/versus/SAFEariVs.png")
-
-                        
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
@@ -92,14 +87,15 @@ end
 function scene:hide( event )
 	local sceneGroup = self.view
 	local phase = event.phase
-	if ( phase == "will" ) then
+    if ( phase == "will" ) then
         -- Code here runs when the scene is on screen (but is about to go off screen)
 		timer.cancel( gameLoopTimer )
         gameLoopTimer=nil
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
-		physics.pause()
+        physics.pause()
+        costantiSchermo.backgroundRemove()
         composer.removeScene( "levels.liv3.liv3" )
         end
 end

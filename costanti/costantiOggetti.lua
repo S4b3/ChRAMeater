@@ -1,12 +1,11 @@
 local costanti = {}
 
-local objectsFunctions = require("utility.objectsFunctions")
-
 local bigRamShape = {   (512/2)*2/10,(-288/2)*2/10, (512/2)*2/10,(288/2)*2/10, (-512/2)*2/10,(288/2)*2/10, (-512/2)*2/10,(-288/2)*2/10    }
 local smallRamShape = { (512/2)*2/10,(-192/2)*2/10, (512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(192/2)*2/10, (-512/2)*2/10,(-192/2)*2/10   }
 costanti.levels = {"liv1","liv2","liv3","liv4"}
 
 costanti.playerState = {}
+costanti.playerState.powerUps = {}
 
 function costanti.playerStateInit(lives)
     costanti.playerState.lives = lives
@@ -44,6 +43,23 @@ function costanti.getSmallRamShape()
     return smallRamShape
 end
 
+function costanti.addPowerUp(obj)
+    table.insert(costanti.playerState.powerUps, obj)
+
+end
+
+function costanti.removePowerUp(objName)
+    for i,item in pairs(costanti.playerState.powerUps) do
+        if(item.myName == objName) then
+            table.remove(costanti.playerState.powerUps, i)
+            --goto loopend
+            print("removed")
+            return 0
+        end
+    end
+--::loopend::
+end
+
 -- configurazione foglio immagine 
 local sheetOptions = {
 
@@ -74,17 +90,23 @@ local sheetOptions = {
             width = 512,
             height = 192
         },
+        {-- powerUp Onda d'urto
+            x = 0,
+            y = 1505,
+            width = 512,
+            height = 512
+        },
         {-- life
-        x = 0,
-        y = 1505,
-        width = 512,
-        height = 512
-    },
+            x = 0,
+            y = 1505,
+            width = 512,
+            height = 512
+        },
     },
 }
 -- ritorna il caricamento del foglio immagine in memoria
 function costanti.objectSheet()
-    return graphics.newImageSheet("images/GameObjects3.png", sheetOptions)
+    return graphics.newImageSheet("images/GameObjects.png", sheetOptions)
 end
 
 return costanti

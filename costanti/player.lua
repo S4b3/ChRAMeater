@@ -1,9 +1,31 @@
-local objectsFunctions = require("utility.objectsFunctions")
 local costanti = require("costanti.costantiOggetti")
 local costantiSchermo = require "costanti.costantiSchermo"
 
 local player = {}
 local scene
+local isStopped
+
+local function dragPlayerChram( event )
+    if(isStopped ) then
+        return
+    end
+    local playerChram = event.target
+    local phase = event.phase
+    if ( "began" == phase ) then
+        -- Set touch focus on playerChram
+        display.currentStage:setFocus( playerChram, event.id )
+        playerChram.touchOffsetX = event.x - playerChram.x
+        playerChram.touchOffsetY = event.y - playerChram.y
+    elseif ( "moved" == phase ) then
+        -- Move playerChram to the new touch position
+        playerChram.x = event.x - playerChram.touchOffsetX
+        playerChram.y = event.y - playerChram.touchOffsetY
+    elseif ( "ended" == phase or "cancelled" == phase ) then
+        -- Release touch focus on playerChram
+        display.currentStage:setFocus( playerChram, nil )
+        return true
+    end
+end
 
 function player.shoot(event)
     if(costanti.playerState.score == 0) then
@@ -20,7 +42,7 @@ function player.shoot(event)
     ramShooten.y = player.playerChram.y
     transition.to(ramShooten, {y = -10, time = 500, onComplete = function () ramShooten:removeSelf() end })
     costantiSchermo.scoreText.text =  "Score : " .. costanti.playerState.score .. "GB"
-
+    return true
 end
 
 function player.playerInit(sceneGroup)
@@ -31,9 +53,17 @@ function player.playerInit(sceneGroup)
 	physics.addBody( player.playerChram, { radius=player.playerChram.contentHeight/2, isSensor=true } )
     player.playerChram.myName = "Chram"
     player.playerChram.gravityScale = 0.0
-    player.playerChram:addEventListener( "touch", objectsFunctions.dragPlayerChram )
+    player.playerChram:addEventListener( "touch", dragPlayerChram )
    -- player.playerChram:addEventListener( "tap" , player.shoot)
 
+end
+
+function player.pauseDrag()
+    isStopped = true
+end
+
+function player.resumeDrag()
+    isStopped = false
 end
 
 return player

@@ -56,10 +56,6 @@ function scene:create( event )
 	uiGroup = display.newGroup()
 	sceneGroup:insert(uiGroup)
 
-	local background = display.newImageRect( backGroup, "images/background7.jpg", display.actualContentWidth, display.actualContentHeight)
-	background.x = display.contentCenterX
-	background.y = display.contentCenterY
-
     player.playerInit(mainGroup)
     costanti.playerStateInit(3)
 
@@ -76,7 +72,8 @@ end
 function scene:show( event )
 	local sceneGroup = self.view
 	local phase = event.phase
-	if ( phase == "will" ) then
+    if ( phase == "will" ) then
+        costantiSchermo.backgroundInit(backGroup, 2)
         -- Code here runs when the scene is still off screen (but is about to come on screen)
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
@@ -97,6 +94,7 @@ function scene:hide( event )
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
         physics.pause()
+        costantiSchermo.backgroundRemove()
 		composer.removeScene( "levels.liv2.liv2" )
     end
 end

@@ -4,6 +4,26 @@ local costantiSchermo = {}
 
 local isStopped = false
 local noBoss = true
+local printedPowerUps = {}
+
+--PER ORA I LIVELLI HANNO TUTTI LO STESSO BACKGROUND, IN FUTURO BASTERA' CAMBIARE L'IMMAGINE
+function costantiSchermo.backgroundInit(backGroup, intLevel)
+    if(intLevel == 1) then
+        costantiSchermo.background = display.newImageRect( backGroup, "images/background7.jpg", display.actualContentWidth, display.actualContentHeight) 
+    elseif(intLevel == 2) then
+        costantiSchermo.background = display.newImageRect( backGroup, "images/background7.jpg", display.actualContentWidth, display.actualContentHeight) 
+    elseif(intLevel == 3) then
+        costantiSchermo.background = display.newImageRect( backGroup, "images/background7.jpg", display.actualContentWidth, display.actualContentHeight) 
+    elseif(intLevel == 4) then
+        costantiSchermo.background = display.newImageRect( backGroup, "images/background7.jpg", display.actualContentWidth, display.actualContentHeight) 
+    end
+	costantiSchermo.background.x = display.contentCenterX
+	costantiSchermo.background.y = display.contentCenterY
+end
+
+function costantiSchermo.backgroundRemove()
+    costantiSchermo.background:removeSelf()
+end
 
 function costantiSchermo.pauseLoop()
     isStopped = true
@@ -12,7 +32,7 @@ end
 function costantiSchermo.resumeLoop()
     isStopped = false
 end
- 
+
 local function finishTime(secondsLeft,playerState)
     if secondsLeft == 0 then
         if(noBoss == true) then
@@ -22,7 +42,6 @@ local function finishTime(secondsLeft,playerState)
     return true
     end
 end
-
 
 local function updateTime( event,playerState )
 
@@ -74,7 +93,5 @@ function costantiSchermo.finalizeLoop()
     timer.cancel(costantiSchermo.timer)
 end
 
+
 return costantiSchermo
-
-
-    
