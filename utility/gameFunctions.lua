@@ -125,7 +125,7 @@ function gameFunctions.onCollision( event, objTable)
             elseif(obj2.myName=="projectile") then
                 objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, updateLives)
-            elseif(obj2.myName=="powerUpOnda") then
+            elseif(obj2.myName=="freeze") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
                 --objectsFunctions.addPowerUp(obj2, objTable)
@@ -155,7 +155,7 @@ function gameFunctions.onCollision( event, objTable)
             elseif(obj1.myName=="projectile") then
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, updateLives)
-            elseif(obj1.myName=="powerUpOnda") then
+            elseif(obj1.myName=="freeze") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
                 --objectsFunctions.addPowerUp(obj2, objTable)

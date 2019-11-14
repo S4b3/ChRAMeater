@@ -47,9 +47,12 @@ function functionLivTwo.createObjects(mainGroup,objectSheet,objTable)
     elseif (selector > 35 and selector <= 45) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector >= 45) then
+    elseif (selector >= 45 and selector <= 70) then
         objIndicator = 1
         objName="cacheCleaner"
+    elseif (selector >= 70) then
+        objIndicator = 5
+        objName="freeze"
     end
     if(mainGroup==nil or objectSheet==nil) then
         return end
@@ -62,6 +65,8 @@ function functionLivTwo.createObjects(mainGroup,objectSheet,objTable)
     elseif(objName=="ram8GB") then
         physics.addBody( newObject, "dynamic", { shape = bigRamShape } )
     elseif(objName=="cacheCleaner") then
+        physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
+    elseif(objName == "freeze") then
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
     end
     newObject.myName = objName
