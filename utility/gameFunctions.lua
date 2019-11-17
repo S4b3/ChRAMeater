@@ -10,7 +10,6 @@ local gameFunctions = {}
 
 local physics = require( "physics" )
 
-local invincibility=false
 
 physics.start()
 physics.setGravity( 0, 0 )
@@ -126,7 +125,7 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj2,objTable)
-                if invincibility==false then
+                if objectsFunctions.getInvincible then
                     timer.performWithDelay(1, updateLives)
                 end
             elseif(obj2.myName=="life") then
@@ -144,11 +143,8 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
             elseif(obj2.myName=="invincibility") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
-                invincibility=true
-                if(objectsFunctions.invincibility() == true) then
-                    invincibility=false
-                    print(invincibility)
-                end
+                objectsFunctions.setInvincibility()
+                objectsFunctions.invincibility()
             end
         end
         if(obj2.myName == "Chram") then
@@ -166,7 +162,7 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj1,objTable)
-                if invincibility then
+                if objectsFunctions.getInvincible then
                     return
                 end
                 timer.performWithDelay(1, updateLives)
@@ -185,11 +181,9 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
             elseif(obj1.myName=="invincibility") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
-                invincibility=true
-                if(objectsFunctions.invincibility() == true) then
-                    invincibility=false
-                    print(invincibility)
-                end
+                objectsFunctions.setInvincibility()
+                objectsFunctions.invincibility()
+
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then

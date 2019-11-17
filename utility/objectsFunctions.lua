@@ -98,7 +98,16 @@ function objectsFunctions.removeAllPwups()
         costanti.playerState.powerUps[i] = nil
     end
 end
+
+ISinvincible=false
+
+function objectsFunctions.endInvincibility()
+    ISinvincible=false
+end
+
+
 function objectsFunctions.invincibility()
+
 
     local time = costantiSchermo.secondsLeft
     local initialTime = time
@@ -109,12 +118,22 @@ function objectsFunctions.invincibility()
         if(time == initialTime - 5 or time==0) then
             print("deleting timer")
             timer.cancel(controlTimer)
+            objectsFunctions.endInvincibility()
             return true
     end
 end
-    controlTimer = timer.performWithDelay(500,controlTime, 0)
+    controlTimer = timer.performWithDelay(1,controlTime, 0)
 end
 
+function objectsFunctions.setInvincibility()
+    ISinvincible=true
+end
+
+
+
+function objectsFunctions.getInvincible()
+    return ISinvincible
+end
 
 
 return objectsFunctions
