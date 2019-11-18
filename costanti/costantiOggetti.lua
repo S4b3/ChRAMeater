@@ -96,9 +96,9 @@ local sheetOptions = {
             width = 512,
             height = 512
         },
-        {-- life
+        {-- invincibilità
             x = 0,
-            y = 1505,
+            y = 2017,
             width = 512,
             height = 512
         },

@@ -2,6 +2,7 @@ local objectsFunctions = {}
 local costanti = require("costanti.costantiOggetti")
 local costantiSchermo = require("costanti.costantiSchermo")
 local player = require("costanti.player")
+local costantiSchermo = require("costanti.costantiSchermo")
 
 local physics = require( "physics" )
 physics.start()
@@ -138,6 +139,41 @@ function objectsFunctions.freeze(objTable, levelsFunction)
         end 
     end
     controllaTimer = timer.performWithDelay(1, controlla, 0)
+end
+ISinvincible=false
+
+function objectsFunctions.endInvincibility()
+    ISinvincible=false
+end
+
+
+function objectsFunctions.invincibility()
+
+
+    local time = costantiSchermo.secondsLeft
+    local initialTime = time
+
+    local function controlTime()
+        time = costantiSchermo.secondsLeft
+        print(initialTime, time)
+        if(time == initialTime - 5 or time==0) then
+            print("deleting timer")
+            timer.cancel(controlTimer)
+            objectsFunctions.endInvincibility()
+            return true
+    end
+end
+    controlTimer = timer.performWithDelay(500,controlTime, 0)
+end
+
+function objectsFunctions.setInvincibility()
+    ISinvincible=true
+end
+
+
+
+function objectsFunctions.getInvincible()
+    return ISinvincible
 end
 
 

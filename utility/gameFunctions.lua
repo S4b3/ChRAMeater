@@ -10,6 +10,7 @@ local gameFunctions = {}
 
 local physics = require( "physics" )
 
+
 physics.start()
 physics.setGravity( 0, 0 )
 
@@ -151,7 +152,9 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj2.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj2,objTable)
-                timer.performWithDelay(1, updateLivesCattiva)
+                if objectsFunctions.getInvincible then
+                    timer.performWithDelay(1, updateLives)
+                end
             elseif(obj2.myName=="life") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2,objTable)
@@ -172,6 +175,11 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 elseif levelsFunctions.isFreezed == true then
                     objectsFunctions.freezeGap = objectsFunctions.freezeGap + 5
                 end
+            elseif(obj2.myName=="invincibility") then
+                display.remove(obj2)
+                objectsFunctions.removeFromTable(obj2, objTable)
+                objectsFunctions.setInvincibility()
+                objectsFunctions.invincibility()
             end
         end
         if(obj2.myName == "Chram") then
@@ -189,7 +197,10 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj1.myName=="cacheCleaner") then
                 objectsFunctions.removeFromTable(obj1,objTable)
-                timer.performWithDelay(1, updateLivesCattiva)
+                if objectsFunctions.getInvincible then
+                    return
+                end
+                timer.performWithDelay(1, updateLives)
             elseif(obj1.myName=="life") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1,objTable)
@@ -210,6 +221,12 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 elseif levelsFunctions.isFreezed == true then
                     objectsFunctions.freezeGap = objectsFunctions.freezeGap + 3
                 end
+            elseif(obj1.myName=="invincibility") then
+                display.remove(obj1)
+                objectsFunctions.removeFromTable(obj1, objTable)
+                objectsFunctions.setInvincibility()
+                objectsFunctions.invincibility()
+
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
