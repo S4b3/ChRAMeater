@@ -5,6 +5,7 @@ local sounds = require ("costanti.sounds")
 local costantiSchermo = require("costanti.costantiSchermo")
 local levelsFunctions = require("utility.levelsFunctions")
 local composer = require "composer"
+local levelsFunctions = require("utility.levelsFunctions")
 
 
 --dichiaro i vari bottoni implementati nella table.
@@ -59,7 +60,9 @@ function buttons.onHomeTapEffect(button)
     costantiSchermo.finalizeLoop()
     objectFunctions.removeAllPwups()
     levelsFunctions.resumeLoop()
+    levelsFunctions.resumeFreezeLoop()
     composer.gotoScene("menu")
+
 end
 
 --Funzione di tap sul bottone "closeMenuButton"

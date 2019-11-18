@@ -1,6 +1,8 @@
 local objectsFunctions = {}
 local costanti = require("costanti.costantiOggetti")
+local costantiSchermo = require("costanti.costantiSchermo")
 local player = require("costanti.player")
+local costantiSchermo = require("costanti.costantiSchermo")
 
 local physics = require( "physics" )
 physics.start()
@@ -96,6 +98,82 @@ function objectsFunctions.removeAllPwups()
         items[i] = nil
         costanti.playerState.powerUps[i] = nil
     end
+end
+
+local linearVelocityXTable = {}
+local linearVelocityYTable = {}
+local angularVelocityTable = {}
+objectsFunctions.freezeGap = 3
+
+function objectsFunctions.freeze(objTable, levelsFunction) 
+    levelsFunction.freezeLoop() -- da problemi
+    for i = 1 , #objTable do --funziona
+        local vx,vy = objTable[i]:getLinearVelocity()
+        linearVelocityXTable[i] = vx
+        linearVelocityYTable[i] = vy
+        angularVelocityTable[i] = objTable[i].angularVelocity
+        objTable[i]:setLinearVelocity(0,0)
+        objTable[i].angularVelocity = 0
+    end
+    local function resumeVelocity() --funziona
+        print("ripartito")
+        for i = 1 , #objTable do
+            objTable[i]:setLinearVelocity(linearVelocityXTable[i] ,linearVelocityYTable[i] )
+            objTable[i].angularVelocity = angularVelocityTable[i]
+        end
+        timer.cancel(uppaTimer)
+    end
+    local time = costantiSchermo.secondsLeft
+    local intialtime = time
+    local function uppa() -- mi serve per aggiornare il tempo che passa
+        time = costantiSchermo.secondsLeft
+    end 
+    uppaTimer = timer.performWithDelay(1, uppa, 0)
+
+    local function controlla ()
+        if (time == intialtime-objectsFunctions.freezeGap or time == 0) then --  and currentLevel == "levels.liv1.liv1"
+            levelsFunction.resumeFreezeLoop()
+            resumeVelocity()
+            timer.cancel(controllaTimer)
+            objectsFunctions.freezeGap = 3
+        end 
+    end
+    controllaTimer = timer.performWithDelay(1, controlla, 0)
+end
+ISinvincible=false
+
+function objectsFunctions.endInvincibility()
+    ISinvincible=false
+end
+
+
+function objectsFunctions.invincibility()
+
+
+    local time = costantiSchermo.secondsLeft
+    local initialTime = time
+
+    local function controlTime()
+        time = costantiSchermo.secondsLeft
+        print(initialTime, time)
+        if(time == initialTime - 5 or time==0) then
+            print("deleting timer")
+            timer.cancel(controlTimer)
+            objectsFunctions.endInvincibility()
+            return true
+    end
+end
+    controlTimer = timer.performWithDelay(500,controlTime, 0)
+end
+
+function objectsFunctions.setInvincibility()
+    ISinvincible=true
+end
+
+
+
+function objectsFunctions.getInvincible()
+    return ISinvincible
 end
 
 

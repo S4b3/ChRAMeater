@@ -17,6 +17,15 @@ function costanti.playerState.setScore(value)
     costanti.playerState.score = value
 end
 
+function costanti.playerState.decrementScore(value)
+    if costanti.playerState.score - value >= 0 then
+        costanti.playerState.score = costanti.playerState.score - value
+    else
+        costanti.playerState.score = 0
+    end
+
+end
+
 function costanti.playerState.decrementLives()
     costanti.playerState.lives = costanti.playerState.lives-1
 end
@@ -87,9 +96,9 @@ local sheetOptions = {
             width = 512,
             height = 512
         },
-        {-- life
+        {-- invincibilità
             x = 0,
-            y = 1505,
+            y = 2017,
             width = 512,
             height = 512
         },
