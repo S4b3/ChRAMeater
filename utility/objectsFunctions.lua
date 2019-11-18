@@ -140,11 +140,10 @@ function objectsFunctions.freeze(objTable, levelsFunction)
     end
     controllaTimer = timer.performWithDelay(1, controlla, 0)
 end
-ISinvincible=false
+objectsFunctions.ISinvincible=false
+objectsFunctions.InvincibleTime=5
 
-function objectsFunctions.endInvincibility()
-    ISinvincible=false
-end
+
 
 
 function objectsFunctions.invincibility()
@@ -155,10 +154,10 @@ function objectsFunctions.invincibility()
 
     local function controlTime()
         time = costantiSchermo.secondsLeft
-        print(initialTime, time)
-        if(time == initialTime - 5 or time==0) then
+        if(time == initialTime - objectsFunctions.InvincibleTime or time==0) then
             print("deleting timer")
             timer.cancel(controlTimer)
+            objectsFunctions.InvincibleTime=5
             objectsFunctions.endInvincibility()
             return true
     end
@@ -167,13 +166,17 @@ end
 end
 
 function objectsFunctions.setInvincibility()
-    ISinvincible=true
+    print("start invincibility")
+    objectsFunctions.ISinvincible=true
 end
 
-
+function objectsFunctions.endInvincibility()
+    print("stop invincibility")
+    objectsFunctions.ISinvincible=false
+end
 
 function objectsFunctions.getInvincible()
-    return ISinvincible
+    return objectsFunctions.ISinvincible
 end
 
 
