@@ -3,9 +3,9 @@ local gameFunctions = require ("utility.gameFunctions")
 local objectFunctions = require("utility.objectsFunctions")
 local sounds = require ("costanti.sounds")
 local costantiSchermo = require("costanti.costantiSchermo")
-local levelsFunctions = require("utility.levelsFunctions")
 local composer = require "composer"
 local levelsFunctions = require("utility.levelsFunctions")
+local player = require("costanti.player")
 
 
 --dichiaro i vari bottoni implementati nella table.
@@ -61,6 +61,7 @@ function buttons.onHomeTapEffect(button)
     objectFunctions.removeAllPwups()
     levelsFunctions.resumeLoop()
     levelsFunctions.resumeFreezeLoop()
+    player.emptyTransitions()
     composer.gotoScene("menu")
 
 end
@@ -95,7 +96,7 @@ function buttons.onCloseMenuTapEffect(button)
         buttons.buttonsMenu.closeMenuButton.pressed = false
         blackScreen.isVisible = false
         
-        gameFunctions.resumeGame()
+        timer.performWithDelay(100, function () gameFunctions.resumeGame() end)
         end
 end
 

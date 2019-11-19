@@ -49,18 +49,19 @@ function ramzilla.ramzillaInit(target, sceneGroup)
     ramzilla.show = display.newImageRect(sceneGroup, "images/bosses/firefox.png", 500, 500)
     ramzilla.show.x = display.contentCenterX
     ramzilla.show.y = -100
-    physics.addBody(ramzilla.show, {radius = ramzilla.show.contentHeight/2, isSensor = true })
+    physics.addBody(ramzilla.show, {radius = ramzilla.show.contentHeight/2-100, isSensor = true })
     ramzilla.show.hp = 100
     ramzilla.show:toFront()
     ramzilla.show.myName = "Ramzilla"
     table.insert(currentTransitions, transition.to(ramzilla.show, {time = 3000, y = 350, onComplete =
-         function () 
+         function ()
             costantiSchermo.background:addEventListener( "tap" , player.shoot)
             Movements = timer.performWithDelay(800, movements, 0)
             ShootTimer = timer.performWithDelay(600, shoot, 0) 
-            print(ShootTimer) end
+            print(ShootTimer)
+        end
     }) )
-    physics.addBody( ramzilla.show, {radius = ramzilla.show.contentHeight/2, isSensor = true}) 
+    physics.addBody( ramzilla.show, {radius = ramzilla.show.contentHeight/2-100, isSensor = true}) 
     ramzilla.sceneGroup = sceneGroup
     ramzilla.target = target
 end

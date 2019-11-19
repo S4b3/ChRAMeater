@@ -2,6 +2,7 @@ local costanti = require("costanti.costantiOggetti")
 local costantiSchermo = require "costanti.costantiSchermo"
 
 local player = {}
+local activeTransitions = {}
 local scene
 local isStopped
 
@@ -28,7 +29,7 @@ local function dragPlayerChram( event )
 end
 
 function player.shoot(event)
-    if(costanti.playerState.score == 0) then
+    if(costanti.playerState.score == 0 or isStopped) then
         return
     end
     costanti.playerState.setScore(costanti.playerState.score - 2)
@@ -40,7 +41,7 @@ function player.shoot(event)
     ramShooten:scale(0.27, 0.27)
     ramShooten.x = player.playerChram.x
     ramShooten.y = player.playerChram.y
-    transition.to(ramShooten, {y = -10, time = 500, onComplete = function () ramShooten:removeSelf() end })
+    table.insert(activeTransitions, transition.to(ramShooten, {y = -10, time = 500, onComplete = function () ramShooten:removeSelf() end }) )
     costantiSchermo.scoreText.text =  "Score : " .. costanti.playerState.score .. "GB"
     return true
 end
@@ -64,6 +65,32 @@ end
 
 function player.resumeDrag()
     isStopped = false
+end
+
+--transition.cancel(activeTransitions[i])
+
+function player.emptyTransitions()
+    if(#activeTransitions > 0) then
+        for i=1, #activeTransitions do
+            transition.cancel(activeTransitions[i])
+        end
+    end
+end
+
+function player.stopProjectiles()
+    if(#activeTransitions > 0) then
+        for i=1, #activeTransitions do
+            transition.pause(activeTransitions[i])
+        end
+    end
+end
+
+function player.resumeProjectiles()
+    if(#activeTransitions > 0) then
+        for i=1, #activeTransitions do
+            transition.resume(activeTransitions[i])
+        end
+    end
 end
 
 return player

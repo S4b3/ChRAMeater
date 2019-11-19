@@ -13,6 +13,7 @@ local sounds = require("costanti.sounds")
 --musica
 themeSong = sounds.menuThemeSong
 selectionSound = sounds.selectionSound
+local lastScore
 
 --musica
 local json = require( "json" )
@@ -59,6 +60,8 @@ function scene:create( event )
 	loadScores()
     -- Insert the saved score from the last game into the table, then reset it
     table.insert( scoresTable, composer.getVariable( "finalScore" ) )
+    lastScore = composer.getVariable("finalScore")
+    print(lastScore)
 	composer.setVariable( "finalScore", 0 )
 	-- Sort the table entries from highest to lowest
     local function compare( a, b )
@@ -75,17 +78,43 @@ function scene:create( event )
 	for i = 1, 10 do
         if ( scoresTable[i] ) then
             local yPos = 250 + ( i * 76 )
- 
-			local rankNum = display.newText( sceneGroup, i .. ")", display.contentCenterX-50, yPos, native.systemFont, 45 )
+
+            local fontSize = 45
+            if(scoresTable[i] == lastScore ) then
+                fontSize = 60
+                lastScore = nil
+            end
+			local rankNum = display.newText( sceneGroup, i .. ")", display.contentCenterX-50, yPos, native.systemFont, fontSize )
             rankNum:setFillColor( 0.8 )
             rankNum.anchorX = 1
+            print(scoresTable[i], lastScore)
  
-            local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX-30, yPos, native.systemFont, 45 )
+            local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX, yPos, native.systemFont, fontSize )
             thisScore.anchorX = 0
 		end
-	end
+    end
+    if(composer.getVariable("died") == true ) then
+        local retryButton = display.newText(sceneGroup, "Retry", display.contentCenterX, 1400, native.systemFont, 130)
+        retryButton:addEventListener("tap", function () composer.gotoScene(composer.getSceneName("previous")) end )
+    else
+        local previousScene = composer.getSceneName("previous")
+        if(previousScene == "levels.liv4.liv") then
+            return
+        end
+        local nextLevelButton = display.newText(sceneGroup, "Next Level", display.contentCenterX, 1400, native.systemFont, 130)
+        nextLevelButton:addEventListener("tap", function ()
+            local nextScene
+            if(previousScene == "levels.liv1.liv1") then
+                nextScene = "levels.liv2.liv2"
+            elseif(previousScene == "levels.liv2.liv2") then
+                nextScene = "levels.liv3.liv3"
+            elseif(previousScene == "levels.liv3.liv3") then
+                nextScene = "levels.liv4.liv4"
+            end
+            composer.gotoScene(nextScene)
+        end )
+    end
 	buttons.goToMenuInit(sceneGroup, 1200)
-
 end
 
 
@@ -114,7 +143,8 @@ function scene:hide( event )
 		-- Code here runs when the scene is on screen (but is about to go off screen)
 
 	elseif ( phase == "did" ) then
-		-- Code here runs immediately after the scene goes entirely off screen
+        -- Code here runs immediately after the scene goes entirely off screen
+        composer.setVariable("died" , false)
         composer.removeScene( "highscores")
         audio.stop( 1 )
 	end

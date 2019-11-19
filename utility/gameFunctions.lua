@@ -36,6 +36,7 @@ function gameFunctions.endGame(score)
     end
     levelsFunctions.removeBoss()
     composer.setVariable( "finalScore", score )
+    composer.setVariable( "died", costantiOggetti.playerState.died )
     composer.gotoScene( "highscores", { time=800, effect="crossFade" } )
 end
 
@@ -47,7 +48,7 @@ function gameFunctions.updateLives(playerChram, playerState,livesText)
         livesText.text = "Lives: " .. playerState.lives
         if ( playerState.lives == 0 ) then
 			display.remove( playerChram )
-			timer.performWithDelay( 2000, gameFunctions.endGame(playerState.score) )
+			timer.performWithDelay( 2000, gameFunctions.endGame(playerState.score))
         else
             playerChram.alpha = 0
             playerChram.isBodyActive = false
@@ -85,6 +86,7 @@ function gameFunctions.pauseGame()
     bossFunctions.pauseBoss()
     levelsFunctions.pauseLoop()
     player.pauseDrag()
+    player.stopProjectiles()
     costantiSchermo.pauseLoop()
 end
 
@@ -93,6 +95,7 @@ function gameFunctions.resumeGame()
     bossFunctions.resumeBoss()
     levelsFunctions.resumeLoop()
     player.resumeDrag()
+    player.resumeProjectiles()
     costantiSchermo.resumeLoop()
 end
 
@@ -237,12 +240,14 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
+            obj1.isVisible = false
             if( ramzilla.onHit() ) then
-                gameFunctions.endGame(costantiOggetti.playerState.score)
+                gameFunctions.endGame(costantiOggetti.playerState.score, 0)
             end
         elseif (obj1.myName == "Ramzilla" and obj2.myName == "ramShooten") then
+            obj2.isVisible = false
             if( ramzilla.onHit() ) then
-                gameFunctions.endGame(costantiOggetti.playerState.score)
+                gameFunctions.endGame(costantiOggetti.playerState.score, 0)
             end
         end
     end
