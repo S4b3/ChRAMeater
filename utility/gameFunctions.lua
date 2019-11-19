@@ -157,7 +157,7 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 if objectsFunctions.ISinvincible==true then
                     return
                 end
-                    timer.performWithDelay(1, updateLives)
+                timer.performWithDelay(1, updateLives)
             elseif(obj2.myName=="life") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2,objTable)
@@ -181,6 +181,10 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
             elseif(obj2.myName=="invincibility") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
+                if(costantiSchermo.secondsLeft == 0 ) then return end
+                if(not player.isCappellino()) then
+                    player.cappellinoSwap()
+                end
                 if objectsFunctions.ISinvincible==false then
                     objectsFunctions.setInvincibility()
                     objectsFunctions.invincibility()
@@ -206,7 +210,7 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 if objectsFunctions.ISinvincible==true then
                     return
                 end
-                    timer.performWithDelay(1, updateLives)
+                timer.performWithDelay(1, updateLives)
             elseif(obj1.myName=="life") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1,objTable)
@@ -230,6 +234,10 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
             elseif(obj1.myName=="invincibility") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1, objTable)
+                if(costantiSchermo.secondsLeft == 0 ) then return end
+                if(not player.isCappellino()) then
+                    player.cappellinoSwap()
+                end
                 if objectsFunctions.ISinvincible==false then
                     objectsFunctions.setInvincibility()
                     objectsFunctions.invincibility()

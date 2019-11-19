@@ -39,16 +39,16 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
     local objIndicator
     local objName
 
-    if(selector <= 50) then
+    if(selector <= 55) then
         objIndicator = 4
         objName="ram2GB"
-    elseif (selector > 50 and selector <= 60) then
+    elseif (selector > 55 and selector <= 70) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector > 60 and selector <= 70) then
+    elseif (selector > 70 and selector <= 99) then
         objIndicator = 1
         objName="cacheCleaner"
-    elseif ( selector > 70 ) then
+    elseif ( selector > 99 ) then
         objIndicator =  5
         objName = "powerUpOnda"
     end

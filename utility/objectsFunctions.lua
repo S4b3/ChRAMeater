@@ -172,6 +172,7 @@ end
 
 function objectsFunctions.endInvincibility()
     print("stop invincibility")
+    player.cappellinoSwap()
     objectsFunctions.ISinvincible=false
 end
 
