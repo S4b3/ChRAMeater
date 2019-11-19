@@ -225,8 +225,8 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                     objectsFunctions.freezeGap = objectsFunctions.freezeGap + 3
                 end
             elseif(obj1.myName=="invincibility") then
-                display.remove(obj2)
-                objectsFunctions.removeFromTable(obj2, objTable)
+                display.remove(obj1)
+                objectsFunctions.removeFromTable(obj1, objTable)
                 if objectsFunctions.ISinvincible==false then
                     objectsFunctions.setInvincibility()
                     objectsFunctions.invincibility()
