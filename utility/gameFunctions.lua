@@ -150,11 +150,11 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 timer.performWithDelay( 1, resizeChram,4)
                 costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 8)
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
-            elseif(obj2.myName=="cacheCleaner") then
-                objectsFunctions.removeFromTable(obj2,objTable)
-                if objectsFunctions.getInvincible then
-                    timer.performWithDelay(1, updateLives)
+            elseif(obj2.myName=="cacheCleaner" ) then
+                if objectsFunctions.ISinvincible==true then
+                    return
                 end
+                    timer.performWithDelay(1, updateLives)
             elseif(obj2.myName=="life") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2,objTable)
@@ -178,8 +178,12 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
             elseif(obj2.myName=="invincibility") then
                 display.remove(obj2)
                 objectsFunctions.removeFromTable(obj2, objTable)
-                objectsFunctions.setInvincibility()
-                objectsFunctions.invincibility()
+                if objectsFunctions.ISinvincible==false then
+                    objectsFunctions.setInvincibility()
+                    objectsFunctions.invincibility()
+                elseif objectsFunctions.ISinvincible==true then
+                    objectsFunctions.InvincibleTime = objectsFunctions.InvincibleTime + 5
+                end
             end
         end
         if(obj2.myName == "Chram") then
@@ -195,12 +199,11 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 timer.performWithDelay( 1, resizeChram)
                 costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 8)
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
-            elseif(obj1.myName=="cacheCleaner") then
-                objectsFunctions.removeFromTable(obj1,objTable)
-                if objectsFunctions.getInvincible then
+            elseif(obj1.myName=="cacheCleaner" ) then
+                if objectsFunctions.ISinvincible==true then
                     return
                 end
-                timer.performWithDelay(1, updateLives)
+                    timer.performWithDelay(1, updateLives)
             elseif(obj1.myName=="life") then
                 display.remove(obj1)
                 objectsFunctions.removeFromTable(obj1,objTable)
@@ -222,11 +225,15 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                     objectsFunctions.freezeGap = objectsFunctions.freezeGap + 3
                 end
             elseif(obj1.myName=="invincibility") then
-                display.remove(obj1)
-                objectsFunctions.removeFromTable(obj1, objTable)
-                objectsFunctions.setInvincibility()
-                objectsFunctions.invincibility()
-
+                display.remove(obj2)
+                objectsFunctions.removeFromTable(obj2, objTable)
+                if objectsFunctions.ISinvincible==false then
+                    objectsFunctions.setInvincibility()
+                    objectsFunctions.invincibility()
+                else if objectsFunctions.ISinvincible==true then
+                    objectsFunctions.InvincibleTime = objectsFunctions.InvincibleTime + 5
+                end
+            end
             end
         end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
