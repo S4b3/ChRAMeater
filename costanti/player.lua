@@ -6,7 +6,6 @@ local activeTransitions = {}
 local scene
 local isStopped
 local isCappellino
-local movementEventId
 
 function player.isCappellino()
     return isCappellino
@@ -20,7 +19,6 @@ local function dragPlayerChram( event )
     local phase = event.phase
     if ( "began" == phase ) then
         -- Set touch focus on playerChram
-        movementEventId = event.id
         display.currentStage:setFocus( playerChram, event.id )
         playerChram.touchOffsetX = event.x - playerChram.x
         playerChram.touchOffsetY = event.y - playerChram.y
@@ -60,7 +58,19 @@ end
 function player.playerInit(sceneGroup)
     isCappellino =  false
     scene = sceneGroup
-    player.playerChram = display.newImageRect(sceneGroup, costanti.objectSheet(), 2, 180, 180)
+
+    player.defaultSkin = {
+        type = "image",
+        sheet = costanti.objectSheet(),
+        frame = 2
+    }
+    player.incognitoSkin = {
+        type = "image",
+        sheet = costanti.objectSheet(),
+        frame = 7
+    }
+    player.playerChram = display.newRect(sceneGroup, display.contentCenterX, display.contentHeight-150, 180, 180)
+    player.playerChram.fill = player.defaultSkin
 	player.playerChram.x = display.contentCenterX
 	player.playerChram.y = display.contentHeight - 150
 	physics.addBody( player.playerChram, { radius=player.playerChram.contentHeight/2, isSensor=true } )
@@ -68,43 +78,16 @@ function player.playerInit(sceneGroup)
     player.playerChram.gravityScale = 0.0
     player.playerChram:addEventListener( "touch", dragPlayerChram )
    -- player.playerChram:addEventListener( "tap" , player.shoot)
-
 end
 
 function player.cappellinoSwap()
-    local selector
     if(isCappellino == true) then
-        selector = 2
+        player.playerChram.fill = (player.defaultSkin)
         isCappellino = false
     else 
-        selector = 7
+        player.playerChram.fill = (player.incognitoSkin)
         isCappellino = true
     end
-    local chram = player.playerChram
-    player.playerChram = display.newImageRect(scene, costanti.objectSheet(), selector, 180, 180)
-    player.playerChram.x = chram.x
-    player.playerChram.y = chram.y
-	player.playerChram.myName = "Chram"
-    player.playerChram.gravityScale = 0.0
-    chram:removeSelf()
-    player.playerChram:toBack()
-
-    local event = {}
-    event.phase = "began"
-    event.target = player.playerChram
-    event.x = player.playerChram.x
-    event.y = player.playerChram.y
-    event.id = movementEventId
-    timer.performWithDelay(1, function ()
-        physics.addBody( player.playerChram, { radius=player.playerChram.contentHeight/2, isSensor=true } )
-        player.playerChram:addEventListener( "touch", dragPlayerChram )
-    end)
-    --display.currentStage:setFocus(player.playerChram, event.id)
-    --timer.performWithDelay(1, function ()
-    if(movementEventId ~= nil) then
-        dragPlayerChram(event)
-    end
-
 end
 
 function player.pauseDrag()
