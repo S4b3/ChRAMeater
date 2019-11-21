@@ -32,20 +32,32 @@ function safaram.onHit()
 end
 
 local function shoot()
-    if(isPaused==true) then
+    if(isPaused==true or safaram.sceneGroup == nil) then
         return
     end
-    local projectile = display.newImageRect(safaram.sceneGroup, "images/bosses/apple.png", 150, 150)
-    --test
-    projectile.x = safaram.show.x
-    projectile.y = safaram.show.y
-    --projectile:setFillColor(255, 255, 0)
-    physics.addBody(projectile, "dinamic", {isSensor = true })
-    projectile.isBullet = true
-    projectile:toBack()
-    projectile.myName ="projectile"
-    --local currTrans = transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end})
-    table.insert( currentTransitions, transition.to ( projectile, { x = math.random(1000), y = display.contentHeight , time = 1200, onComplete = function () display.remove(projectile) end}) )
+    local selector = math.random(50)
+    local numerodivoltechesparo
+    if(selector>25) then
+        numerodivoltechesparo = 3
+    else 
+        numerodivoltechesparo = 1
+    end
+    while numerodivoltechesparo > 0 do
+        
+        local projectile = display.newImageRect(safaram.sceneGroup, "images/bosses/apple.png", 150, 150)
+        --test
+        projectile.x = safaram.show.x
+        projectile.y = safaram.show.y
+        --projectile:setFillColor(255, 255, 0)
+        physics.addBody(projectile, "dinamic", {isSensor = true })
+        projectile.isBullet = true
+        projectile:toBack()
+        projectile.myName ="projectile"
+        --local currTrans = transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end})
+        table.insert( currentTransitions, transition.to ( projectile, { x = math.random(1000), y = display.contentHeight , time = 1200, onComplete = function () display.remove(projectile) end}) )
+
+        numerodivoltechesparo = numerodivoltechesparo-1
+    end
 end
 
 function safaram.safariInit(target, sceneGroup)
@@ -67,9 +79,8 @@ function safaram.safariInit(target, sceneGroup)
     physics.addBody( safaram.show, {radius = safaram.show.contentHeight/2, isSensor = true})
     safaram.sceneGroup = sceneGroup
     safaram.target = target
-    timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(2000, shoot, 0) end)   
-    timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(2412, shoot, 0) end)    
-    timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(2424, shoot, 0) end)  
+   timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(2000, shoot, 0) end)   
+  
   
  
 
@@ -100,6 +111,7 @@ function safaram.safariRemove()
         timer.cancel(ShootTimer)
     end
     timer.cancel(Movements)
+    
     safaram.show:removeSelf()
 end
 

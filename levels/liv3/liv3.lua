@@ -28,7 +28,7 @@ local function gameLoop() --porkaround mi serve poter passare gameloop senza par
 end
 
 local function onCollision( event )
-    gameFunctions.onCollision( event, objTable )
+    gameFunctions.onCollision( event, objTable , uiGroup)
 end
 
 -- -----------------------------------------------------------------------------------
