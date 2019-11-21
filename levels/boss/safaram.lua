@@ -36,13 +36,13 @@ local function shoot()
         return
     end
     local selector = math.random(50)
-    local numerodivoltechesparo
+    local numberOfApples
     if(selector>25) then
-        numerodivoltechesparo = 3
+        numberOfApples = 3
     else 
-        numerodivoltechesparo = 1
+        numberOfApples = 1
     end
-    while numerodivoltechesparo > 0 do
+    while numberOfApples > 0 do
         
         local projectile = display.newImageRect(safaram.sceneGroup, "images/bosses/apple.png", 150, 150)
         --test
@@ -54,9 +54,12 @@ local function shoot()
         projectile:toBack()
         projectile.myName ="projectile"
         --local currTrans = transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end})
-        table.insert( currentTransitions, transition.to ( projectile, { x = math.random(1000), y = display.contentHeight , time = 1200, onComplete = function () display.remove(projectile) end}) )
-
-        numerodivoltechesparo = numerodivoltechesparo-1
+        if numberOfApples==1 then
+            table.insert( currentTransitions, transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1200, onComplete = function () display.remove(projectile) end}) )
+        else
+            table.insert( currentTransitions, transition.to ( projectile, { x = math.random(1000), y = display.contentHeight , time = 1200, onComplete = function () display.remove(projectile) end}) )
+        end
+        numberOfApples = numberOfApples-1
     end
 end
 
