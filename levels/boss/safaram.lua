@@ -16,7 +16,7 @@ local function movements()
     if(isPaused==true) then
         return
     end
-    table.insert( currentTransitions, transition.to(safaram.show, {time=800, x = math.random(0,display.contentWidth), y= math.random(350, 500)}) )
+    table.insert( currentTransitions, transition.to(safaram.show, {time=800, x = safaram.target.x, y= math.random(100, 500)}) )
 end
 
 function safaram.onHit()
@@ -45,7 +45,7 @@ local function shoot()
     projectile:toBack()
     projectile.myName ="projectile"
     --local currTrans = transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end})
-    table.insert( currentTransitions, transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end}) )
+    table.insert( currentTransitions, transition.to ( projectile, { x = math.random(1000), y = display.contentHeight , time = 1200, onComplete = function () display.remove(projectile) end}) )
 end
 
 function safaram.safariInit(target, sceneGroup)
@@ -67,7 +67,12 @@ function safaram.safariInit(target, sceneGroup)
     physics.addBody( safaram.show, {radius = safaram.show.contentHeight/2, isSensor = true})
     safaram.sceneGroup = sceneGroup
     safaram.target = target
-    timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(1600, shoot, 0) end)
+    timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(2000, shoot, 0) end)   
+    timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(2412, shoot, 0) end)    
+    timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(2424, shoot, 0) end)  
+  
+ 
+
 end
 
 function safaram.pause()
