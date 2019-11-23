@@ -25,7 +25,7 @@ function gameFunctions.resizeChram(playerChram)
     playerChram : scale(1.011, 1.011)
     timer.performWithDelay(1)
     physics.removeBody(playerChram)
-    physics.addBody( playerChram, { radius=playerChram.contentHeight/2, isSensor=true } )
+    physics.addBody( playerChram, { radius=playerChram.contentHeight/2 } )
 end
 
 function gameFunctions.endGame(score)
