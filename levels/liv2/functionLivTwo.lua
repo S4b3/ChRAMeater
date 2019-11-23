@@ -89,11 +89,10 @@ function functionLivTwo.createObjects(mainGroup,objectSheet,objTable)
         newObject.y = math.random( 500 )
         newObject:setLinearVelocity( math.random( -120,-40 ), math.random( 20,60 ) )
     elseif  ( whereFrom == 4 and newObject.myName == "cacheCleaner" )then
-        newObject.x = math.random( display.contentWidth )
+        newObject.x = player.playerChram.x
         newObject.y = -60
-        newObject:setLinearVelocity( math.random( -40,40 ), math.random( 40,120 ) )
+        newObject:setLinearVelocity( 0, 10200)
         newObject.isBullet = true
-        newObject:applyLinearImpulse(-60,200)
     elseif (whereFrom == 4) then
         newObject.x = math.random( display.contentWidth )
         newObject.y = -60

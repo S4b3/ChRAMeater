@@ -73,7 +73,7 @@ function player.playerInit(sceneGroup)
     player.playerChram.fill = player.defaultSkin
 	player.playerChram.x = display.contentCenterX
 	player.playerChram.y = display.contentHeight - 150
-	physics.addBody( player.playerChram, { radius=player.playerChram.contentHeight/2} )
+	physics.addBody( player.playerChram, "dynamic" ,{ radius=player.playerChram.contentHeight/2} )
     player.playerChram.myName = "Chram"
     player.playerChram.gravityScale = 0.0
     player.playerChram:addEventListener( "touch", dragPlayerChram )

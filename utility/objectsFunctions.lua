@@ -56,7 +56,7 @@ local function ondaTap(event)
         table.remove(items,#items)
         lastItem = items[#items]
     end
-
+    player.playerChram.isSensor = true
     local shockWave = display.newCircle(player.playerChram.x,player.playerChram.y, 600)
     shockWave:setFillColor(0.5000,0.0588,1.0000)
     local function shockFunc()
@@ -68,10 +68,11 @@ local function ondaTap(event)
         )
     end
     shockWave.alpha=0.2
-    timer.performWithDelay(1, shockFunc , 20)
-    timer.performWithDelay(1, remove)
+    timer.performWithDelay(10, shockFunc , 20)
+    timer.performWithDelay(10, remove)
     costanti.removePowerUp(event.target.myName)
     timer.performWithDelay(800, function() shockWave:removeSelf() end)
+    timer.performWithDelay(400,function() player.playerChram.isSensor=false end)
     return
 end
 
