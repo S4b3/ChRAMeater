@@ -51,7 +51,7 @@ function functionLivTwo.createObjects(mainGroup,objectSheet,objTable)
         objIndicator = 1
         objName="cacheCleaner"
     elseif (selector > 99) then
-        objIndicator = 5
+        objIndicator = 9
         objName="freeze"
     end
     if(mainGroup==nil or objectSheet==nil) then
