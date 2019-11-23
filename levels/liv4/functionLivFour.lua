@@ -45,11 +45,11 @@ function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
     elseif (selector > 50 and selector <= 60) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector >= 60 and selector < 98) then
+    elseif (selector >= 60 and selector < 70) then
         objIndicator = 1
         objName="cacheCleaner"
-    elseif (selector >=98 ) then
-        objIndicator = 5
+    elseif (selector >=70 ) then
+        objIndicator = 7
         objName="life"
     end
     if(mainGroup==nil or objectSheet==nil) then

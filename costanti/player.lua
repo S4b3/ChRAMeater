@@ -67,7 +67,7 @@ function player.playerInit(sceneGroup)
     player.incognitoSkin = {
         type = "image",
         sheet = costanti.objectSheet(),
-        frame = 7
+        frame = 8
     }
     player.playerChram = display.newRect(sceneGroup, display.contentCenterX, display.contentHeight-150, 180, 180)
     player.playerChram.fill = player.defaultSkin

@@ -102,9 +102,21 @@ local sheetOptions = {
             width = 512,
             height = 512
         },
-        {
+        {-- vita
+            x = 512,
+            y = 0,
+            width = 512,
+            height = 512
+        },
+        {-- cappellino
             x = 512,
             y = 512,
+            width = 512,
+            height = 512
+        },
+        {-- ghiaccio
+            x = 512,
+            y = 1024,
             width = 512,
             height = 512
         }
@@ -112,7 +124,7 @@ local sheetOptions = {
 }
 -- ritorna il caricamento del foglio immagine in memoria
 function costanti.objectSheet()
-    return graphics.newImageSheet("images/GameObjects.png", sheetOptions)
+    return graphics.newImageSheet("images/GameObjects5.png", sheetOptions)
     --return graphics.newImageSheet("images/GameObjects.png", sheetOptions)
 end
 
