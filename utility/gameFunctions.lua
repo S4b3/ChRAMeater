@@ -101,6 +101,7 @@ end
 
 
 function gameFunctions.versus(enemy)
+    Runtime:removeEventListener("touch")
     gameFunctions.pauseGame()
     local chram = display.newImageRect("images/versus/ChRAMvs.png", 1111*1.30, 1795*1.30)
     chram.x = 2*display.contentCenterX
