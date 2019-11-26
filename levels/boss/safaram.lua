@@ -80,12 +80,12 @@ function safaram.safariInit(target, sceneGroup)
     safaram.show.hp = 10
     safaram.show:toFront()
     safaram.myName = "Safari"
-    transition.to(safaram.show, {time = 3000, y = 350, onComplete =
+    table.insert(currentTransitions, transition.to(safaram.show, {time = 3000, y = 350, onComplete =
     
          function () 
             costantiSchermo.background:addEventListener( "tap" , player.shoot)
             Movements = timer.performWithDelay(800, movements, 0) end
-        })
+        }) )
     
     physics.addBody( safaram.show, {radius = safaram.show.contentHeight/2, isSensor = true})
     safaram.sceneGroup = sceneGroup

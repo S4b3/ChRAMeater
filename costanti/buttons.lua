@@ -114,6 +114,9 @@ function buttons.buttonSwitcheroo(button, target)
 end
 
 function buttons.onNonSwappableTap(event)
+    if(gameFunctions.isMenuStopped() == true ) then
+        return
+    end
     event.target.pressed = not event.target.pressed
     event.target.onTapEffect(event.target)
 end

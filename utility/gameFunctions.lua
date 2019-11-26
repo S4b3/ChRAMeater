@@ -9,7 +9,7 @@ local ramzilla = require("levels.boss.ramzilla")
 local gameFunctions = {}
 
 local physics = require( "physics" )
-
+local isMenuStopped = false
 
 physics.start()
 physics.setGravity( 0, 0 )
@@ -79,6 +79,9 @@ function gameFunctions.updateLivesCattiva(playerChram, playerState,livesText)
     end
 end
 
+function gameFunctions.isMenuStopped()
+    return isMenuStopped
+end
 
 
 function gameFunctions.pauseGame()
@@ -101,6 +104,7 @@ end
 
 
 function gameFunctions.versus(enemy)
+    isMenuStopped = true
     gameFunctions.pauseGame()
     local chram = display.newImageRect("images/versus/ChRAMvs.png", 1111*1.30, 1795*1.30)
     chram.x = 2*display.contentCenterX
@@ -110,7 +114,11 @@ function gameFunctions.versus(enemy)
     opponent.y = display.contentCenterY
     function fadeout()
         transition.fadeOut(chram, {time = 1500, delay = 500})
-        transition.fadeOut(opponent, {time = 1500, delay = 500, onComplete = gameFunctions.resumeGame})
+        transition.fadeOut(opponent, {time = 1500, delay = 500, onComplete = function()
+            gameFunctions.resumeGame()
+            isMenuStopped = false
+        end
+        })
     end
     transition.to(chram, {time = 300, x = display.contentCenterX})
     transition.to(opponent, {time = 300, x = display.contentCenterX, onComplete = fadeout})
