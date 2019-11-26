@@ -42,6 +42,7 @@ function objectsFunctions.restorePlayerCharm(playerChram, playerState)
             playerState.setDied(false) --non serve se lo sposto
         end
     } )
+    costanti.playerState.died = false
 end
 
 local lastItem
