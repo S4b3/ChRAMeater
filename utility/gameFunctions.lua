@@ -135,10 +135,16 @@ local function updateLivesCattiva()
     gameFunctions.updateLivesCattiva(player.playerChram, costantiOggetti.playerState, costantiSchermo.livesText)
 end
 
+local function setPlayerVelocityZero()
+    timer.performWithDelay(1,function () player.playerChram:setLinearVelocity(0,0) end)
+end
+
+local obj1 
+local obj2 
 function gameFunctions.onCollision( event, objTable, sceneGroup )
     if ( event.phase == "began" ) then
-        local obj1 = event.object1
-        local obj2 = event.object2
+        obj1 = event.object1
+        obj2 = event.object2
 
         if(obj1.myName == "Chram") then
             if(obj2.myName == "ram2GB" ) then
@@ -258,6 +264,14 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 gameFunctions.endGame(costantiOggetti.playerState.score, 0)
             end
         end
+    end
+    if(event.phase=="ended" and (obj1.myName == "Chram" or obj2.myName == "Chram" ) ) then
+        if(objectsFunctions.ISinvincible == false 
+             and( obj1.myName=="cacheCleaner" or obj1.myName == "projectile" 
+            or obj2.myName=="cacheCleaner" or obj2.myName=="projectile") ) then 
+            return
+        end
+        setPlayerVelocityZero()
     end
 end
 
