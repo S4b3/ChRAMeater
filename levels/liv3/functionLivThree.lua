@@ -45,13 +45,13 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
     elseif (selector > 50 and selector <= 60) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector > 60 and selector < 80) then
+    elseif (selector > 60 and selector < 78) then
         objIndicator = 1
         objName="cacheCleaner"
-    elseif (selector >= 80) then
+    elseif (selector >= 78) then
         objIndicator = 5
         objName="powerUpOnda"
-    elseif (selector >0 and selector <=20) then
+    elseif (selector >=0 and selector <=20) then
         objIndicator = 6
         objName="invincibility"
     end

@@ -45,10 +45,10 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
     elseif (selector > 55 and selector <= 70) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector > 70 and selector <= 99) then
+    elseif (selector > 70 and selector <= 79) then
         objIndicator = 1
         objName="cacheCleaner"
-    elseif ( selector > 99 ) then
+    elseif ( selector > 79 ) then
         objIndicator =  5
         objName = "powerUpOnda"
     end

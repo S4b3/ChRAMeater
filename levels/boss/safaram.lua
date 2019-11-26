@@ -32,18 +32,7 @@ function safaram.onHit()
 end
 
 local function shoot()
-    if(isPaused==true or safaram.sceneGroup == nil) then
-        return
-    end
-    local selector = math.random(50)
-    local numberOfApples
-    if(selector>25) then
-        numberOfApples = 3
-    else 
-        numberOfApples = 1
-    end
-    while numberOfApples > 0 do
-        
+    local function projectileInit()
         local projectile = display.newImageRect(safaram.sceneGroup, "images/bosses/apple.png", 150, 150)
         --test
         projectile.x = safaram.show.x
@@ -53,14 +42,33 @@ local function shoot()
         projectile.isBullet = true
         projectile:toBack()
         projectile.myName ="projectile"
-        --local currTrans = transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end})
-        if numberOfApples==1 then
-            table.insert( currentTransitions, transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1200, onComplete = function () display.remove(projectile) end}) )
-        else
-            table.insert( currentTransitions, transition.to ( projectile, { x = math.random(1000), y = display.contentHeight , time = 1200, onComplete = function () display.remove(projectile) end}) )
-        end
-        numberOfApples = numberOfApples-1
+        return projectile
     end
+    if(isPaused==true or safaram.sceneGroup == nil) then
+        return
+    end
+    local selector = math.random(50)
+    local numberOfApples
+    if(selector >= 35) then
+        numberOfApples = 3
+    elseif(selector >=20 and selector < 35) then
+        numberOfApples = 2
+    else
+        numberOfApples = 1
+    end
+    local offset = math.random(500,600)
+    --local currTrans = transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end})
+    if numberOfApples <= 3 then
+        local proj1 = projectileInit()
+        table.insert( currentTransitions, transition.to ( proj1, { x = safaram.target.x-offset, y = display.contentHeight , time = 1200, onComplete = function () display.remove(proj1) end}) )
+        local proj2 = projectileInit()
+        table.insert( currentTransitions, transition.to ( proj2, { x = safaram.target.x+offset, y = display.contentHeight , time = 1200, onComplete = function () display.remove(proj1) end}) )
+        if(numberOfApples == 2) then
+            return
+        end
+    end
+    local projectile = projectileInit()
+    table.insert( currentTransitions, transition.to ( projectile, { x = safaram.target.x, y = display.contentHeight , time = 1200, onComplete = function () display.remove(projectile) end}) )
 end
 
 function safaram.safariInit(target, sceneGroup)
