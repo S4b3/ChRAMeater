@@ -62,7 +62,7 @@ local function shoot()
         local proj1 = projectileInit()
         table.insert( currentTransitions, transition.to ( proj1, { x = safaram.target.x-offset, y = display.contentHeight , time = 1200, onComplete = function () display.remove(proj1) end}) )
         local proj2 = projectileInit()
-        table.insert( currentTransitions, transition.to ( proj2, { x = safaram.target.x+offset, y = display.contentHeight , time = 1200, onComplete = function () display.remove(proj1) end}) )
+        table.insert( currentTransitions, transition.to ( proj2, { x = safaram.target.x+offset, y = display.contentHeight , time = 1200, onComplete = function () display.remove(proj2) end}) )
         if(numberOfApples == 2) then
             return
         end
