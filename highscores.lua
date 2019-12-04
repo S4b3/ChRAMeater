@@ -93,12 +93,14 @@ function scene:create( event )
             thisScore.anchorX = 0
 		end
     end
-    if(composer.getVariable("died") == true ) then
+
+    local previousScene = composer.getSceneName("previous")
+    if (previousScene=="menu") then   
+    elseif(composer.getVariable("died") == true ) then
         local retryButton = display.newText(sceneGroup, "Retry", display.contentCenterX, 1400, native.systemFont, 130)
         retryButton:addEventListener("tap", function () composer.gotoScene(composer.getSceneName("previous")) end )
     else
-        local previousScene = composer.getSceneName("previous")
-        if(previousScene == "levels.liv4.liv") then
+        if(previousScene == "levels.liv4.liv4") then
             return
         end
         local nextLevelButton = display.newText(sceneGroup, "Next Level", display.contentCenterX, 1400, native.systemFont, 130)
