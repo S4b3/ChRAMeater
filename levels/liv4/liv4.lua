@@ -42,7 +42,7 @@ end
 function scene:create( event )
 
 	local sceneGroup = self.view
-	-- Code here runs when the scene is first created but has not yet appeared on screen
+	-- Il codice viene eseguito quando la scena è creata ma non è ancora apparsa sullo schermo
 	physics.pause()
 
 	backGroup = display.newGroup()
@@ -54,11 +54,15 @@ function scene:create( event )
 	uiGroup = display.newGroup()
 	sceneGroup:insert(uiGroup)
 
-	player.playerInit(mainGroup)
+    player.playerInit(mainGroup)
     costanti.playerStateInit(3)
-
-    costantiSchermo.livesScoreTextInit(uiGroup, costanti.playerState)
-
+    costantiSchermo.allTextInit(uiGroup, "01:00", 10, costanti.playerState)
+    timeText = costantiSchermo.clockText
+    clockText = display.newText( uiGroup, timeText, 800, 130, native.systemFont, 50 )
+    function uppa()
+        clockText.text = costantiSchermo.clockText
+    end 
+    timer.performWithDelay(1, uppa, 0)
 end
 
 -- show()

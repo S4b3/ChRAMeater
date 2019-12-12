@@ -1,4 +1,5 @@
 local costantiOggetti = require("costanti.costantiOggetti")
+local edgram = require("levels.boss.edgram")
 local player = require("costanti.player")
 local functionLivFour = {}
 
@@ -20,12 +21,12 @@ function functionLivFour.startCreating()
 end
 
 function functionLivFour.spawnBoss(sceneGroup)
-    --FuturoBoss
+    edgram.edgramInit(player.playerChram, sceneGroup)
     isStopped = true
 end
 
 function functionLivFour.removeBoss()
-    --FuturoBoss
+    edgram.edgramRemove()
     isStopped = false
 end
 
