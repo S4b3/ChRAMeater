@@ -6,6 +6,7 @@ local costantiSchermo = require("costanti.costantiSchermo")
 local bossFunctions = require "levels.boss.bossFunctions"
 local player = require("costanti.player")
 local ramzilla = require("levels.boss.ramzilla")
+local safaram = require("levels.boss.safaram")
 local gameFunctions = {}
 
 local physics = require( "physics" )
@@ -269,6 +270,17 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
         elseif (obj1.myName == "Ramzilla" and obj2.myName == "ramShooten") then
             obj2.isVisible = false
             if( ramzilla.onHit() ) then
+                gameFunctions.endGame(costantiOggetti.playerState.score, 0)
+            end
+        end
+        if (obj1.myName == "ramShooten" and obj2.myName == "Safari" ) then
+            obj1.isVisible = false
+            if( safaram.onHit() ) then
+                gameFunctions.endGame(costantiOggetti.playerState.score, 0)
+            end
+        elseif (obj1.myName == "Safari" and obj2.myName == "ramShooten") then
+            obj2.isVisible = false
+            if( safaram.onHit() ) then
                 gameFunctions.endGame(costantiOggetti.playerState.score, 0)
             end
         end

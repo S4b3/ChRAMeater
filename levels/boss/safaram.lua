@@ -23,7 +23,7 @@ function safaram.onHit()
     if(safaram.isDead) then
         return
     end
-    safaram.show.hp = safaram.show.hp - 5
+    safaram.show.hp = safaram.show.hp - 10
     if(safaram.show.hp <= 0 ) then
         safaram.isDead = true
         return safaram.isDead
@@ -79,7 +79,7 @@ function safaram.safariInit(target, sceneGroup)
     physics.addBody(safaram.show, {radius = safaram.show.contentHeight/2, isSensor = true })
     safaram.show.hp = 10
     safaram.show:toFront()
-    safaram.myName = "Safari"
+    safaram.show.myName = "Safari"
     table.insert(currentTransitions, transition.to(safaram.show, {time = 3000, y = 350, onComplete =
     
          function () 
@@ -121,9 +121,19 @@ function safaram.safariRemove()
     if(ShootTimer ~= nil ) then
         timer.cancel(ShootTimer)
     end
-    timer.cancel(Movements)
-    
-    safaram.show:removeSelf()
+    isPaused = true
+    if(Movements ~= nil) then
+        timer.cancel(Movements)
+    end
+    if(safaram.show ~= nil) then
+        safaram.show:removeSelf()
+    end
+    if(#currentTransitions > 0) then
+        for i = 1, #currentTransitions do
+            transition.cancel(currentTransitions[i])
+           currentTransitions[i] = nil
+        end
+    end
 end
 
 return safaram
