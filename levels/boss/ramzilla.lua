@@ -8,9 +8,6 @@ ramzilla.isDead = false
 local isPaused
 local currentTransitions ={}
 
-
-
-
 local function movements()
     if(isPaused==true) then
         return
