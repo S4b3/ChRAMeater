@@ -8,27 +8,36 @@ tor.isDead = false
 local isPaused
 local currentTransitions ={}
 
+local function randomSelector(arg1, arg2, arg3)
+    local selector =  math.random(1,3)
+    timing = {
+        [1] = function () return arg1 end,
+        [2] = function () return arg2 end,
+        [3] = function () return arg3 end,
+      }
+    return timing[selector]()
+end
+
 local function movements()
     if(isPaused==true) then
         return
     end
-    table.insert(currentTransitions ,transition.to(tor.show, {time = 800, x = math.random(0, display.contentWidth), y = math.random(350, 500)}))
+    table.insert(currentTransitions ,transition.to(tor.show, {time = 300, x = math.random(0, display.contentWidth), y = math.random(100, 900)}))
 end
+
 function tor.onHit()
     if(tor.isDead) then
         return
     end
-    tor.show.hp = tor.show.hp - 10
+    tor.show.hp = tor.show.hp - 5
     if(tor.show.hp <= 0 ) then
         tor.isDead = true
         return tor.isDead
     end
     transition.to(tor.show, {yScale = 1.1, xScale = 1.1, time = 300, onComplete = function () table.insert(currentTransitions, transition.to(tor.show, {yScale = 1, xScale = 1, time = 300} ) ) end } )
 end
-local function shoot()
-  if(isPaused==true or tor.sceneGroup == nil) then
-        return
-    end
+
+local function projectileInit(shootingSpeed)
     local projectile = display.newImageRect(tor.sceneGroup, "images/bosses/onion.png", 100, 100)
     projectile.x = tor.show.x
     projectile.y = tor.show.y
@@ -37,7 +46,17 @@ local function shoot()
     projectile.isBullet = true
     projectile:toBack()
     projectile.myName ="projectile"
-    table.insert(currentTransitions, transition.to ( projectile, { x = tor.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end}))
+    table.insert(currentTransitions, transition.to ( projectile, { x = tor.target.x, y = display.contentHeight , time = shootingSpeed, onComplete = function () display.remove(projectile) end}))
+end
+
+local function shoot()
+  if(isPaused==true or tor.sceneGroup == nil) then
+        return
+    end
+
+    local shootingSpeed = math.random(400,1500)
+    projectileInit(shootingSpeed)
+    timer.performWithDelay(randomSelector(200,400,600),shoot)
 end
 
 function tor.torInit(target, sceneGroup)
@@ -54,7 +73,7 @@ function tor.torInit(target, sceneGroup)
          function ()
             costantiSchermo.background:addEventListener( "tap" , player.shoot)
             Movements = timer.performWithDelay(800, movements, 0)
-            ShootTimer = timer.performWithDelay(600, shoot, 0) 
+            ShootTimer = timer.performWithDelay(randomSelector(200,400,600), shoot) 
             print(ShootTimer)
         end
     }) )
