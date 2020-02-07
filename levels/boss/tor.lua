@@ -22,7 +22,8 @@ local function movements()
     if(isPaused==true) then
         return
     end
-    table.insert(currentTransitions ,transition.to(tor.show, {time = 300, x = math.random(0, display.contentWidth), y = math.random(100, 900)}))
+    table.insert(currentTransitions ,transition.to(tor.show, {time = 250, x = math.random(0, display.contentWidth), y = math.random(100, 900)}))
+    timer.performWithDelay(randomSelector(200,400,600),movements)
 end
 
 function tor.onHit()
@@ -72,7 +73,7 @@ function tor.torInit(target, sceneGroup)
     table.insert(currentTransitions, transition.to(tor.show, {time = 3000, y = 350, onComplete =
          function ()
             costantiSchermo.background:addEventListener( "tap" , player.shoot)
-            Movements = timer.performWithDelay(800, movements, 0)
+            Movements = timer.performWithDelay(randomSelector(200,400,600), movements)
             ShootTimer = timer.performWithDelay(randomSelector(200,400,600), shoot) 
             print(ShootTimer)
         end
@@ -101,6 +102,7 @@ function tor.resume()
         end
     end
 end
+
 function tor.torRemove()
     if(ShootTimer ~= nil) then
         timer.cancel(ShootTimer)
