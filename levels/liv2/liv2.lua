@@ -59,7 +59,7 @@ function scene:create( event )
     player.playerInit(mainGroup)
     costanti.playerStateInit(3)
 
-    costantiSchermo.allTextInit(uiGroup, "00:05", 5, costanti.playerState)
+    costantiSchermo.allTextInit(uiGroup, "00:30", 30, costanti.playerState)
     timeText = costantiSchermo.clockText
     clockText = display.newText( uiGroup, timeText, 800, 130, native.systemFont, 50 )
     function uppa()
@@ -74,7 +74,7 @@ function scene:show( event )
 	local phase = event.phase
     if ( phase == "will" ) then
         costantiSchermo.backgroundInit(backGroup, 2)
-        -- Code here runs when the scene is still off screen (but is about to come on screen)
+        gameFunctions.versus("images/versus/torVs.png")
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
         physics.start()

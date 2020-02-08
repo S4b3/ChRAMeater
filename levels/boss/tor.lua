@@ -75,7 +75,6 @@ function tor.torInit(target, sceneGroup)
             costantiSchermo.background:addEventListener( "tap" , player.shoot)
             Movements = timer.performWithDelay(randomSelector(200,400,600), movements)
             ShootTimer = timer.performWithDelay(randomSelector(200,400,600), shoot) 
-            print(ShootTimer)
         end
     }) )
     physics.addBody( tor.show, {radius = tor.show.contentHeight/2-100, isSensor = true}) 
