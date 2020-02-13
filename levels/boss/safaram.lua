@@ -6,7 +6,7 @@ local costantiSchermo = require ("costanti.costantiSchermo")
 
 local safaram = {}
 safaram.show = {}
-safaram.life = 10
+safaram.life = 200
 safaram.isDead = false
 
 local isPaused
@@ -77,7 +77,7 @@ function safaram.safariInit(target, sceneGroup)
     safaram.show.x = display.contentCenterX
     safaram.show.y = -100
     physics.addBody(safaram.show, {radius = safaram.show.contentHeight/2, isSensor = true })
-    safaram.show.hp = 10
+    safaram.show.hp = 200
     safaram.show:toFront()
     safaram.show.myName = "Safari"
     table.insert(currentTransitions, transition.to(safaram.show, {time = 3000, y = 350, onComplete =
