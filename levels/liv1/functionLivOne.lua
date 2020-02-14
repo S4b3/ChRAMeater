@@ -48,7 +48,7 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
     elseif (selector > 70 and selector <= 93) then
         objIndicator = 1
         objName="cacheCleaner"
-    elseif (selector > 93 and selector <= 100 ) then
+    elseif (selector > 93) then
         objIndicator = 7
         objName="life"   
     end

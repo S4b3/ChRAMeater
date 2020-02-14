@@ -1,7 +1,7 @@
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
-local levelsFunctions = require"utility.levelsFunctions"
+local levelsFunctions = require "utility.levelsFunctions"
 local costantiSchermo = require "costanti.costantiSchermo"
 local player = require "costanti.player"
 
@@ -9,7 +9,7 @@ local scene = composer.newScene()
 
 local physics = require( "physics" )
 physics.start()
-physics.setGravity(0,0)
+physics.setGravity( 0, 0 )
 
 math.randomseed( os.time() )
 local objectSheet = costanti.objectSheet()
@@ -21,12 +21,14 @@ local backGroup
 local mainGroup
 local uiGroup
 
+--Passiamo riferimento al livello corrente,
+--questo ci permetterà di accedere alla funzione di creazione oggetti corretta
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable,4)
+    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable, 4)
 end
 
 local function onCollision(event)
-    gameFunctions.onCollision(event, objTable)
+    gameFunctions.onCollision(event, objTable, uiGroup)
 end
 
 -- -----------------------------------------------------------------------------------
@@ -42,10 +44,10 @@ end
 function scene:create( event )
 
 	local sceneGroup = self.view
-	-- Il codice viene eseguito quando la scena è creata ma non è ancora apparsa sullo schermo
+	-- Code here runs when the scene is first created but has not yet appeared on screen
 	physics.pause()
 
-	backGroup = display.newGroup()
+    backGroup = display.newGroup()
 	sceneGroup:insert(backGroup)
 
 	mainGroup = display.newGroup()
@@ -56,13 +58,11 @@ function scene:create( event )
 
     player.playerInit(mainGroup)
     costanti.playerStateInit(3)
-    costantiSchermo.allTextInit(uiGroup, "01:00", 10, costanti.playerState)
+
+    costantiSchermo.allTextInit(uiGroup, "01:00", 60, costanti.playerState)
     timeText = costantiSchermo.clockText
     clockText = display.newText( uiGroup, timeText, 800, 130, native.systemFont, 50 )
-    function uppa()
-        clockText.text = costantiSchermo.clockText
-    end 
-    timer.performWithDelay(1, uppa, 0)
+    timer.performWithDelay(1, function () clockText.text = costantiSchermo.clockText end, 0)
 end
 
 -- show()
@@ -70,30 +70,29 @@ function scene:show( event )
 	local sceneGroup = self.view
 	local phase = event.phase
 	if ( phase == "will" ) then
-		-- Code here runs when the scene is still off screen (but is about to come on screen)
-		costantiSchermo.backgroundInit(backGroup, 4)
-		gameFunctions.versus("images/versus/torVs.png")
+        -- Code here runs when the scene is still off screen (but is about to come on screen)
+        costantiSchermo.backgroundInit(backGroup,1)
+        gameFunctions.versus("images/versus/torVs.png")
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
-        gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
+        gameLoopTimer = timer.performWithDelay( 400, gameLoop, 0 )
     end
 end
-
 -- hide()
 function scene:hide( event )
 	local sceneGroup = self.view
 	local phase = event.phase
 	if ( phase == "will" ) then
         -- Code here runs when the scene is on screen (but is about to go off screen)
-		timer.cancel( gameLoopTimer )
-		gameLoopTimer=nil
+        timer.cancel( gameLoopTimer )
+        gameLoopTimer=nil
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
-		physics.pause()
-		costantiSchermo.backgroundRemove()
+        physics.pause()
+        costantiSchermo.backgroundRemove()
 		composer.removeScene( "levels.liv4.liv4" )
     end
 end
