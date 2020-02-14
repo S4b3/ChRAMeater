@@ -24,11 +24,11 @@ local uiGroup
 --Passiamo riferimento al livello corrente,
 --questo ci permetterà di accedere alla funzione di creazione oggetti corretta
 local function gameLoop() --porkaround mi serve poter passare gameloop senza parametri
-    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable,2)
+    levelsFunctions.gameLoop(mainGroup,objectSheet,objTable, 2)
 end
 
 local function onCollision(event)
-    gameFunctions.onCollision(event, objTable)
+    gameFunctions.onCollision(event, objTable, uiGroup)
 end
 
 -- -----------------------------------------------------------------------------------
@@ -59,21 +59,19 @@ function scene:create( event )
     player.playerInit(mainGroup)
     costanti.playerStateInit(3)
 
-    costantiSchermo.allTextInit(uiGroup, "00:30", 30, costanti.playerState)
+    costantiSchermo.allTextInit(uiGroup, "01:00", 60, costanti.playerState)
     timeText = costantiSchermo.clockText
     clockText = display.newText( uiGroup, timeText, 800, 130, native.systemFont, 50 )
-    function uppa()
-        clockText.text = costantiSchermo.clockText
-    end 
-    timer.performWithDelay(1, uppa, 0)
+    timer.performWithDelay(1, function () clockText.text = costantiSchermo.clockText end, 0)
 end
 
 -- show()
 function scene:show( event )
 	local sceneGroup = self.view
 	local phase = event.phase
-    if ( phase == "will" ) then
-        costantiSchermo.backgroundInit(backGroup, 2)
+	if ( phase == "will" ) then
+        -- Code here runs when the scene is still off screen (but is about to come on screen)
+        costantiSchermo.backgroundInit(backGroup,1)
         gameFunctions.versus("images/versus/torVs.png")
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
