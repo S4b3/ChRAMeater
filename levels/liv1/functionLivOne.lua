@@ -45,12 +45,12 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
     elseif (selector > 55 and selector <= 70) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector > 70 and selector <= 79) then
+    elseif (selector > 70 and selector <= 93) then
         objIndicator = 1
         objName="cacheCleaner"
-    elseif ( selector > 79 ) then
-        objIndicator =  5
-        objName = "powerUpOnda"
+    elseif (selector > 93 and selector <= 100 ) then
+        objIndicator = 7
+        objName="life"   
     end
     if(mainGroup==nil or objectSheet==nil) then
         return end
@@ -64,8 +64,6 @@ function functionLivOne.createObjects(mainGroup,objectSheet,objTable)
         physics.addBody( newObject, "dynamic", { shape = smallRamShape } )
     elseif(objName=="ram8GB") then
         physics.addBody( newObject, "dynamic", { shape = bigRamShape } )
-    elseif(objName == "powerUpOnda") then
-        physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
     elseif(objName=="cacheCleaner") then
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
     elseif(objName=="life") then

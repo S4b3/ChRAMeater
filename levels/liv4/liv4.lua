@@ -72,6 +72,7 @@ function scene:show( event )
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
 		costantiSchermo.backgroundInit(backGroup, 4)
+		gameFunctions.versus("images/versus/torVs.png")
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
         physics.start()

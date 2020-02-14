@@ -1,5 +1,6 @@
 local costantiOggetti = require("costanti.costantiOggetti")
-local edgram = require("levels.boss.edgram")
+--require del futuro boss
+local boss = require("levels.boss.tor")
 local player = require("costanti.player")
 local functionLivFour = {}
 
@@ -11,7 +12,7 @@ physics.start()
 physics.setGravity( 0, 0 )
 
 local isStopped = false
--------------------------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------------------
+-------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI------------------------------------------
 function functionLivFour.stopCreating()
     isStopped = true
 end
@@ -21,35 +22,44 @@ function functionLivFour.startCreating()
 end
 
 function functionLivFour.spawnBoss(sceneGroup)
-    edgram.edgramInit(player.playerChram, sceneGroup)
+    boss.torInit(player.playerChram, sceneGroup)
     isStopped = true
 end
 
 function functionLivFour.removeBoss()
-    edgram.edgramRemove()
+    boss.torRemove()
     isStopped = false
 end
 
+
 function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
-    
     if(isStopped) then
         return
     end
-
+    
     local selector = math.random ( 100 )
     local objIndicator
     local objName
 
-    if(selector <= 50) then
+    if(selector <= 55) then
         objIndicator = 4
         objName="ram2GB"
-    elseif (selector > 50 and selector <= 60) then
+    elseif (selector > 55 and selector <= 60) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector >= 60 and selector < 70) then
+    elseif (selector > 60 and selector <= 95) then
         objIndicator = 1
         objName="cacheCleaner"
-    elseif (selector >=70 ) then
+    elseif (selector > 95 and selector <= 96) then
+        objIndicator = 6
+        objName="invincibility"
+    elseif (selector > 96 and selector <= 98 ) then
+        objIndicator = 9
+        objName="freeze"
+    elseif (selector > 98 and selector <= 99) then
+        objIndicator = 5
+        objName="powerUpOnda"
+    elseif (selector >=99 ) then
         objIndicator = 7
         objName="life"
     end
@@ -64,6 +74,12 @@ function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
     elseif(objName=="ram8GB") then
         physics.addBody( newObject, "dynamic", { shape = bigRamShape } )
     elseif(objName=="cacheCleaner") then
+        physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
+    elseif(objName=="invincibility")then
+        physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
+    elseif(objName == "freeze") then
+        physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
+    elseif(objName == "powerUpOnda") then
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
     elseif(objName=="life") then
         physics.addBody( newObject, "dynamic", { radius = (newObject.contentHeight/2)} )
@@ -87,12 +103,11 @@ function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
         newObject.x = display.contentWidth + 60
         newObject.y = math.random( 500 )
         newObject:setLinearVelocity( math.random( -120,-40 ), math.random( 20,60 ) )
-    elseif  ( whereFrom == 4 and newObject.myName == "cacheCleaner" )then --cache cleaner sparato dall'alto
-        newObject.x = math.random( display.contentWidth )
+    elseif  ( whereFrom == 4 and newObject.myName == "cacheCleaner" )then
+        newObject.x = player.playerChram.x
         newObject.y = -60
-        newObject:setLinearVelocity( math.random( -40,40 ), math.random( 40,120 ) )
+        newObject:setLinearVelocity( 0, 10200)
         newObject.isBullet = true
-        newObject:applyLinearImpulse(-60,200)
     elseif (whereFrom == 4) then
         newObject.x = math.random( display.contentWidth )
         newObject.y = -60
