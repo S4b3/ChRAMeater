@@ -75,22 +75,22 @@ function scene:create( event )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
      
-	local highScoresHeader = display.newText( sceneGroup, "High Scores", display.contentCenterX, 200, native.systemFont, 80 )
+	local highScoresHeader = display.newText( sceneGroup, "High Scores", display.contentCenterX, 300, "SourceCodePro-SemiBold", 90 )
 	for i = 1, 10 do
         if ( scoresTable[i] ) then
-            local yPos = 250 + ( i * 76 )
+            local yPos = 600 + ( i * 76 )
 
-            local fontSize = 45
+            local fontSize = 55
             if(scoresTable[i] == lastScore ) then
                 fontSize = 60
                 lastScore = nil
             end
-			local rankNum = display.newText( sceneGroup, i .. ")", display.contentCenterX-50, yPos, native.systemFont, fontSize )
+			local rankNum = display.newText( sceneGroup, i .. ")", display.contentCenterX-50, yPos, "SourceCodePro-SemiBold", fontSize )
             rankNum:setFillColor( 0.8 )
             rankNum.anchorX = 1
             print(scoresTable[i], lastScore)
  
-            local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX, yPos, native.systemFont, fontSize )
+            local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX, yPos, "SourceCodePro-SemiBold", fontSize )
             thisScore.anchorX = 0
 		end
     end
@@ -116,7 +116,7 @@ function scene:create( event )
             }
             )
         retryButton.x = display.contentCenterX
-        retryButton.y = 1400
+        retryButton.y = 1800
         --local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, yValue, native.systemFont, 70 )
         --menuButton:setFillColor( 0.75, 0.78, 1 )
         sceneGroup:insert(retryButton)
@@ -143,7 +143,7 @@ function scene:create( event )
             }
             )
         nextLevelButton.x = display.contentCenterX
-        nextLevelButton.y = 1400
+        nextLevelButton.y = 1800
         --local nextLevelButton = display.newText(sceneGroup, "Next Level", display.contentCenterX, 1400, native.systemFont, 130)
         sceneGroup:insert(nextLevelButton)
         nextLevelButton:addEventListener("tap", function ()
@@ -158,7 +158,7 @@ function scene:create( event )
             composer.gotoScene(nextScene)
         end )
     end
-	buttons.goToMenuInit(sceneGroup, 1200)
+	buttons.goToMenuInit(sceneGroup, 1600)
 end
 
 
