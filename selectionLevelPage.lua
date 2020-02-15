@@ -33,7 +33,7 @@ function scene:create( event )
     background.y = 0 + display.screenOriginY
     
 	-- crea immagine logo nella parte superiore della scena
-	local titleLogo = display.newImageRect( "images/Game Title.png", 600, 100 )
+	local titleLogo = display.newImageRect( "images/Game Title.png", 685,100 )
 	titleLogo.x = display.contentCenterX
     titleLogo.y = 300
     local i = 1 
@@ -52,15 +52,15 @@ function scene:create( event )
 
 		local playButton = widget.newButton(
     {
-        font = "SourceCodePro-SemiBold.ttf",
+        font = "SourceCodePro-SemiBold",
         labelColor = { default={ 0, 0, 0 }},
-        fontSize = 70,
+        fontSize = 60,
         id = "Button" .. tostring(i),
         label = "Level " .. tostring(i),
-        shape = "Rect",
+        shape = "RoundedRect",
         cornerRadius =50,
         strokeWidth = 5,
-        fillColor =  { default={1,0.9,0,0.8}, over ={1,0.9,0,0.8}},
+        fillColor =  { default={1,0.9,0,0.6}, over ={1,0.9,0,0.6}},
         strokeColor = { default={1,0.9,0,1}, over ={1,0.9,0,1}},
         width = 320,
         height = 110,

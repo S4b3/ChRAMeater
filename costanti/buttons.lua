@@ -223,7 +223,7 @@ function buttons.menuButtonsInit(sceneGroup)
     -- crea bottone Play
     local playButton = widget.newButton(
     {
-        font = "SourceCodePro-SemiBold.ttf",
+        font = "SourceCodePro-SemiBold",
         labelColor = { default={ 0, 0, 0 }},
         fontSize = 70,
         id = "button1",
@@ -247,7 +247,7 @@ function buttons.menuButtonsInit(sceneGroup)
     
     local highScoresButton = widget.newButton(
     {
-        font = "SourceCodePro-SemiBold.ttf",
+        font = "SourceCodePro-SemiBold",
         labelColor = { default={ 0, 0, 0 }},
         fontSize = 70,
         id = "button1",
@@ -280,8 +280,28 @@ local function gotoMenu()
 end
 
 function buttons.goToMenuInit(sceneGroup, yValue)
-    local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, yValue, native.systemFont, 70 )
-    menuButton:setFillColor( 0.75, 0.78, 1 )
+    local menuButton = widget.newButton(
+    {
+        font = "SourceCodePro-SemiBold",
+        labelColor = { default={ 0, 0, 0 }},
+        fontSize = 70,
+        id = "menu",
+        label = "Menu",
+        shape = "Rect",
+        cornerRadius =50,
+        strokeWidth = 5,
+        fillColor =  { default={1,0.9,0,0.6}, over ={1,0.9,0,0.6}},
+        strokeColor = { default={1,0.9,0,1}, over ={1,0.9,0,1}},
+        width = 240,
+        height = 110
+    }
+    )
+    --local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, "fonts/SourceCodePro-SemiBold.ttf", 70 )
+    menuButton.x = display.contentCenterX
+    menuButton.y = yValue
+    --local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, yValue, native.systemFont, 70 )
+    --menuButton:setFillColor( 0.75, 0.78, 1 )
+    sceneGroup:insert(menuButton)
     menuButton:addEventListener( "tap", gotoMenu )
 end
 return buttons
