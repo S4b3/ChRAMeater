@@ -53,9 +53,9 @@ function scene:create( event )
 	chramEating:play()
 
 	-- crea immagine logo nella parte superiore della scena
-	local titleLogo = display.newImageRect( "images/Game Title.png", 500, 240 )
+	local titleLogo = display.newImageRect( "images/Game Title.png", 685,100 )
 	titleLogo.x = display.contentCenterX
-	titleLogo.y = 200
+	titleLogo.y = 300
 	-- tutti gli oggetti del display devono essere inseriti nel gruppo
 	sceneGroup:insert( background )
 	sceneGroup:insert( titleLogo )

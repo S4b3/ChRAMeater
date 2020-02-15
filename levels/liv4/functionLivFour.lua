@@ -59,7 +59,7 @@ function functionLivFour.createObjects(mainGroup,objectSheet,objTable)
     elseif (selector > 98 and selector <= 99) then
         objIndicator = 5
         objName="powerUpOnda"
-    elseif (selector >=99 ) then
+    elseif (selector > 99 ) then
         objIndicator = 7
         objName="life"
     end

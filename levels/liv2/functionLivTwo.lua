@@ -46,13 +46,13 @@ function functionLivTwo.createObjects(mainGroup,objectSheet,objTable)
     elseif (selector > 50 and selector <= 60) then
         objIndicator = 3
         objName="ram8GB"
-    elseif (selector >= 60 and selector < 93) then
+    elseif (selector > 60 and selector <= 93) then
         objIndicator = 1
         objName="cacheCleaner"
-    elseif (selector >=93 and selector < 97 ) then
+    elseif (selector > 93 and selector <= 97 ) then
         objIndicator = 7
         objName="life"
-    elseif (selector >= 97) then
+    elseif (selector > 97) then
         objIndicator = 9
         objName="freeze"
     end

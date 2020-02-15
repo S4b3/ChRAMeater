@@ -6,6 +6,7 @@ local costantiSchermo = require("costanti.costantiSchermo")
 local composer = require "composer"
 local levelsFunctions = require("utility.levelsFunctions")
 local player = require("costanti.player")
+local widget = require( "widget" )
 
 
 --dichiaro i vari bottoni implementati nella table.
@@ -220,14 +221,52 @@ end
 --buttons.musicButton:addEventListener("tap", buttons.onTap )
 function buttons.menuButtonsInit(sceneGroup)
     -- crea bottone Play
-	local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, native.systemFont, 70 )
-	playButton:setFillColor( 0.82, 0.86, 1 )
-	playButton:addEventListener("tap", onPlayTap)
-	-- crea bottone Highscores
-	local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 1300, native.systemFont, 70 )
-	highScoresButton:setFillColor( 0.75, 0.78, 1 )
+    local playButton = widget.newButton(
+    {
+        font = "fonts/SourceCodePro-SemiBold.ttf",
+        labelColor = { default={ 0, 0, 0 }},
+        fontSize = 70,
+        id = "button1",
+        label = "Play",
+        shape = "Rect",
+        cornerRadius =50,
+        strokeWidth = 5,
+        fillColor =  { default={1,0.9,0,0.8}, over ={1,0.9,0,0.8}},
+        strokeColor = { default={1,0.9,0,1}, over ={1,0.9,0,1}},
+        width = 240,
+        height = 110,
+        onEvent = onPlayTap
+    }
+    )
+    --local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, "fonts/SourceCodePro-SemiBold.ttf", 70 )
+    playButton.x = display.contentCenterX
+    playButton.y = display.contentHeight - 1400
+	--playButton:setFillColor( 0.82, 0.86, 1 )
+	--playButton:addEventListener("touch", onPlayTap)
+    -- crea bottone Highscores
+    
+    local highScoresButton = widget.newButton(
+    {
+        font = "fonts/SourceCodePro-SemiBold.ttf",
+        labelColor = { default={ 0, 0, 0 }},
+        fontSize = 70,
+        id = "button1",
+        label = "High Scores",
+        shape = "Rect",
+        --cornerRadius =50,
+        strokeWidth = 5,
+        fillColor =  { default={1,0.9,0,0.8}, over ={1,0.9,0,0.8}},
+        strokeColor = { default={1,0.9,0,1}, over ={1,0.9,0,1}},
+        width = 480,
+        height = 110,
+        --onEvent = onHighscoresTap
+    }
+    )
+    highScoresButton.x = display.contentCenterX
+    highScoresButton.y = display.contentHeight - 1200
+	--local highScoresButton = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight - 1300, native.systemFont, 70 )
+	--highScoresButton:setFillColor( 0.75, 0.78, 1 )
     highScoresButton:addEventListener( "tap", onHighscoresTap )
-
     sceneGroup:insert(playButton)
     sceneGroup:insert(highScoresButton)
 end

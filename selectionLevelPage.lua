@@ -32,7 +32,7 @@ function scene:create( event )
     background.y = 0 + display.screenOriginY
     
 	-- crea immagine logo nella parte superiore della scena
-	local titleLogo = display.newImageRect( "images/Game Title.png", 500, 240 )
+	local titleLogo = display.newImageRect( "images/Game Title.png", 600, 100 )
 	titleLogo.x = display.contentCenterX
     titleLogo.y = startY
     local i = 1 
