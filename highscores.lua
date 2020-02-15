@@ -3,6 +3,7 @@ local composer = require( "composer" )
 local buttons = require("costanti.buttons")
 local scene = composer.newScene()
 local sounds = require("costanti.sounds")
+local widget = require( "widget" )
 
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
@@ -97,13 +98,54 @@ function scene:create( event )
     local previousScene = composer.getSceneName("previous")
     if (previousScene=="menu") then   
     elseif(composer.getVariable("died") == true ) then
-        local retryButton = display.newText(sceneGroup, "Retry", display.contentCenterX, 1400, native.systemFont, 130)
+        
+        local retryButton = widget.newButton(
+            {
+                font = "SourceCodePro-SemiBold",
+                labelColor = { default={ 1, 1, 1 }},
+                fontSize = 70,
+                id = "menu",
+                label = "Retry",
+                shape = "Rect",
+                cornerRadius =50,
+                strokeWidth = 5,
+                fillColor =  { default={1,0.2,0,0.6}, over ={1,0.2,0,0.6}},
+                strokeColor = { default={1,0.2,0,1}, over ={1,0.2,0,1}},
+                width = 240,
+                height = 110
+            }
+            )
+        retryButton.x = display.contentCenterX
+        retryButton.y = 1400
+        --local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, yValue, native.systemFont, 70 )
+        --menuButton:setFillColor( 0.75, 0.78, 1 )
+        sceneGroup:insert(retryButton)
+        --local retryButton = display.newText(sceneGroup, "Retry", display.contentCenterX, 1400, native.systemFont, 130)
         retryButton:addEventListener("tap", function () composer.gotoScene(composer.getSceneName("previous")) end )
     else
         if(previousScene == "levels.liv4.liv4") then
             return
         end
-        local nextLevelButton = display.newText(sceneGroup, "Next Level", display.contentCenterX, 1400, native.systemFont, 130)
+        local nextLevelButton = widget.newButton(
+            {
+                font = "SourceCodePro-SemiBold",
+                labelColor = { default={ 1, 1, 1 }},
+                fontSize = 70,
+                id = "menu",
+                label = "Next Level",
+                shape = "Rect",
+                cornerRadius =50,
+                strokeWidth = 5,
+                fillColor =  { default={1,0.2,0,0.6}, over ={1,0.2,0,0.6}},
+                strokeColor = { default={1,0.2,0,1}, over ={1,0.2,0,1}},
+                width = 450,
+                height = 110
+            }
+            )
+        nextLevelButton.x = display.contentCenterX
+        nextLevelButton.y = 1400
+        --local nextLevelButton = display.newText(sceneGroup, "Next Level", display.contentCenterX, 1400, native.systemFont, 130)
+        sceneGroup:insert(nextLevelButton)
         nextLevelButton:addEventListener("tap", function ()
             local nextScene
             if(previousScene == "levels.liv1.liv1") then
