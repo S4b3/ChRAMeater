@@ -4,10 +4,11 @@ local scene = composer.newScene()
 local costanti = require("costanti.costantiOggetti")
 local sounds = require("costanti.sounds")
 local buttons = require("costanti.buttons")
+local widget = require( "widget" )
 local playBtn -- variabile per il bottone play
 local themeSong -- variabile per la musica di background
 local selectionSound -- variabile per il suono della selezione
-local startY = 200 -- variabile che indica la Y iniziale per iniziare a printare i bottoni
+local startY = 600 -- variabile che indica la Y iniziale per iniziare a printare i bottoni
 local levels = costanti.levels -- variabile che contiene i livelli disponibili
 
 themeSong = sounds.menuThemeSong
@@ -34,7 +35,7 @@ function scene:create( event )
 	-- crea immagine logo nella parte superiore della scena
 	local titleLogo = display.newImageRect( "images/Game Title.png", 600, 100 )
 	titleLogo.x = display.contentCenterX
-    titleLogo.y = startY
+    titleLogo.y = 300
     local i = 1 
     -- crea bottone Play.
 	-- tutti gli oggetti del display devono essere inseriti nel gruppo
@@ -43,18 +44,41 @@ function scene:create( event )
 
 	-- creo tanti bottoni in base a quanti livelli sono disponibili
 	for a,liv in pairs(levels) do
+		local sceneGroup = self.view
 		-- mi serve una funzione senza paramentri per dopo
         local function goToLiv()
             goToLevel(liv)
 		end
+
+		local playButton = widget.newButton(
+    {
+        font = "SourceCodePro-SemiBold.ttf",
+        labelColor = { default={ 0, 0, 0 }},
+        fontSize = 70,
+        id = "Button" .. tostring(i),
+        label = "Level " .. tostring(i),
+        shape = "Rect",
+        cornerRadius =50,
+        strokeWidth = 5,
+        fillColor =  { default={1,0.9,0,0.8}, over ={1,0.9,0,0.8}},
+        strokeColor = { default={1,0.9,0,1}, over ={1,0.9,0,1}},
+        width = 320,
+        height = 110,
+        --onEvent = goToLiv
+    }
+	)
+		playButton.x = display.contentCenterX
+		playButton.y = startY + 150
 		--mi creo un bottone che mi rimanda al livello corrispondente
-        playButton = display.newText( sceneGroup,liv, display.contentCenterX, startY+100 , native.systemFont, 70 )
-        playButton:setFillColor( 0.82, 0.86, 1 )
+        --local playButton = display.newText( sceneGroup,liv, display.contentCenterX, startY+100 , native.systemFont, 70 )
+        --playButton:setFillColor( 0.82, 0.86, 1 )
         playButton:addEventListener("tap", goToLiv)
         table.insert(buttons,playButton)
-        startY = startY +100
+		startY = startY +175
+		i = i + 1
+		sceneGroup:insert(playButton)
 	end
-	buttons.goToMenuInit(sceneGroup, 1200)
+	buttons.goToMenuInit(sceneGroup, 1700)
 end
 
 function scene:show( event )

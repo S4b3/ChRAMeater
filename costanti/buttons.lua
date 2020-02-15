@@ -223,7 +223,7 @@ function buttons.menuButtonsInit(sceneGroup)
     -- crea bottone Play
     local playButton = widget.newButton(
     {
-        font = "fonts/SourceCodePro-SemiBold.ttf",
+        font = "SourceCodePro-SemiBold.ttf",
         labelColor = { default={ 0, 0, 0 }},
         fontSize = 70,
         id = "button1",
@@ -247,7 +247,7 @@ function buttons.menuButtonsInit(sceneGroup)
     
     local highScoresButton = widget.newButton(
     {
-        font = "fonts/SourceCodePro-SemiBold.ttf",
+        font = "SourceCodePro-SemiBold.ttf",
         labelColor = { default={ 0, 0, 0 }},
         fontSize = 70,
         id = "button1",
@@ -257,7 +257,7 @@ function buttons.menuButtonsInit(sceneGroup)
         strokeWidth = 5,
         fillColor =  { default={1,0.9,0,0.8}, over ={1,0.9,0,0.8}},
         strokeColor = { default={1,0.9,0,1}, over ={1,0.9,0,1}},
-        width = 480,
+        width = 500,
         height = 110,
         --onEvent = onHighscoresTap
     }
