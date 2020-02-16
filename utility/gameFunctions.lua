@@ -2,6 +2,7 @@ local composer = require( "composer" )
 local costantiOggetti = require("costanti.costantiOggetti")
 local objectsFunctions = require "utility.objectsFunctions"
 local levelsFunctions = require("utility.levelsFunctions")
+local sounds = require("costanti.sounds")
 local costantiSchermo = require("costanti.costantiSchermo")
 local bossFunctions = require "levels.boss.bossFunctions"
 local player = require("costanti.player")
@@ -9,6 +10,9 @@ local ramzilla = require("levels.boss.ramzilla")
 local safaram = require("levels.boss.safaram")
 local gameFunctions = {}
 
+ramSound = sounds.ramSound
+powerupSound =sounds.powerupSound
+audio.setVolume( 0.15, { channel=2 } )
 local physics = require( "physics" )
 local isMenuStopped = false
 
@@ -158,12 +162,14 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
         if(obj1.myName == "Chram") then
             if(obj2.myName == "ram2GB" ) then
                 display.remove(obj2)
+                audio.play(sounds.ramSound,{ channel=3})
                 objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay( 1, resizeChram)
                 costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 2)
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj2.myName=="ram8GB") then
                 display.remove(obj2)
+                audio.play(sounds.ramSound,{ channel=3 })
                 objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay( 1, resizeChram,4)
                 costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 8)
@@ -175,6 +181,7 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 timer.performWithDelay(1, updateLives)
             elseif(obj2.myName=="life") then
                 display.remove(obj2)
+                audio.play(sounds.powerupSound,{ channel=2})
                 objectsFunctions.removeFromTable(obj2,objTable)
                 timer.performWithDelay(1, increaseLives)
             elseif(obj2.myName=="projectile") then
@@ -182,10 +189,12 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 timer.performWithDelay(1, updateLives)
             elseif(obj2.myName=="powerUpOnda") then
                 display.remove(obj2)
+                audio.play(sounds.powerupSound,{ channel=2})
                 objectsFunctions.removeFromTable(obj2, objTable)
                 objectsFunctions.addPowerUp(obj2, sceneGroup)
             elseif(obj2.myName=="freeze") then
                 display.remove(obj2)
+                audio.play(sounds.powerupSound,{ channel=2})
                 objectsFunctions.removeFromTable(obj2, objTable)
                 --objectsFunctions.addPowerUp(obj2, objTable)
                 if levelsFunctions.isFreezed == false then
@@ -195,6 +204,7 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 end
             elseif(obj2.myName=="invincibility") then
                 display.remove(obj2)
+                audio.play(sounds.powerupSound,{ channel=2})
                 objectsFunctions.removeFromTable(obj2, objTable)
                 if(costantiSchermo.secondsLeft == 0 ) then return end
                 if(not player.isCappellino()) then
@@ -211,12 +221,14 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
         if(obj2.myName == "Chram") then
             if(obj1.myName == "ram2GB" ) then
                 display.remove(obj1)
+                audio.play(sounds.ramSound,{ channel=3 })
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay( 1, resizeChram)
                 costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 2)
                 costantiSchermo.scoreText.text = "Score: " .. costantiOggetti.playerState.score .. "GB"
             elseif(obj1.myName=="ram8GB") then--
                 display.remove(obj1)
+                audio.play(sounds.ramSound,{ channel=3})
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay( 1, resizeChram)
                 costantiOggetti.playerState.setScore(costantiOggetti.playerState.score + 8)
@@ -228,6 +240,7 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 timer.performWithDelay(1, updateLives)
             elseif(obj1.myName=="life") then
                 display.remove(obj1)
+                audio.play(sounds.powerupSound,{ channel=2})
                 objectsFunctions.removeFromTable(obj1,objTable)
                 timer.performWithDelay(1, increaseLives)
             elseif(obj1.myName=="projectile") then
@@ -235,10 +248,12 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 timer.performWithDelay(1, updateLives)
             elseif(obj1.myName=="powerUpOnda") then
                 display.remove(obj1)
+                audio.play(sounds.powerupSound,{ channel=2})
                 objectsFunctions.removeFromTable(obj1, objTable)
                 objectsFunctions.addPowerUp(obj1, sceneGroup)
             elseif(obj1.myName=="freeze") then
                 display.remove(obj1)
+                audio.play(sounds.powerupSound,{ channel=2})
                 objectsFunctions.removeFromTable(obj1, objTable)
                 --objectsFunctions.addPowerUp(obj2, objTable)
                 if levelsFunctions.isFreezed == false then
@@ -248,6 +263,7 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
                 end
             elseif(obj1.myName=="invincibility") then
                 display.remove(obj1)
+                audio.play(sounds.powerupSound,{ channel=2})
                 objectsFunctions.removeFromTable(obj1, objTable)
                 if(costantiSchermo.secondsLeft == 0 ) then return end
                 if(not player.isCappellino()) then
