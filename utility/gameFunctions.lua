@@ -8,6 +8,8 @@ local bossFunctions = require "levels.boss.bossFunctions"
 local player = require("costanti.player")
 local ramzilla = require("levels.boss.ramzilla")
 local safaram = require("levels.boss.safaram")
+local edGram = require("levels.boss.edgram")
+local tor = require("levels.boss.tor")
 local gameFunctions = {}
 
 ramSound = sounds.ramSound
@@ -278,6 +280,17 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
             end
             end
         end
+        if (obj1.myName == "ramShooten" and obj2.myName == "Edgram" ) then
+            obj1.isVisible = false
+            if( edGram.onHit() ) then
+                gameFunctions.endGame(costantiOggetti.playerState.score, 0)
+            end
+        elseif (obj1.myName == "Edgram" and obj2.myName == "ramShooten") then
+            obj2.isVisible = false
+            if( edGram.onHit() ) then
+                gameFunctions.endGame(costantiOggetti.playerState.score, 0)
+            end
+        end
         if (obj1.myName == "ramShooten" and obj2.myName == "Ramzilla" ) then
             obj1.isVisible = false
             if( ramzilla.onHit() ) then
@@ -286,6 +299,17 @@ function gameFunctions.onCollision( event, objTable, sceneGroup )
         elseif (obj1.myName == "Ramzilla" and obj2.myName == "ramShooten") then
             obj2.isVisible = false
             if( ramzilla.onHit() ) then
+                gameFunctions.endGame(costantiOggetti.playerState.score, 0)
+            end
+        end
+        if (obj1.myName == "ramShooten" and obj2.myName == "Tor" ) then
+            obj1.isVisible = false
+            if( tor.onHit() ) then
+                gameFunctions.endGame(costantiOggetti.playerState.score, 0)
+            end
+        elseif (obj1.myName == "Tor" and obj2.myName == "ramShooten") then
+            obj2.isVisible = false
+            if( tor.onHit() ) then
                 gameFunctions.endGame(costantiOggetti.playerState.score, 0)
             end
         end
