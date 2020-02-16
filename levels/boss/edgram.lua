@@ -48,22 +48,22 @@ local function shoot()
         return
     end
     local selector = math.random(50)
-    local numberOfApples
+    local numberOfWindows
     if(selector >= 35) then
-        numberOfApples = 3
+        numberOfWindows = 3
     elseif(selector >=20 and selector < 35) then
-        numberOfApples = 2
+        numberOfWindows = 2
     else
-        numberOfApples = 1
+        numberOfWindows = 1
     end
     local offset = math.random(500,600)
     --local currTrans = transition.to ( projectile, { x = edgram.target.x, y = display.contentHeight , time = 1400, onComplete = function () display.remove(projectile) end})
-    if numberOfApples <= 3 then
+    if numberOfWindows <= 3 then
         local proj1 = projectileInit()
         table.insert( currentTransitions, transition.to ( proj1, { x = edgram.target.x-offset, y = display.contentHeight , time = 1200, onComplete = function () display.remove(proj1) end}) )
         local proj2 = projectileInit()
         table.insert( currentTransitions, transition.to ( proj2, { x = edgram.target.x+offset, y = display.contentHeight , time = 1200, onComplete = function () display.remove(proj2) end}) )
-        if(numberOfApples == 2) then
+        if(numberOfWindows == 2) then
             return
         end
     end
