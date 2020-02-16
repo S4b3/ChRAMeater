@@ -1,9 +1,15 @@
 local composer = require( "composer" )
 local costanti = require "costanti.costantiOggetti"
 local gameFunctions = require "utility.gameFunctions"
+local sounds = require("costanti.sounds")
 local levelsFunctions = require "utility.levelsFunctions"
 local costantiSchermo = require "costanti.costantiSchermo"
+local themeSong -- variabile per la musica di background
+local selectionSound -- variabile per il suono della selezione
 local player = require "costanti.player"
+
+themeSong = sounds.levelThemeSong
+selectionSound = sounds.selectionSound
 
 local scene = composer.newScene()
 
@@ -77,6 +83,7 @@ function scene:show( event )
         -- Code here runs when the scene is entirely on screen
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
+        audio.play( themeSong, { channel=1, loops=-1 } )
         gameLoopTimer = timer.performWithDelay( 400, gameLoop, 0 )
     end
 end
@@ -93,13 +100,16 @@ function scene:hide( event )
         Runtime:removeEventListener( "collision", onCollision )
         physics.pause()
         costantiSchermo.backgroundRemove()
-		composer.removeScene( "levels.liv1.liv1" )
+        composer.removeScene( "levels.liv1.liv1" )
+        audio.stop( 1 )
     end
 end
 
 -- destroy()
 function scene:destroy( event )
-	local sceneGroup = self.view
+    local sceneGroup = self.view
+    audio.dispose( themeSong )
+	audio.dispose( selectionSound )
 	-- Code here runs prior to the removal of scene's view
 end
 -- -----------------------------------------------------------------------------------

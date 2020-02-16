@@ -75,7 +75,7 @@ function scene:create( event )
     background.x = display.contentCenterX
     background.y = display.contentCenterY
      
-	local highScoresHeader = display.newText( sceneGroup, "High Scores", display.contentCenterX, 300, "SourceCodePro-SemiBold", 90 )
+	local highScoresHeader = display.newText( sceneGroup, "High Scores", display.contentCenterX, 300, "SourceCodePro-Semibold.ttf", 90 )
 	for i = 1, 10 do
         if ( scoresTable[i] ) then
             local yPos = 600 + ( i * 76 )
@@ -85,12 +85,12 @@ function scene:create( event )
                 fontSize = 60
                 lastScore = nil
             end
-			local rankNum = display.newText( sceneGroup, i .. ")", display.contentCenterX-50, yPos, "SourceCodePro-SemiBold", fontSize )
+			local rankNum = display.newText( sceneGroup, i .. ")", display.contentCenterX-50, yPos, "SourceCodePro-Semibold.ttf", fontSize )
             rankNum:setFillColor( 0.8 )
             rankNum.anchorX = 1
             print(scoresTable[i], lastScore)
  
-            local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX, yPos, "SourceCodePro-SemiBold", fontSize )
+            local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX, yPos, "SourceCodePro-Semibold.ttf", fontSize )
             thisScore.anchorX = 0
 		end
     end
@@ -101,7 +101,7 @@ function scene:create( event )
         
         local retryButton = widget.newButton(
             {
-                font = "SourceCodePro-SemiBold",
+                font = "SourceCodePro-Semibold.ttf",
                 labelColor = { default={ 1, 1, 1 }},
                 fontSize = 70,
                 id = "menu",
@@ -128,7 +128,7 @@ function scene:create( event )
         end
         local nextLevelButton = widget.newButton(
             {
-                font = "SourceCodePro-SemiBold",
+                font = "SourceCodePro-Semibold.ttf",
                 labelColor = { default={ 1, 1, 1 }},
                 fontSize = 70,
                 id = "menu",

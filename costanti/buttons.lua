@@ -223,7 +223,7 @@ function buttons.menuButtonsInit(sceneGroup)
     -- crea bottone Play
     local playButton = widget.newButton(
     {
-        font = "SourceCodePro-SemiBold",
+        font = "SourceCodePro-Semibold.ttf",
         labelColor = { default={ 0, 0, 0 }},
         fontSize = 70,
         id = "button1",
@@ -238,7 +238,7 @@ function buttons.menuButtonsInit(sceneGroup)
         onEvent = onPlayTap
     }
     )
-    --local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, "fonts/SourceCodePro-SemiBold.ttf", 70 )
+    --local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, "fonts/SourceCodePro-SemiBold.ttf.ttf", 70 )
     playButton.x = display.contentCenterX
     playButton.y = display.contentHeight - 1400
 	--playButton:setFillColor( 0.82, 0.86, 1 )
@@ -247,7 +247,7 @@ function buttons.menuButtonsInit(sceneGroup)
     
     local highScoresButton = widget.newButton(
     {
-        font = "SourceCodePro-SemiBold",
+        font = "SourceCodePro-Semibold.ttf",
         labelColor = { default={ 0, 0, 0 }},
         fontSize = 70,
         id = "button1",
@@ -282,7 +282,7 @@ end
 function buttons.goToMenuInit(sceneGroup, yValue)
     local menuButton = widget.newButton(
     {
-        font = "SourceCodePro-SemiBold",
+        font = "SourceCodePro-Semibold.ttf",
         labelColor = { default={ 0, 0, 0 }},
         fontSize = 70,
         id = "menu",
@@ -296,7 +296,7 @@ function buttons.goToMenuInit(sceneGroup, yValue)
         height = 110
     }
     )
-    --local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, "fonts/SourceCodePro-SemiBold.ttf", 70 )
+    --local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, "fonts/SourceCodePro-SemiBold.ttf.ttf", 70 )
     menuButton.x = display.contentCenterX
     menuButton.y = yValue
     --local menuButton = display.newText( sceneGroup, "Menu", display.contentCenterX, yValue, native.systemFont, 70 )

@@ -52,7 +52,7 @@ function scene:create( event )
 
 		local playButton = widget.newButton(
     {
-        font = "SourceCodePro-SemiBold",
+        font = "SourceCodePro-Semibold.ttf",
         labelColor = { default={ 0, 0, 0 }},
         fontSize = 60,
         id = "Button" .. tostring(i),
