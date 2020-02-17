@@ -108,8 +108,9 @@ end
 -- destroy()
 function scene:destroy( event )
     local sceneGroup = self.view
-    audio.dispose( themeSong )
-	audio.dispose( selectionSound )
+    audio.rewind()
+    --audio.dispose( themeSong )
+	--audio.dispose( selectionSound )
 	-- Code here runs prior to the removal of scene's view
 end
 -- -----------------------------------------------------------------------------------
