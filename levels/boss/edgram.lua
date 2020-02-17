@@ -2,11 +2,8 @@ local composer = require( "composer" )
 local player = require("costanti.player")
 local costantiSchermo = require ("costanti.costantiSchermo")
 
-
-
 local edgram = {}
 edgram.show = {}
-edgram.life = 10
 edgram.isDead = false
 
 local isPaused
@@ -23,7 +20,7 @@ function edgram.onHit()
     if(edgram.isDead) then
         return
     end
-    edgram.show.hp = edgram.show.hp - 5
+    edgram.show.hp = edgram.show.hp - 10
     if(edgram.show.hp <= 0 ) then
         edgram.isDead = true
         return edgram.isDead
@@ -77,20 +74,20 @@ function edgram.edgramInit(target, sceneGroup)
     edgram.show.x = display.contentCenterX
     edgram.show.y = -100
     physics.addBody(edgram.show, {radius = edgram.show.contentHeight/2, isSensor = true })
-    edgram.show.hp = 10
+    edgram.show.hp = 150
     edgram.show:toFront()
-    edgram.myName = "Edgram"
+    edgram.show.myName = "Edgram"
     table.insert(currentTransitions, transition.to(edgram.show, {time = 3000, y = 350, onComplete =
     
          function () 
             costantiSchermo.background:addEventListener( "tap" , player.shoot)
-            Movements = timer.performWithDelay(800, movements, 0) end
+            Movements = timer.performWithDelay(400, movements, 0) end
         }) )
     
     physics.addBody( edgram.show, {radius = edgram.show.contentHeight/2, isSensor = true})
     edgram.sceneGroup = sceneGroup
     edgram.target = target
-   timer.performWithDelay(4000, function () ShootTimer = timer.performWithDelay(2000, shoot, 0) end)   
+   timer.performWithDelay(2000, function () ShootTimer = timer.performWithDelay(1200, shoot, 0) end)   
   
   
  
@@ -121,9 +118,19 @@ function edgram.edgramRemove()
     if(ShootTimer ~= nil ) then
         timer.cancel(ShootTimer)
     end
-    timer.cancel(Movements)
-    
-    edgram.show:removeSelf()
+    isPaused = true
+    if(Movements ~= nil) then
+        timer.cancel(Movements)
+    end
+    if(edgram.show ~= nil) then
+        edgram.show:removeSelf()
+    end
+    if(#currentTransitions > 0) then
+        for i = 1, #currentTransitions do
+            transition.cancel(currentTransitions[i])
+           currentTransitions[i] = nil
+        end
+    end
 end
 
 return edgram
