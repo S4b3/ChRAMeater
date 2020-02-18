@@ -73,7 +73,7 @@ function player.playerInit(sceneGroup)
     player.playerChram.fill = player.defaultSkin
 	player.playerChram.x = display.contentCenterX
 	player.playerChram.y = display.contentHeight - 150
-	physics.addBody( player.playerChram, "dynamic" ,{ radius=player.playerChram.contentHeight/2, bounce = 0} )
+	physics.addBody( player.playerChram, "dynamic" ,{ radius=player.playerChram.contentHeight/2, isSensor = true} )
     player.playerChram.myName = "Chram"
     player.playerChram.gravityScale = 0.0
     player.playerChram:addEventListener( "touch", dragPlayerChram )
@@ -83,9 +83,11 @@ end
 function player.cappellinoSwap()
     if(isCappellino == true) then
         player.playerChram.fill = (player.defaultSkin)
+        player.playerChram.isSensor = false
         isCappellino = false
     else 
         player.playerChram.fill = (player.incognitoSkin)
+        player.playerChram.isSensor = true
         isCappellino = true
     end
 end

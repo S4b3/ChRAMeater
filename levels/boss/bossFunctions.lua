@@ -13,11 +13,11 @@ function bossFunctions.pauseBoss()
     if( currentLevel == "levels.liv1.liv1") then
         ramzilla.pause()
     elseif (currentLevel == "levels.liv2.liv2") then
-        tor.pause()
+        edgram.pause()
     elseif (currentLevel == "levels.liv3.liv3") then
         safaram.pause()
     elseif (currentLevel == "levels.liv4.liv4") then
-        edgram.pause()
+        tor.pause()
     end
 end
 
@@ -26,11 +26,11 @@ function bossFunctions.resumeBoss()
     if( currentLevel == "levels.liv1.liv1") then
         ramzilla.resume()
     elseif (currentLevel == "levels.liv2.liv2") then
-        tor.resume()
+        edgram.resume()
     elseif (currentLevel == "levels.liv3.liv3") then
         safaram.resume()
     elseif (currentLevel == "levels.liv4.liv4") then
-        edgram.resume()
+        tor.resume()
     end
 end
 

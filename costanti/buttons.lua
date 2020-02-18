@@ -45,7 +45,7 @@ function buttons.onEffectsTapEffect(button)
         audio.setVolume(0, { channel = 3 } )
     else
         audio.setVolume(0.5, { channel = 2 })
-        audio.setVolume(0, { channel = 3 } )
+        audio.setVolume(0.9, { channel = 3 } )
     end
 end
 
