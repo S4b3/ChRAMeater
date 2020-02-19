@@ -24,6 +24,7 @@ physics.setGravity( 0, 0 )
 
 -------------------------------------FUNZIONI NECESSARIE PER I VARI LIVELLI-----------------------------------------
 function gameFunctions.resizeChram(playerChram)
+    levelsFunctions.resumeFreezeLoop()
     if(playerChram.contentWidth == nil or playerChram.contentHeight == nil) then
         return
     end
