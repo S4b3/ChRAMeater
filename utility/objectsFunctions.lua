@@ -96,7 +96,6 @@ function objectsFunctions.removeAllPwups()
         return
     end
     for i = 1, #costanti.playerState.powerUps do
-        --print(items[i].myName)
         items[i] = nil
         costanti.playerState.powerUps[i] = nil
     end
@@ -118,7 +117,6 @@ function objectsFunctions.freeze(objTable, levelsFunction)
         objTable[i].angularVelocity = 0
     end
     local function resumeVelocity() --funziona
-        print("ripartito")
         for i = 1 , #objTable do
             objTable[i]:setLinearVelocity(linearVelocityXTable[i] ,linearVelocityYTable[i] )
             objTable[i].angularVelocity = angularVelocityTable[i]
@@ -157,7 +155,6 @@ function objectsFunctions.invincibility()
     local function controlTime()
         time = costantiSchermo.secondsLeft
         if(time == initialTime - objectsFunctions.InvincibleTime or time==0) then
-            print("deleting timer")
             timer.cancel(controlTimer)
             objectsFunctions.InvincibleTime=5
             objectsFunctions.endInvincibility()
@@ -168,12 +165,10 @@ end
 end
 
 function objectsFunctions.setInvincibility()
-    print("start invincibility")
     objectsFunctions.ISinvincible=true
 end
 
 function objectsFunctions.endInvincibility()
-    print("stop invincibility")
     player.cappellinoSwap()
     objectsFunctions.ISinvincible=false
 end

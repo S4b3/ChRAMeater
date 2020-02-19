@@ -55,7 +55,6 @@ function ramzilla.ramzillaInit(target, sceneGroup)
             costantiSchermo.background:addEventListener( "tap" , player.shoot)
             Movements = timer.performWithDelay(800, movements, 0)
             ShootTimer = timer.performWithDelay(600, shoot, 0) 
-            print(ShootTimer)
         end
     }) )
     physics.addBody( ramzilla.show, {radius = ramzilla.show.contentHeight/2-100, isSensor = true}) 

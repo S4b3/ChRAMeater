@@ -62,7 +62,6 @@ function scene:create( event )
     -- Insert the saved score from the last game into the table, then reset it
     table.insert( scoresTable, composer.getVariable( "finalScore" ) )
     lastScore = composer.getVariable("finalScore")
-    print(lastScore)
 	composer.setVariable( "finalScore", 0 )
 	-- Sort the table entries from highest to lowest
     local function compare( a, b )
@@ -87,9 +86,7 @@ function scene:create( event )
             end
 			local rankNum = display.newText( sceneGroup, i .. ")", display.contentCenterX-50, yPos, "SourceCodePro-Semibold.ttf", fontSize )
             rankNum:setFillColor( 0.8 )
-            rankNum.anchorX = 1
-            print(scoresTable[i], lastScore)
- 
+            rankNum.anchorX = 1 
             local thisScore = display.newText( sceneGroup, scoresTable[i], display.contentCenterX, yPos, "SourceCodePro-Semibold.ttf", fontSize )
             thisScore.anchorX = 0
 		end

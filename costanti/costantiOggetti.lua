@@ -52,8 +52,6 @@ function costanti.removePowerUp(objName)
     for i,item in pairs(costanti.playerState.powerUps) do
         if(item.myName == objName) then
             table.remove(costanti.playerState.powerUps, i)
-            --goto loopend
-            print("removed")
             return 0
         end
     end
