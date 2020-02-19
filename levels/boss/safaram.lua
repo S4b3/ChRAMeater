@@ -6,7 +6,6 @@ local costantiSchermo = require ("costanti.costantiSchermo")
 
 local safaram = {}
 safaram.show = {}
-safaram.life = 200
 safaram.isDead = false
 
 local isPaused

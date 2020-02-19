@@ -99,7 +99,7 @@ function functionLivThree.createObjects(mainGroup,objectSheet,objTable)
     elseif  ( whereFrom == 4 and newObject.myName == "cacheCleaner" )then
         newObject.x = player.playerChram.x
         newObject.y = -60
-        newObject:setLinearVelocity( 0, 10200)
+        newObject:setLinearVelocity( 0, 1000)
         newObject.isBullet = true
     elseif (whereFrom == 4) then
         newObject.x = math.random( display.contentWidth )
