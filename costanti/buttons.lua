@@ -21,12 +21,7 @@ buttons.buttonsMenu = {}
 buttons.buttonsMenu.show = {}
 buttons.buttonsMenu.closeMenuButton = {}
 buttons.buttonsMenu.closeMenuButton.show = {}
-
---Variabile necessaria all'over semitrasparente sullo schermo nel momento in cui premo pausa.
-local blackScreen = display.newRect(display.contentCenterX, display.contentCenterY, display.actualContentWidth, display.actualContentHeight)
-blackScreen:setFillColor("black", 0.5)
-blackScreen.isVisible = false
-
+local blackScreen 
 --Funzione di tap sul bottone "musicale":
 --rimuove o riaggiunge il volume al canale audio responsabile della musica
 function buttons.onMusicTapEffect(button)
@@ -55,7 +50,10 @@ end
 --Potremmo invece implementare direttamente il bottone di abbandono della partita che la interrompa salvandone lo score?
 function buttons.onHomeTapEffect(button)
     local currentScene = composer.getSceneName("current")
-    if (currentScene == "menu" or currentScene == "highscores" or currentScene == "selectionLevelPage" or currentScene == "levels.liv4.liv4") then
+    if (currentScene == "menu") then
+        return
+    end
+    if ( currentScene == "highscores" or currentScene == "selectionLevelPage" or currentScene == "levels.liv4.liv4" )  then
         composer.gotoScene("menu")
         return
     end
@@ -154,6 +152,14 @@ function buttons.onSwappableTap(event)
 end
 
 function buttons.buttonsInit(sceneGroup)
+
+
+    --Variabile necessaria all'over semitrasparente sullo schermo nel momento in cui premo pausa.
+    blackScreen = display.newRect(display.contentCenterX, display.contentCenterY, display.actualContentWidth, display.actualContentHeight)
+    blackScreen:setFillColor("black", 0.5)
+    blackScreen.isVisible = false
+    blackScreen:addEventListener("touch", (function () return true end))
+    blackScreen:addEventListener("tap", (function () return true end))
     buttons.buttonsMenu.show = display.newImageRect("images/buttons/buttonsMenu.png", 300, 400)
     buttons.buttonsMenu.show.x = display.contentWidth + 140
     buttons.buttonsMenu.show.y = display.contentCenterY-600
