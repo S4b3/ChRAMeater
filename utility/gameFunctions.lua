@@ -11,6 +11,7 @@ local safaram = require("levels.boss.safaram")
 local edGram = require("levels.boss.edgram")
 local tor = require("levels.boss.tor")
 local gameFunctions = {}
+local pause = false
 
 ramSound = sounds.ramSound
 powerupSound =sounds.powerupSound
@@ -98,6 +99,7 @@ function gameFunctions.pauseGame()
     player.pauseDrag()
     player.stopProjectiles()
     costantiSchermo.pauseLoop()
+    pause=true
 end
 
 function gameFunctions.resumeGame()
@@ -107,6 +109,11 @@ function gameFunctions.resumeGame()
     player.resumeDrag()
     player.resumeProjectiles()
     costantiSchermo.resumeLoop()
+    pause = false
+end
+
+function gameFunctions.getPause()
+    return pause
 end
 
 
