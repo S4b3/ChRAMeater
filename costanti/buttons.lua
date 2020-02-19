@@ -243,14 +243,14 @@ function buttons.menuButtonsInit(sceneGroup)
         strokeColor = { default={1,0.9,0,1}, over ={1,0.9,0,1}},
         width = 240,
         height = 110,
-        onEvent = onPlayTap
+        --onEvent = onPlayTap
     }
     )
     --local playButton = display.newText( sceneGroup, "Play", display.contentCenterX, display.contentHeight - 1400, "fonts/SourceCodePro-SemiBold.ttf.ttf", 70 )
     playButton.x = display.contentCenterX
     playButton.y = display.contentHeight - 1400
 	--playButton:setFillColor( 0.82, 0.86, 1 )
-	--playButton:addEventListener("touch", onPlayTap)
+	playButton:addEventListener("tap", onPlayTap)
     -- crea bottone Highscores
     
     local highScoresButton = widget.newButton(
