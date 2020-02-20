@@ -61,7 +61,9 @@ function buttons.onHomeTapEffect(button)
     costantiSchermo.finalizeLoop()
     objectFunctions.removeAllPwups()
     levelsFunctions.resumeLoop()
-    levelsFunctions.resumeFreezeLoop()
+    if levelsFunctions.isFreezed == true then
+        levelsFunctions.resumeFreezeLoop()
+    end
     player.emptyTransitions()
     composer.gotoScene("menu")
 

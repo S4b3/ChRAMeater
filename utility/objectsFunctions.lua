@@ -2,6 +2,7 @@ local objectsFunctions = {}
 local costanti = require("costanti.costantiOggetti")
 local costantiSchermo = require("costanti.costantiSchermo")
 local player = require("costanti.player")
+local levelsFunctions = require("utility.levelsFunctions")
 local costantiSchermo = require("costanti.costantiSchermo")
 
 local physics = require( "physics" )
@@ -32,6 +33,9 @@ function objectsFunctions.restorePlayerCharm(playerChram, playerState)
     playerChram.x = display.contentCenterX
     playerChram.y = display.contentHeight - 100
     -- Fade in the playerChram
+    if levelsFunctions.isFreezed == true then
+        levelsFunctions.resumeFreezeLoop();
+    end
     physics.removeBody(playerChram)
     transition.to( playerChram, { alpha=1, time=2000,
         onComplete = function()
