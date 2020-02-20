@@ -18,7 +18,7 @@ function ramzilla.onHit()
     if(ramzilla.isDead) then
         return
     end
-    ramzilla.show.hp = ramzilla.show.hp - 10
+    ramzilla.show.hp = ramzilla.show.hp - 20
     if(ramzilla.show.hp <= 0 ) then
         ramzilla.isDead = true
         return ramzilla.isDead
@@ -47,7 +47,7 @@ function ramzilla.ramzillaInit(target, sceneGroup)
     ramzilla.show.x = display.contentCenterX
     ramzilla.show.y = -100
     physics.addBody(ramzilla.show, {radius = ramzilla.show.contentHeight/2-100, isSensor = true })
-    ramzilla.show.hp = 100
+    ramzilla.show.hp = 200
     ramzilla.show:toFront()
     ramzilla.show.myName = "Ramzilla"
     table.insert(currentTransitions, transition.to(ramzilla.show, {time = 3000, y = 350, onComplete =

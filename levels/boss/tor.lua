@@ -30,7 +30,7 @@ function tor.onHit()
     if(tor.isDead) then
         return
     end
-    tor.show.hp = tor.show.hp - 5
+    tor.show.hp = tor.show.hp - 20
     if(tor.show.hp <= 0 ) then
         tor.isDead = true
         return tor.isDead
@@ -67,7 +67,7 @@ function tor.torInit(target, sceneGroup)
     tor.show.x = display.contentCenterX
     tor.show.y = -100
     physics.addBody(tor.show, {radius = tor.show.contentHeight/2-100, isSensor = true })
-    tor.show.hp = 100
+    tor.show.hp = 500
     tor.show:toFront()
     tor.show.myName = "Tor"
     table.insert(currentTransitions, transition.to(tor.show, {time = 3000, y = 350, onComplete =

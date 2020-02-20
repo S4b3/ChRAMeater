@@ -20,7 +20,7 @@ function edgram.onHit()
     if(edgram.isDead) then
         return
     end
-    edgram.show.hp = edgram.show.hp - 10
+    edgram.show.hp = edgram.show.hp - 20
     if(edgram.show.hp <= 0 ) then
         edgram.isDead = true
         return edgram.isDead
@@ -74,7 +74,7 @@ function edgram.edgramInit(target, sceneGroup)
     edgram.show.x = display.contentCenterX
     edgram.show.y = -100
     physics.addBody(edgram.show, {radius = edgram.show.contentHeight/2, isSensor = true })
-    edgram.show.hp = 150
+    edgram.show.hp = 300
     edgram.show:toFront()
     edgram.show.myName = "Edgram"
     table.insert(currentTransitions, transition.to(edgram.show, {time = 3000, y = 350, onComplete =

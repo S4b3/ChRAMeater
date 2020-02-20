@@ -22,7 +22,7 @@ function safaram.onHit()
     if(safaram.isDead) then
         return
     end
-    safaram.show.hp = safaram.show.hp - 10
+    safaram.show.hp = safaram.show.hp - 20
     if(safaram.show.hp <= 0 ) then
         safaram.isDead = true
         return safaram.isDead
@@ -76,7 +76,7 @@ function safaram.safariInit(target, sceneGroup)
     safaram.show.x = display.contentCenterX
     safaram.show.y = -100
     physics.addBody(safaram.show, {radius = safaram.show.contentHeight/2, isSensor = true })
-    safaram.show.hp = 200
+    safaram.show.hp = 400
     safaram.show:toFront()
     safaram.show.myName = "Safari"
     table.insert(currentTransitions, transition.to(safaram.show, {time = 3000, y = 350, onComplete =

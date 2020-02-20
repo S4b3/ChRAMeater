@@ -64,7 +64,7 @@ function scene:create( event )
 
     player.playerInit(mainGroup)
     costanti.playerStateInit(3)
-    costantiSchermo.allTextInit(uiGroup, "01:00", 60, costanti.playerState)
+    costantiSchermo.allTextInit(uiGroup, "00:45", 45, costanti.playerState)
     timeText = costantiSchermo.clockText
     clockText = display.newText( uiGroup, timeText, 800, 130, native.systemFont, 50 )
     function uppa()
