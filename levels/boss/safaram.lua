@@ -82,7 +82,7 @@ function safaram.safariInit(target, sceneGroup)
     table.insert(currentTransitions, transition.to(safaram.show, {time = 3000, y = 350, onComplete =
     
          function () 
-            costantiSchermo.background:addEventListener( "tap" , player.shoot)
+            costantiSchermo.background:addEventListener( "touch" , player.shoot)
             Movements = timer.performWithDelay(800, movements, 0) end
         }) )
     

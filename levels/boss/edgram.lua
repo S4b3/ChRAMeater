@@ -80,7 +80,7 @@ function edgram.edgramInit(target, sceneGroup)
     table.insert(currentTransitions, transition.to(edgram.show, {time = 3000, y = 350, onComplete =
     
          function () 
-            costantiSchermo.background:addEventListener( "tap" , player.shoot)
+            costantiSchermo.background:addEventListener( "touch" , player.shoot)
             Movements = timer.performWithDelay(400, movements, 0) end
         }) )
     

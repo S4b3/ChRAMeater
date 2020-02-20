@@ -72,7 +72,7 @@ function tor.torInit(target, sceneGroup)
     tor.show.myName = "Tor"
     table.insert(currentTransitions, transition.to(tor.show, {time = 3000, y = 350, onComplete =
          function ()
-            costantiSchermo.background:addEventListener( "tap" , player.shoot)
+            costantiSchermo.background:addEventListener( "touch" , player.shoot)
             Movements = timer.performWithDelay(randomSelector(200,400,600), movements)
             ShootTimer = timer.performWithDelay(randomSelector(200,400,600), shoot) 
         end
